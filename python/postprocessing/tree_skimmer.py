@@ -432,15 +432,13 @@ def reco(scenario, isMC, addPDF, MCReco):
             chi_TopJet_pt[0] = chi_jet_p4.Pt()
             chi_TopJet_eta[0] = chi_jet_p4.Eta()
             chi_TopJet_phi[0] = chi_jet_p4.Phi()
-            chi_TopJet_isBTagged[0] = copy.deepcopy(is_chi_topjet_btag) #int(len(bjet_filter([chi_jet], 'DeepFlv', 'M')[0]))
-            ##print("chi_TopJet_isBTagged: ", chi_TopJet_isBTagged[0])
+            chi_TopJet_isBTagged[0] = copy.deepcopy(is_chi_topjet_btag)
             chi_TopJet_dRLepJet[0] = copy.deepcopy(chi_dR_lepjet)
             chi_WpJet_m[0] = chi_promptjet.p4().M()
             chi_WpJet_pt[0] = chi_promptjet.p4().Pt()
             chi_WpJet_eta[0] = chi_promptjet.p4().Eta()
             chi_WpJet_phi[0] = chi_promptjet.p4().Phi()
-            chi_WpJet_isBTagged[0] = copy.deepcopy(is_chi_Wpjet_btag) #int(len(bjet_filter([chi_promptjet], 'DeepFlv', 'M')[0]))
-            ##print("chi_WpJet_isBTagged: ", chi_WpJet_isBTagged[0])
+            chi_WpJet_isBTagged[0] = copy.deepcopy(is_chi_Wpjet_btag)
             closAK8, dR_bestWAK4AK8 = closest(chi_promptjet, fatjets) 
             ptrel_bestWAK4_closestAK8[0] = chi_promptjet.pt/closAK8.pt
             deltaR_bestWAK4_closestAK8[0] = copy.deepcopy(dR_bestWAK4AK8)
@@ -461,7 +459,6 @@ def reco(scenario, isMC, addPDF, MCReco):
     if scenario == 'nominal':
         trees[0].Write()
         if(isMC):
-            #print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genweight.GetBinContent(1), h_PDFweight.GetNbinsX()))
             h_genweight.Write()
             h_PDFweight.Write()
             h_eff_mu.Write()
@@ -484,12 +481,6 @@ def reco(scenario, isMC, addPDF, MCReco):
 
 for scenario in scenarios:
     reco(scenario, isMC, addPDF, MCReco)
-#if Debug:
-    #print("Event with neutrino failed: ", neutrino_failed, " out of ", str(50000))
-#else:
-    #print("Event with neutrino failed: ", neutrino_failed, " out of ", tree.GetEntries())
-
-#trees[0].Print()
 
 endTime = datetime.datetime.now()
 print("Ending running at " + str(endTime))
