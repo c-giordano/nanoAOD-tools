@@ -3,6 +3,10 @@ Tools for working with NanoAOD (requiring only python + root, not CMSSW)
 
 ## Checkout instructions: standalone
 
+Note that you can also find the github.io page with all instructions here:
+
+    https://cmsnafw.github.io/nanoAOD-tools/
+
 You need to setup python 2.7 and a recent ROOT version first.
 
     git clone https://github.com/cms-nanoAOD/nanoAOD-tools.git NanoAODTools
