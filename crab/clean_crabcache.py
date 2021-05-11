@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-
 import json
 import os
 import pycurl
@@ -14,7 +13,7 @@ class UserCacheHelper:
     def __init__(self, proxy=None, user=None):
         if proxy is None:
             #proxy = os.getenv('X509_USER_PROXY')
-            proxy = '/tmp/x509up_u103214'
+            proxy = '/tmp/x509up_u' #personalize with your uid --> from terminal type echo $uid
         if not proxy or not os.path.isfile(proxy):
             raise Crab3ToolsException('X509_USER_PROXY is %r, get grid proxy first' % proxy)
         self.proxy = proxy

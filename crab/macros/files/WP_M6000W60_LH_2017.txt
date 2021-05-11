@@ -1,2 +1,0 @@
-You requested to process files for 1223 jobs.
-The limit is 500. Please use the '--jobids'option to select up to 500 jobs.

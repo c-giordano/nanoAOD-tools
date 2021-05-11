@@ -200,5 +200,3 @@ for sample in samples:
     elif getout:
         print "crab getoutput -d crab_" + sample.label + " --xrootd > ./macros/files/" + sample.label + ".txt"
         os.system("crab getoutput -d crab_" + sample.label + " --xrootd > ./macros/files/" + sample.label + ".txt")
-        #for i in xrange(1, 969):
-        #os.system("crab getoutput -d crab_" + sample.label + " --outputpath=/eos/user/"+str(os.environ.get('USER')[0]) + "/"+str(os.environ.get('USER'))+"/Wprime/nosynch/" + sample.label + "/ --jobids="+str(i))

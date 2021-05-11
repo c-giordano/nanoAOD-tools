@@ -10,7 +10,7 @@ parser.add_option('-f', '--folder', dest='folder', type=str, default = '', help=
 #parser.add_option('-u', '--user', dest='us', type='string', default = 'ade', help="")
 (opt, args) = parser.parse_args()
 #Insert here your uid... you can see it typing echo $uid
-
+uid = 0
 username = str(os.environ.get('USER'))
 inituser = str(os.environ.get('USER')[0])
 if username == 'adeiorio':
@@ -29,17 +29,23 @@ def sub_writer(sample, n, files, folder):
     f.write("use_x509userproxy       = true\n")
     f.write("should_transfer_files   = YES\n")
     f.write("when_to_transfer_output = ON_EXIT\n")
-    f.write("transfer_input_files    = $(Proxy_path), samples/samples.py, skimtree_utils.py, __init__.py, BtagEfficiency.root\n")
-    f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/user/"+inituser + "/" + username+"/Wprime/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
+    f.write("transfer_input_files    = $(Proxy_path)\n")
+    #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/user/"+inituser + "/" + username+"/Wprime/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
-    f.write("executable              = tree_skimmer.py\n")
-    f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " remote" + "\n")
+    f.write("executable              = runner.sh\n")
+    #f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " " + str(folder) "\n")
     #f.write("input                   = input.txt\n")
     f.write("output                  = condor/output/"+ sample.label + "_part" + str(n) + ".out\n")
     f.write("error                   = condor/error/"+ sample.label + "_part" + str(n) + ".err\n")
     f.write("log                     = condor/log/"+ sample.label + "_part" + str(n) + ".log\n")
-
     f.write("queue\n")
+
+def runner_writer(sample, n, files, folder):
+    f = open("runner.sh", "w")
+    f.write("cd " + str(os.getcwd()) + "\n")
+    f.write("eval `scramv1 runtime -sh` \n")
+    f.write("python " + sample.label + " " + str(n) + " " + str(files) + " " + str(folder) "\n")
+    
 
 if not(opt.dat in sample_dict.keys()):
     print sample_dict.keys()
@@ -61,6 +67,7 @@ if not os.path.exists("condor/log"):
 
 if(uid == 0):
     print("Please insert your uid")
+    os.system("echo $uid")
     exit()
 if not os.path.exists("/tmp/x509up_u" + str(uid)):
     os.system('voms-proxy-init --rfc --voms cms -valid 192:00')
@@ -77,18 +84,21 @@ for sample in samples:
         os.makedirs("/eos/user/" + inituser + "/" + username +"/Wprime/nosynch/" + folder + "/" + sample.label)
     f = open("../../crab/macros/files/" + sample.label + ".txt", "r")
     files_list = f.read().splitlines()
+    final_folder = "/eos/user/" + inituser + "/" + username +"/Wprime/nosynch/" + folder + "/" + sample.label
     print(str(len(files_list)))
     if(isMC):
         for i, files in enumerate(files_list):
-            sub_writer(sample, i, files, folder)
+            runner_writer(sample, i, files, final_folder)
+            sub_writer(sample, i, files, final_folder)
             os.popen('condor_submit condor.sub')
             print('condor_submit condor.sub')
             #os.popen("python tree_skimmer.py " " + sample.label + " " + str(i) + " " + str(files))
-            print("python tree_skimmer.py " + sample.label + " " + str(i) + " " + str(files))
+            print("python tree_skimmer.py " + sample.label + " " + str(i) + " " + str(files) + " " + str(final_folder))
     else:
         for i in range(len(files_list)/split+1):
-            sub_writer(sample, i,  ",".join( e for e in files_list[split*i:split*(i+1)]), folder)
+            runner_writer(sample, i, files, final_folder)
+            sub_writer(sample, i,  ",".join( e for e in files_list[split*i:split*(i+1)]), final_folder)
             print('condor_submit condor.sub')
             os.popen('condor_submit condor.sub')
             #os.popen("python tree_skimmer.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
-            print("python tree_skimmer.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]))
+            print("python tree_skimmer.py " + sample.label + " " + str(i) + " " + ",".join( e for e in files_list[split*i:split*(i+1)]) + " " + str(final_folder))

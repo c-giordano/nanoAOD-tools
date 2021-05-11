@@ -1,5 +1,0 @@
-root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/ST_tW_tbar_2017/201128_212716/0000/tree_hadd_2.root
-root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/ST_tW_tbar_2017/201128_212716/0000/tree_hadd_4.root
-root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/ST_tW_tbar_2017/201128_212716/0000/tree_hadd_5.root
-root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/ST_tW_tbar_2017/201128_212716/0000/tree_hadd_6.root
-root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/ST_tW_antitop_5f_inclusiveDecays_TuneCP5_13TeV-powheg-pythia8/ST_tW_tbar_2017/201128_212716/0000/tree_hadd_1.root
