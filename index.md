@@ -25,7 +25,7 @@ scramv1 b -j 4
 To run the CRAB step, **you need to modify and customise** some configuration files. 
 1. First of all, you have to modify the file _script/keep_and_drop.txt_ to keep/drop branches you need or not.
 2. Another requirement is to write the samples on which you would run in the file _python/postprocessing/samples/samples.py_ according to the convention already present. You also need to add the the samples you add to the dictionary, so you can use it as an argument of a python macro.
-3. The last step is to personalise the _crab/submit_crab.py_ that will take care of writing all the files needed for the submission. It is also useful to interact with a crab job after it has been submitted or when it will be finished.
+3. The last step is to customise the _crab/submit_crab.py_ that will take care of writing all the files needed for the submission. It is also useful to interact with a crab job after it has been submitted or when it will be finished.
 ```
 cd crab
 python submit_crab.py -d TT_Mtt_2016 -s
@@ -51,7 +51,7 @@ In the repository you can also find a macro to produce the histograms for your f
   ```
   python makeplot.py --merpart --lumi --mertree
   ```
-  This command should be used only ones. The parts files are not removed nor overwritten.
+  This command should be used only once. The parts files are not removed nor overwritten.
 
 - Now you are ready to produce histograms and stack plots:
   ```
