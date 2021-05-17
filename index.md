@@ -22,7 +22,7 @@ scramv1 b -j 4
 ```
 
 ### CRAB 
-To run the CRAB step, **you need to modify and personalise** some configuration files. 
+To run the CRAB step, **you need to modify and customise** some configuration files. 
 1. First of all, you have to modify the file _script/keep_and_drop.txt_ to keep/drop branches you need or not.
 2. Another requirement is to write the samples on which you would run in the file _python/postprocessing/samples/samples.py_ according to the convention already present. You also need to add the the samples you add to the dictionary, so you can use it as an argument of a python macro.
 3. The last step is to personalise the _crab/submit_crab.py_ that will take care of writing all the files needed for the submission. It is also useful to interact with a crab job after it has been submitted or when it will be finished.
@@ -30,7 +30,7 @@ To run the CRAB step, **you need to modify and personalise** some configuration 
 cd crab
 python submit_crab.py -d TT_Mtt_2016 -s
 ```
-In this step the PostProcessor method is run. **You need to personalise** to your use case the modules in the _python/postprocessing/examples_ folder. 
+In this step the PostProcessor method is run. **You need to customise** to your use case the modules in the _python/postprocessing/examples_ folder. 
 
 ### Condor
 This represent the last step of the framework and it is located in _python/postprocessing_ folder. The wrapper _submit_condor.py_ allows you to submit a job taking as a input a file produced with the previous step or with a file stored on the CMS DAS database.
@@ -41,3 +41,18 @@ This macro prepares all the needed files for the submission.
 cd python/postprocessing
 python submit_condor.py -f v0 -d TT_Mtt_2016
 ```
+### Makeplot
+In the repository you can also find a macro to produce the histograms for your final fit from the output of the previous steps. This macro is _makeplot.py_, it is located in _python/postprocessing_ folder and it uses the class _variabile.py_ (stored in the same folder) and the official CMS macro for the plot style (_CMS\_lumi.py_).
+**You need to customise** to your use case this macro to make it work correctly with your samples, input folder, years and categories.
+
+-You can use this macro to merge all the parts files produced by Condor, apply the luminosity weights and merge the components of a samples:
+```
+python makeplot.py --merpart --lumi --mertree
+```
+This command should be used only ones. The parts files are not removed nor overwritten.
+
+-Now you are ready to produce histograms and stack plots:
+```
+python makeplot.py -p -s --sel -S noSyst/all/name_syst -C "some requirement" 
+```
+The above is one of the most general uses of the makeplot. The option passed produce plots, stack plots, apply a default selection, histograms for systematic variations and apply additional requirements (producing an according text in the histogram) respectively.
