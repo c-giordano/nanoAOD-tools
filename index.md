@@ -41,17 +41,18 @@ This macro prepares all the needed files for the submission.
 cd python/postprocessing
 python submit_condor.py -f v0 -d TT_Mtt_2016
 ```
+
 ### Makeplot
 In the repository you can also find a macro to produce the histograms for your final fit from the output of the previous steps. This macro is _makeplot.py_, it is located in _python/postprocessing_ folder and it uses the class _variabile.py_ (stored in the same folder) and the official CMS macro for the plot style (_CMS\_lumi.py_).
 **You need to customise** to your use case this macro to make it work correctly with your samples, input folder, years and categories.
 
--You can use this macro to merge all the parts files produced by Condor, apply the luminosity weights and merge the components of a samples:
+- You can use this macro to merge all the parts files produced by Condor, apply the luminosity weights and merge the components of a samples:
 ```
 python makeplot.py --merpart --lumi --mertree
 ```
 This command should be used only ones. The parts files are not removed nor overwritten.
 
--Now you are ready to produce histograms and stack plots:
+- Now you are ready to produce histograms and stack plots:
 ```
 python makeplot.py -p -s --sel -S noSyst/all/name_syst -C "some requirement" 
 ```
