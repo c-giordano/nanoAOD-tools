@@ -47,13 +47,13 @@ In the repository you can also find a macro to produce the histograms for your f
 **You need to customise** to your use case this macro to make it work correctly with your samples, input folder, years and categories.
 
 - You can use this macro to merge all the parts files produced by Condor, apply the luminosity weights and merge the components of a samples:
-```
-python makeplot.py --merpart --lumi --mertree
-```
-This command should be used only ones. The parts files are not removed nor overwritten.
+  ```
+  python makeplot.py --merpart --lumi --mertree
+  ```
+  This command should be used only ones. The parts files are not removed nor overwritten.
 
 - Now you are ready to produce histograms and stack plots:
-```
-python makeplot.py -p -s --sel -S noSyst/all/name_syst -C "some requirement" 
-```
-The above is one of the most general uses of the makeplot. The option passed produce plots, stack plots, apply a default selection, histograms for systematic variations and apply additional requirements (producing an according text in the histogram) respectively.
+  ```
+  python makeplot.py -p -s --sel -S noSyst/all/name_syst -C "some requirement" 
+  ```
+  The above is one of the most general uses of the makeplot. The option passed produce plots, stack plots, apply a default selection, histograms for systematic variations and apply additional requirements (producing an according text in the histogram) respectively.
