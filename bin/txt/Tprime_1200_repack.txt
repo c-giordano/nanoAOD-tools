@@ -1,0 +1,8 @@
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/low_pt_mu_resolved_1200.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/low_pt_mu_merged_1200.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/low_pt_el_resolved_1200.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/low_pt_el_merged_1200.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/high_pt_mu_resolved_1200.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/high_pt_mu_merged_1200+1800.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/high_pt_el_resolved_1200.root
+/home/diefer/workdir/CMSSW_9_4_9/src/Wprime/WprimeAnalysis/bin/Root/Tprime/BDT_scores/high_pt_el_merged_1200+1800.root
