@@ -12,7 +12,6 @@ build
 *.pcm
 *.root
 *.json
-*.xml
 crab/crab_*
 crab/crab_cfg.py
 crab/crab_script.py
