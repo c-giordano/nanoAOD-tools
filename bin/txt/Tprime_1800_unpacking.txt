@@ -1,0 +1,1 @@
+/home/diefer/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/Tprime_tHq_1800_Skim.root
