@@ -62,7 +62,7 @@ class unpacking_vers2(Module):
         self.out.branch("Top_dR","F",lenVar="nTop")
 
         self.out.branch("Top_High_Truth","I", lenVar="nTop") 
-        self.out.branch("Top_Tau_High_Truth","I", lenVar="nTop") # (It should be bool)
+        self.out.branch("Top_Tau_High_Truth","I", lenVar="nTop")
         self.out.branch("Top_Lep_MomId","I", lenVar="nTop")
         self.out.branch("Muon_mindR","F", lenVar="nMuon")
         self.out.branch("Muon_mindR_jIndex","I", lenVar="nMuon")
@@ -207,7 +207,6 @@ class unpacking_vers2(Module):
                                     if (abs(genpart[genpart[gen.genPartIdxMother_prompt].genPartIdxMother_prompt].pdgId)==6 ):
                                         if deltaR(j.p4().Eta(),j.p4().Phi(),gen.p4().Eta(),gen.p4().Phi()) <0.3 :  #This is 0.3 (but in ML is 0.4) -> We use 0.3
                                             jet_has_promptLep = True 
-                    jet_has_pL.append(jet_has_promptLep)
                     
                     for m in allMu:
 
@@ -327,7 +326,11 @@ class unpacking_vers2(Module):
 
                                 if ((is_jet_true * is_muon_prompt)== True and (j.partonFlavour*m.charge)<0.) :
                                     top_high_truth.append(5)
-
+                            
+                            else:
+                                lep_MomId.append(0)
+                                tau_high_truth.append(-1)
+                                top_high_truth.append(-1)
 
                     for e in allEl:
 
@@ -445,6 +448,11 @@ class unpacking_vers2(Module):
 
                                 if ((is_jet_true * is_el_prompt)== True and (j.partonFlavour*e.charge)<0.) :
                                     top_high_truth.append(5)
+
+                            else:
+                                lep_MomId.append(0)
+                                tau_high_truth.append(-1)
+                                top_high_truth.append(-1)
 
         #IMPORTANT: Here it should be better to reject the events with ONLY tops with DeltaR>2 
     

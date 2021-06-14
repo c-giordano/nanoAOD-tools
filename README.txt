@@ -12,7 +12,6 @@ INSTRUCTIONS FOR ANALYSIS: Tprime -> tHq/tZq -> lnuqq
 	MCweight_writer.py -> Writes MC weights
 	preselection_Tprime.py -> Preselection for our final state
 	GenPart_MomFirstCp.py -> Computes real mother particles (i.e. not considering scattering)
-	top_alloc.py -> Allocation of Top candidates: Not needed anymore, either remove it or use it for top selection (i.e. el/mu/jet pt requirements etc.)
 	unpacking_vers2.py -> Constructs the Top collection for each event
 
 2. MACHINE LEARNING (BDT)
