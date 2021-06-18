@@ -44,7 +44,7 @@ def runner_writer(sample, n, files, folder):
     f = open("runner.sh", "w")
     f.write("cd " + str(os.getcwd()) + "\n")
     f.write("eval `scramv1 runtime -sh` \n")
-    f.write("python " + sample.label + " " + str(n) + " " + str(files) + " " + str(folder)+"\n")
+    f.write("python tree_skimmer.py " + sample.label + " " + str(n) + " " + str(files) + " " + str(folder)+"\n")
     
 
 if not(opt.dat in sample_dict.keys()):
