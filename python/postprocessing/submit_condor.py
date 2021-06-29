@@ -32,7 +32,7 @@ def sub_writer(sample, n, files, folder):
     f.write("transfer_input_files    = $(Proxy_path)\n")
     #f.write("transfer_output_remaps  = \""+ sample.label + "_part" + str(n) + ".root=/eos/user/"+inituser + "/" + username+"/Wprime/nosynch/" + folder + "/" + sample.label +"/"+ sample.label + "_part" + str(n) + ".root\"\n")
     f.write("+JobFlavour             = \"testmatch\"\n") # options are espresso = 20 minutes, microcentury = 1 hour, longlunch = 2 hours, workday = 8 hours, tomorrow = 1 day, testmatch = 3 days, nextweek     = 1 week
-    f.write("executable              = runner.sh\n")
+    f.write("executable              = runner_"+sample.label+"_"+str(n)+".sh \n")
     #f.write("arguments               = " + sample.label + " " + str(n) + " " + str(files) + " " + str(folder) "\n")
     #f.write("input                   = input.txt\n")
     f.write("output                  = condor/output/"+ sample.label + "_part" + str(n) + ".out\n")
@@ -41,11 +41,12 @@ def sub_writer(sample, n, files, folder):
     f.write("queue\n")
 
 def runner_writer(sample, n, files, folder):
-    f = open("runner.sh", "w")
+    f = open("runner_"+sample.label+"_"+str(n)+".sh", "w")
+    f.write("#!/bin/bash \n")
     f.write("cd " + str(os.getcwd()) + "\n")
     f.write("eval `scramv1 runtime -sh` \n")
     f.write("python tree_skimmer.py " + sample.label + " " + str(n) + " " + str(files) + " " + str(folder)+"\n")
-    
+    f.write("rm runner_"+sample.label+"_"+str(n)+".sh")
 
 if not(opt.dat in sample_dict.keys()):
     print sample_dict.keys()
