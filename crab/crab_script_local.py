@@ -20,7 +20,7 @@ fatJetCorrector_tot = createJMECorrector(isMC=True, dataYear=2017, jesUncert='To
 metCorrector = createJMECorrector(isMC=True, dataYear=2017, jesUncert='All', redojec=True)
 fatJetCorrector = createJMECorrector(isMC=True, dataYear=2017, jesUncert='All', redojec=True, jetType = 'AK8PFchs')
 
-p = PostProcessor('.', ['/../../home/iorio/public/tHq/signals/Tprime_tHq_1200.root'], '', modules=[MCweight_writer(), preselection_Tprime(), GenPart_MomFirstCp(flavour="11,12,13,14,15,16,5,6,24,23,25"), unpacking_MC()], outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), histFileName="histOut.root", histDirName="plots", maxEntries=200000, provenance=True, fwkJobReport=True)
+p = PostProcessor('.', ['/../../eos/user/f/fcarneva/Tprime_tZq_1200.root'], '', modules=[MCweight_writer(), preselection_Tprime(), GenPart_MomFirstCp(flavour="11,12,13,14,15,16,5,6,24,23,25"), unpacking_MC()], outputbranchsel=os.path.abspath('../scripts/keep_and_drop.txt'), histFileName="histOut.root", histDirName="plots", maxEntries=1000, provenance=True, fwkJobReport=True)
 p.run()
 print 'DONE'
 #, PrefCorr(), metCorrector(), fatJetCorrector()

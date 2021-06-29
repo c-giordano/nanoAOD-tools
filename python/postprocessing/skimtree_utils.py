@@ -260,6 +260,29 @@ def bjet_filter(jets, tagger, WP): #returns collections of b jets and no b jets 
     else:
         print('Only DeepFlv and DeepCSV accepted! Pleae implement other taggers if you want them.')
 
+def fatjet_tagger(fatjets, tagger, tagger_min, tagger_max=1.01, mass=[0,100000]):
+    fatjets_selected = list(filter(lambda x : (x[tagger] >= tagger_min) and (x[tagger] < tagger_max) and (x["msoftdrop"]>=mass[0]) and (x["msoftdrop"]<=mass[1]) , fatjets))
+    return  fatjets_selected, list(set(fatjets)-set(fatjets_selected))
+
+def fatjet_tag_tot(fatjets):
+    mass_H = [110,140]
+    mass_Z = [60,110]
+    jet_sel=[]
+    excluded_jet= fatjets
+    selection=[["btagDDBvLV2",0.91,1.01,mass_H],
+               ["deepTagMD_ZvsQCD",0.731,1.01,mass_Z],
+               ["btagDDBvLV2",0.91,1.01,mass_Z],
+               ["deepTagMD_ZvsQCD",0.731,1.01,mass_H],
+               ["btagDDBvLV2",0.7,0.91,mass_H],
+               ["deepTagMD_ZvsQCD",0.274,0.731,mass_Z],
+               ["btagDDBvLV2",0.7,0.91,mass_Z],
+               ["deepTagMD_ZvsQCD",0.274,0.731,mass_H]]
+    for i in range(len(selection)):
+      sel = fatjet_tagger(excluded_jet,selection[i][0],selection[i][1],tagger_max=selection[i][2],mass=selection[i][3])
+      for k in range(len(sel[0])):jet_sel.append(sel[0][k])
+      excluded_jet = sel[1]
+    return jet_sel
+
 def mcbjet_filter(jets): #returns a collection of only b-gen jets (to use only for MC samples)
     return list(filter(lambda x : x.partonFlavour == -5 or x.partonFlavour == 5, jets))
 

@@ -1,4 +1,4 @@
-#!/bin/env python3
+#!/bin/env python
 import os
 ##print(os.environ)
 ##print("**********************************************************************")
@@ -19,16 +19,13 @@ import datetime
 import copy
 from array import array
 from skimtree_utils import *
+print("ok \n")
 import xgboost as xgb
 import numpy as np
 from training import *
+from samples.samples import *
 
-if sys.argv[4] == 'remote':
-    from samples import *
-    Debug = False
-else:
-    from samples.samples import *
-    Debug = True
+print("all import are ok \n")
 
 if sys.argv[5] == None: training = training_dict["BDT_Tprime"]
 else: training = training_dict[sys.argv[5]]
@@ -65,7 +62,7 @@ MCReco = MCReco * isMC
 #++++++++++++++++++++++++++++++++++
 #++   branching the new trees    ++
 #++++++++++++++++++++++++++++++++++
-outTreeFile = ROOT.TFile(sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
+outTreeFile = ROOT.TFile(str(sys.argv[4])+"/"+sample.label+"_part"+str(part_idx)+".root", "RECREATE") # output file
 trees = []
 for i in range(10):
     trees.append(None)
@@ -236,8 +233,11 @@ def reco(scenario, isMC, addPDF, training):
         nelectron = len(electron)
         nmuon = len(muon)
         ntop = len(tops)
-
-        if i%5000 == 0:
+        fatjets = Collection(event,"FatJet")
+        
+        selected = fatjet_tag_tot(fatjets)
+        if(len(selected)>0): print(i,selected)
+        if i%100 == 0:
             print("Processed ", i+1, " out of ", tree.GetEntries(), " events")
         
  

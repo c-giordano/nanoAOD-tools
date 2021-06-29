@@ -75,7 +75,9 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
-
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.preselection_Tprime import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.unpacking_vers2 import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.GenPart_MomFirstCp import *\n")
     #f.write("infile = "+str(sample.files)+"\n")
     #f.write("outpath = '"+ outpath+"'\n")
     #Deafult PostProcessor(outputDir,inputFiles,cut=None,branchsel=None,modules=[],compression='LZMA:9',friend=False,postfix=None, jsonInput=None,noOut=False,justcount=False,provenance=False,haddFileName=None,fwkJobReport=False,histFileName=None,histDirName=None, outputbranchsel=None,maxEntries=None,firstEntry=0, prefetch=False,longTermCache=False)\n")
@@ -166,18 +168,22 @@ for sample in samples:
         print 'The flag isMC is: ' + str(isMC)
 
         print "Producing crab configuration file"
-        cfg_writer(sample, isMC, "Wprime")
+        cfg_writer(sample, isMC, "Tprime")
 
         if isMC:
+            modules = "MCweight_writer(), preselection_Tprime(), GenPart_MomFirstCp(flavour=\"11,12,13,14,15,16,5,6,24,23,25\"), unpacking_MC()"
+            """
             if year != '2018':
                 modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", " + prefire_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
             else:
                 modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
+            """
         else:
-            modules = "HLT(), preselection(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
+            #modules = "HLT(), preselection(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
+            modules = "MCweight_writer(), preselection_Tprime(), GenPart_MomFirstCp(flavour=\"11,12,13,14,15,16,5,6,24,23,25\"), unpacking_Data()"
             
         print "Producing crab script"
-        crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Wprime/nosynch/', isMC, modules, presel)
+        crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Tprime/nosynch/', isMC, modules, presel)
         os.system("chmod +x crab_script.sh")
         
         #Launching crab
