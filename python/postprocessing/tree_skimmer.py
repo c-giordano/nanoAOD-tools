@@ -30,7 +30,7 @@ sample = sample_dict[sys.argv[1]]
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
 
-MCReco = True
+MCReco = False
 DeltaFilter = True
 bjetSwitch = False # True #
 startTime = datetime.datetime.now()
@@ -979,6 +979,22 @@ def reco(scenario, isMC, addPDF, MCReco):
         elif isElectron:
             h_eff_ele.Fill('passEle+jetsel', int(isElectron))
 
+        #++++++++++++++++++++++++++++++++++
+        #++      applying selection      ++
+        #++++++++++++++++++++++++++++++++++
+        if(isMuon):
+            if(goodMu[0].pt<55.):
+                continue
+        if(isElectron):
+            if(goodEle[0].pt<50.):
+                continue 
+        if(goodJets[0].pt<300. or goodJets[1].pt<150.):
+            continue
+        if(met.pt<120.):
+            continue
+        #++++++++++++++++++++++++++++++++++
+        #++      applying selection      ++
+        #++++++++++++++++++++++++++++++++++
         if isMC:
             genpart = Collection(event, "GenPart")
             LHE = Collection(event, "LHEPart")
@@ -995,6 +1011,11 @@ def reco(scenario, isMC, addPDF, MCReco):
                     lheSF = lheweight * LHEScaleWeight[4].__getattr__("")
                     lheUp = lheweight * lhemax
                     lheDown = lheweight * lhemin
+                    systTree.setWeightName("LHESF", copy.deepcopy(lheSF))
+                    systTree.setWeightName("LHEUp", copy.deepcopy(lheUp))
+                    systTree.setWeightName("LHEDown", copy.deepcopy(lheDown))
+                    print(lheUp, lheDown)
+
                 if addPDF:
                     LHEPdfWeight = Collection(event, 'LHEPdfWeight')
                     mean_pdf = 0.
@@ -1009,12 +1030,9 @@ def reco(scenario, isMC, addPDF, MCReco):
                     #print(rms)
                     pdf_totalUp = (1+rms)*pdf_xsweight
                     pdf_totalDown = (1-rms)*pdf_xsweight
-                    #print(pdf_totalUp, pdf_totalDown)
-                systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
-                systTree.setWeightName("pdf_totalDown", copy.deepcopy(pdf_totalDown))
-                systTree.setWeightName("LHESF", copy.deepcopy(lheSF))
-                systTree.setWeightName("LHEUp", copy.deepcopy(lheUp))
-                systTree.setWeightName("LHEDown", copy.deepcopy(lheDown))
+                    print(pdf_totalUp, pdf_totalDown)
+                    systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
+                    systTree.setWeightName("pdf_totalDown", copy.deepcopy(pdf_totalDown))
 
         if(isMuon):
             isEle_nominal[0] = 0
@@ -1118,7 +1136,7 @@ def reco(scenario, isMC, addPDF, MCReco):
             Event_HT_nominal[0] = -100.
             
         # requiring mtt < 700 to merge inclusive tt with the mtt > 700
-        if('TT_incl' in sample.label or 'TT_semilep_2018' in sample.label):
+        if('TT_incl' in sample.label or 'TT_semilep_2018' in sample.label or 'TT_SemiLep_2017' in sample.label):
             top_q4 = ROOT.TLorentzVector()  
             antitop_q4 = ROOT.TLorentzVector()  
             tt_q4 = ROOT.TLorentzVector()  
@@ -1130,6 +1148,7 @@ def reco(scenario, isMC, addPDF, MCReco):
             tt_q4 = top_q4 + antitop_q4
             if(tt_q4.M() > 700.):
                 w_nominal_nominal[0] *= 0 #trick to make the events with mtt > 700 count zero
+                continue
 
         # trying to understand the composition of the ttbar background
         if('TT_' in sample.label):
@@ -1940,8 +1959,8 @@ def reco(scenario, isMC, addPDF, MCReco):
             if isMC:
                 best_TopJet_hadronflv_nominal[0] = best_jet.hadronFlavour
                 best_TopJet_partonflv_nominal[0] = best_jet.partonFlavour
-                best_TopJet_hadronflv_nominal[0] = best_promptjet.hadronFlavour
-                best_TopJet_partonflv_nominal[0] = best_promptjet.partonFlavour
+                best_WpJet_hadronflv_nominal[0] = best_promptjet.hadronFlavour
+                best_WpJet_partonflv_nominal[0] = best_promptjet.partonFlavour
             ##print( "best W' mass: ", best_Wprime_p4.M())
         else:
             best_Wprime_m_nominal[0] = -100.

@@ -27,8 +27,13 @@ parser.add_option('', '--plotpath', dest='plotpath',type='string', default='./pl
 parser.add_option('', '--plotonly', dest='plotonly', action="store_true", default = False, help='do only the plots')
 parser.add_option('', '--year_sf', dest='year_sf',type='string', default='None', help='year from which to extract sf, if None it is done from the same as Data')
 parser.add_option('', '--resetMF', dest='resetMF',action="store_true" ,default=False, help='reset missing files file or append to it')
+parser.add_option('', '--runoptions', dest='runoptions', type='string', default='N', help='run options: A = all, N = nominal, B = background composition up/down, S = systs, D = dryrun  ')
+parser.add_option('', '--sfregions', dest='sfregions',type='string', default='CR*,SR*vsCR*_I,SR*_I', help='regions to consider SR vs CR ; SR can be : * [all] or split by comma. Special regions are: "SR" = "SR2B,SRT,SRB" ; "CR" = "CR0B"')
+
 
 (opt, args) = parser.parse_args()
+
+runoptions=opt.runoptions
 categories =[""]
 systs=[""]
 #systs = ["","_btagUp","_btagDown","_mistagUp","_mistagDown","_pdf_totalUp","_pdf_totalDown","_puUp","_puDown","_q2TTUp","_q2QCDUp","_q2ZJetsUp","_q2WJetsUp","_q2TprimeUp","_q2TTDown","_q2QCDDown","_q2ZJetsDown","_q2WJetsDown","_q2TprimeDown","_jesUp","_jesDown","_jerUp","_jerDown","_topTagUp", "_topTagDown","_wTagUp", "_wTagDown","_topPtWeightDown","_topPtWeightUp"]
@@ -41,11 +46,13 @@ if not plotpath[-1]=="/": plotpath=plotpath+"/"
 wjets_veto_threshold=200
 
 sig_cut = "best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60"
+#CR_cut = "best_top_m_L_120_OR_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60"
 CR_cut = "best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60"
 
-if not os.path.exists(opt.pathin + '/' + opt.category + '/Data_' + opt.year + '_' + opt.category + '.root'):  
+if not os.path.exists(opt.pathin + '/' + opt.category + '/Data_' + opt.year + '_' + opt.category + '.root') and not opt.year=='2020' :  
     os.system('hadd -f ' + opt.pathin + '/' + opt.category + '/Data_' + opt.year + '_' + opt.category + '.root ' + opt.pathin + '/' + opt.category + '/Data*_' + opt.year + '_' + opt.category + '.root ')
 
+    print opt.pathin + '/' + opt.category + '/Data_' + opt.year + '_' + opt.category + '.root' 
 lepcut=""
 #lepcut="lep180_"
 
@@ -77,7 +84,28 @@ wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I"}
 #wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}
 #wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}
 #wjets_veto_map = {"SR2B":"SR2B_I"}
-#
+wjets_veto_map = {"CR0B":"CR0B_I"}
+
+sfregions = opt.sfregions
+
+
+if "vs" in sfregions:
+    sfregions = sfregions.replace("CR*_I","CR0B_I")#puo essere fatto meglio ma per ora mi sfotto
+    sfregions = sfregions.replace("SR*_I","SR2B_I,SRT_I,SRW_I")
+    sfregions = sfregions.replace("CR*","CR0B")
+    sfregions = sfregions.replace("SR*","SR2B,SRT,SRW")
+    tsrs=(sfregions.split("vs")[0]).split(",")
+    tcrs=(sfregions.split("vs")[1]).split(",")
+    wjets_veto_map={}
+    if(len(tsrs)!=len(tcrs)):
+        print "WARNING DIFFERENT # SRS AND CRS GIVEN!!!! PUTTING DEFAULT SR2B "
+        wjets_veto_map={"SR2B":"SR2B_I"}
+    for t in range(0,len(tsrs)):
+        print ("regions s", tsrs[t]," b ",tcrs[t])
+        wjets_veto_map[tsrs[t]]=tcrs[t]
+print "map is ",wjets_veto_map
+#wjets_veto_map={}
+
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
 srcr_map_2 = {"SR2B":"SRW","SR2B_I":"SRW_I","SRW":"CR0B","SRW_I":"CR0B_I"}
@@ -92,17 +120,31 @@ fexp2.SetParameters(310,0.1,0.001,0.0000002)
 fexp1=TF1("fexp1","[0]*exp(-(x*[1]))",1000,5000)
 fexp1.SetParameters(310,0.001)
 
+#@fexp1plus2=TF1("fexp1plus2","[0]*exp(-([6]+x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
 fexp1plus2=TF1("fexp1plus2","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
-fexp1plus2.SetParameters(310,0.001,210,0.1,0.001,0.0000002)
+fexp1plus2.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
 
-fexp1plus20b=TF1("fexp1plus2","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
-fexp1plus20b.SetParameters(310,0.001,210,0.01,0.0001,0.000001)
+#fexp1plus20b=TF1("fexp1plus2t","exp(-(x*[0]))+exp(-([1]+x*[2]+x*x*[3]))",1000,5000)
+#fexp1plus20b=TF1("fexp1plus20b","[0]*exp(-(x*[1]))+[2]*exp(-(x*[3]))",1000,5000)
+#fexp1plus20b=TF1("fexp1plus20b","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4])+x*x*[5])",1000,5000)
+#fexp1plus20b=TF1("fexp1plus20b","[0]*exp(-(x*[1]))",1000,5000)
+#fexp1plus20b.SetParameters(310,0.001,10,1.,0.001,0.000002)
+fexp1plus20b=TF1("fexp1plus20b","[0]+x*[1]+x*x*[2]",1000,5000)
 
-fexp1plus2w=TF1("fexp1plus2","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
+fexp1plus2w=TF1("fexp1plus2w","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
 fexp1plus2w.SetParameters(310,0.001,210,0.1,0.001,0.0000002)
+if opt.year == "2017" or opt.year == "2018":
+    fexp1plus2w=TF1("fexp1plus2w","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
+#    fexp1plus2w=TF1("fexp1plus2","[0]*(-(x*[1]))+[2]+(-([3]+x*[4]+x*x*[5]))",1000,5000)
+    fexp1plus2w.SetParameters(1,0.001,1.,1.,0.001,0.00000001)
+    fexp1plus2w=TF1("fexp1plus2w","[0]*exp(-(x*[1]))",1000,5000)
+#    fexp1plus2w=TF1("fexp1plus2","[0]*(-(x*[1]))+[2]+(-([3]+x*[4]+x*x*[5]))",1000,5000)
+    fexp1plus2w.SetParameters(1,0.000001)
+#    fexp1plus2w=TF1("fexp1plus2","[0]*exp(-([1]+x*[2]+x*x*[3]))",1000,5000)
+#    fexp1plus2w.SetParameters(310,0.1,0.001,0.000002)
 
 fexp1plus2t=TF1("fexp1plus2","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
-fexp1plus2t.SetParameters(310,0.001,210,0.1,0.001,0.0000002)
+fexp1plus2t.SetParameters(310,0.001,110,0.1,0.001,0.0000002)
 
 fpoly3= TF1("fpoly3","[0]+x*[1]+x*x*[2]+x*x*x*[3]",1000,5000)
 fpoly3.SetParameters(310,10,1.,0.1)
@@ -119,35 +161,78 @@ fexp1plus2data_v2.SetParameters(5000,1000,152)
 #fexp1plus2data.SetParameters(1000,0,2,1000)
 
 #fexp1plus2ele=TF1("fexp1plus2ele","[0]*exp(-([1]+x*[2]+x*x*[3]))",1000,5000)
-fexp1plus2ele=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
-#Fexp1plus2ele.SetParameters(310,0.001,210,0.1,-0.001,-0.0000002)
-fexp1plus2ele.SetParameters(310,0.001,20,0.1,0.001,0.0000002)
+#fexp1plus2ele0b=TF1("fexp1plus2ele0b","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
+#fexp1plus2ele0b=TF1("fexp1plus2ele0b","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
+#fexp1plus2ele0b=TF1("fexp1plus2ele0b","[0]*exp(-(x*[1]))+[2]",1000,5000)
+#fexp1plus2ele.SetParameters(1,0.001,10,1,-0.001,0.000000002)
+#fexp1plus2ele0b.SetParameters(10,0.001,10,1.,0.001,0.0000002)
+fexp1plus2ele0b=TF1("fexp1plus2ele0b","[0]+x*[1]+x*x*[2]",1000,5000)
+
 
 #fexp1plus2ele=TF1("fexp1plus2ele","[0]*exp(-([1]+x*[2]+x*x*[3]))",1000,5000)
-fexp1plus2elew=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
-#Fexp1plus2ele.SetParameters(310,0.001,210,0.1,-0.001,-0.0000002)
-fexp1plus2elew.SetParameters(310,0.001,20,0.1,0.001,0.0000002)
+fexp1plus2ele=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
+#fexp1plus2ele=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
+#fexp1plus2ele.SetParameters(1,0.001,10,1,-0.001,0.000000002)
+#fexp1plus2ele.SetParameters(110,0.01,-10,-0.1,0.001,0.0000002)
+#fexp1plus2ele.SetParameters(310,0.001,0.1,0.1,0.001,0.0000002)
+fexp1plus2ele.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
 
-#fexp1plus2ele=TF1("fexp1plus2ele","[0]*exp(-([1]+x*[2]+x*x*[3]))",1000,5000)
-fexp1plus2elet=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
-#Fexp1plus2ele.SetParameters(310,0.001,210,0.1,-0.001,-0.0000002)
-fexp1plus2elet.SetParameters(310,0.001,20,0.1,0.001,0.0000002)
+fexp1plus2elew=TF1("fexp1plus2elew","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
+#fexp1plus2elew=TF1("fexp1plus2elew","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
+fexp1plus2elew.SetParameters(310,0.001,0.1,0.1,0.001,0.0000002)
+if opt.year == "2017" or opt.year == "2018":
+    fexp1plus2elew=TF1("fexp1plus2elew","[0]*exp(-(x*[1]))",1000,5000)
+#    fexp1plus2w=TF1("fexp1plus2","[0]*(-(x*[1]))+[2]+(-([3]+x*[4]+x*x*[5]))",1000,5000)
+    fexp1plus2elew.SetParameters(1,0.000001)
+
+#fexp1plus2elew.SetParameters(121,0.01,-10.1,-0.01,0.001,0.0000001)
+#fexp1plus2elew.SetParameters(121,0.01,-10.1,-0.01,0.001,0.0000001)
+#fexp1plus2elew=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
+#fexp1plus2elew.SetParameters(310,0.001,20,0.1,0.1,0.0000002)
+#fexp1plus2elew.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
+
+fexp1plus2elet=TF1("fexp1plus2elet","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,5000)
+#fexp1plus2elet.SetParameters(20,0.001,-1.1,-1.5,-0.001,0.0000002)
+fexp1plus2elet.SetParameters(310,0.001,0.1,0.1,0.001,0.0000002)
+#fexp1plus2elet.SetParameters(210,0.01,10,0.1,0.01,0.00002)
+#fexp1plus2elet=TF1("fexp1plus2ele","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,5000)
+#fexp1plus2elet.SetParameters(310,0.001,20,0.1,0.001,0.0000002)
 
 
 
 fexp1ele=TF1("fexp1ele","[0]*exp(-(x*[2])+[1])",1000,5000)
 fexp1ele.SetParameters(310,0.010,0.001)
 
+def resetParameters():
+    fexp1plus2elet.SetParameters(310,0.001,0.1,0.1,0.001,0.0000002)
+    fexp1plus2elew.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
+    fexp1plus2ele.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
+    fexp1plus2ele0b.SetParameters(10,0.001,10,1.,0.001,0.0000002)
+
+    fexp1plus2data.SetParameters(1000,1100,1002)
+    fexp1plus2data_v2.SetParameters(5000,1000,152)
+
+    fexp1plus2.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
+    fexp1plus20b.SetParameters(10,0.001,10,1.,0.001,0.000002)
+    fexp1plus2w.SetParameters(310,0.001,210,0.1,0.001,0.0000002)
+    fexp1plus2t.SetParameters(310,0.001,110,0.1,0.001,0.0000002)
+
+    fexp2data.SetParameters(310,0.1,0.01,0.0000002)
+
 
 #fexp2data=TF1("fexp2data","[0]+x*[1]+x*x*[2]+x*x*x*[3]+[4]*exp(-([5]+x*[6]+x*x*[7]))",1000,5000)
 #fexp2data.SetParameters(1000,10,1,0.1,1000,0.1,0.01,0.0000002)
 
+#expo1_fit_map={"SR2B":fexp1,"SRW":fexp1,"SRT":fexp1,"CR1B":fexp1,"CR0B":fexp1,"CR1B":fexp1}
+#poly3_fit_map={"SR2B":fpoly3,"SRW":fpoly3,"SRT":fpoly3,"CR1B":fpoly3,"CR0B":fpoly3,"CR1B":fpoly3}
 
-expo2_fit_map={"SR2B":fexp1plus2,"SRW":fexp1plus2w,"SRT":fexp1plus2t,"CR1B":fexp1plus2,"CR0B":fexp1plus20b}
-expo1_fit_map={"SR2B":fexp1,"SRW":fexp1,"SRT":fexp1,"CR1B":fexp1,"CR0B":fexp1,"CR1B":fexp1}
-poly3_fit_map={"SR2B":fpoly3,"SRW":fpoly3,"SRT":fpoly3,"CR1B":fpoly3,"CR0B":fpoly3,"CR1B":fpoly3}
+#expo2ele_fit_map={"SR2B":fexp1plus2ele,"SRW":fexp1plus2elew,"SRT":fexp1plus2elet,"CR1B":fexp1plus2ele,"CR0B":fexp1plus2ele0b}
+#Mappe usate nei fit
+expo2_fit_map={"SR2B":fexp1,"SRW":fexp1,"SRT":fexp1,"CR1B":fexp1,"CR0B":fexp1plus20b}
+expo2ele_fit_map={"SR2B":fexp1,"SRW":fexp1,"SRT":fexp1,"CR1B":fexp1,"CR0B":fexp1plus2ele0b}
 
-expo2ele_fit_map={"SR2B":fexp1plus2ele,"SRW":fexp1plus2elew,"SRT":fexp1plus2elet,"CR1B":fexp1plus2ele,"CR0B":fexp1plus2ele}
+expo2_fit_map_option={"SR2B":"SIE","SRW":"SI","SRT":"SIE","CR1B":"SI","CR0B":"SEMI"}
+expo2ele_fit_map_option={"SR2B":"SIE","SRW":"SI","SRT":"SIE","CR1B":"SI","CR0B":"SIEM"}
 
 #fexp1=TF1("fexp1","[0]*exp(-(x*[1]))",1000,5000)
 #fexp1.SetParameters(310,0.001)
@@ -157,14 +242,17 @@ expo2_cr_fit_map={"SR2B_I":fexp2data,"SRW_I":fexp2data,"SRT_I":fexp2data,"CR1B_I
 expo2_cr_fit_map={"SR2B_I":fexp1plus2data_v2,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2}
 expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2}
 
-def_fitrange=[1250,5000]
-data_fitrange=[1250,5000]
+def_fitrange = [1250,6000]
+data_fitrange = [1500,6000]
 if opt.category=="electron":
-    data_fitrange=[1250,5000]
-    def_fitrange=[1250,5000]
+    data_fitrange = [1250,6000]
+    def_fitrange = [1250,6000]
 #wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}
-def_fitrange=None
-data_fitrange=None
+#def_fitrange=[2050,5000]
+def_fitrange = None
+data_fitrange = None
+alt1_fitrange = [1250,6000]
+alt2_fitrange = [1500,6000]
 class namecollection(object):
     def __init__(self,namemap):
         self.__namemap=namemap
@@ -176,13 +264,13 @@ map_names=namecollection(namemap)
 #print map_names.getmap()
 
 #min,max,rebin
-bins=[1000,5000,1,"uniform"]
-binsvariable=[1000,1250,1500,1750,2000,2250,2500,2750,3000,3500,4000,5000]
+bins = [1000,6000,1,"uniform"]
+binsvariable = [1000., 1250., 1500., 1750., 2000., 2250., 2500., 2750., 3000., 3500., 4500., 6000.] #[1000,1250,1500,1750,2000,2250,2500,2750,3000,3500,4000,5000]
 
-binsv=[1000,5000,binsvariable,"variablenorm"]
-binsv=[1000,5000,binsvariable,"variable"]
+binsv=[1000,6000,binsvariable,"variablenorm"]
+binsv=[1000,6000,binsvariable,"variable"]
 
-#[binsv=bins
+binsv=bins
 
 from histoUtils import resizeHisto,fittedHisto
 xcheck=False
@@ -244,7 +332,7 @@ if(xcheck):
 class single_process(namecollection):
     def __init__(self,namemap,sample, path="./",category="muon",year="2016",syst=None,tag=None,bins=None,verbose=False):
         super(single_process,self).__init__(namemap)#initialize the parent class with the map names
-#        print "map is " ,self.getmap()
+        #        print "map is " ,self.getmap()
         self.__sample=sample
         self.__category=category
         self.__year=year
@@ -265,7 +353,8 @@ class single_process(namecollection):
     def getHistoByName(self,histoname,verbose=False):
         h_ret=TH1F
         if(verbose):
-            print " looking for histo ", histoname , " in file ", self.__filename
+            print " looking for histo ", histoname , " in file ", self.__filename ##fatti stampare il nome qui se non si trova
+#        print " looking for histo ", histoname , " in file ", self.__filename
         h_ret=TH1
         f=TFile(self.__filename,"OPEN")
         try:
@@ -297,7 +386,6 @@ class single_process(namecollection):
         return h_ret
 
     def getHistoR(self,region,verbose=False):
-        
         if(verbose):
             print "gethisto keys "
             print self.getmap().keys()
@@ -313,7 +401,8 @@ class single_process(namecollection):
                     return 0
             except : 
                 print "no histogram in region ",region, "hname ",hname 
-#                print "no histogram in ",region
+                
+                #                print "no histogram in ",region
                 return 0
             h_ret.SetDirectory(0)
             if(verbose):print "returning ",h_ret," name ",h_ret.GetName()
@@ -322,7 +411,7 @@ class single_process(namecollection):
             print " no histo found in maps!"
             return None
 
-    def transfer_factors(self,regions_map,onlyCentral=False,mapFitFunction=None,plot=True,syst=None,tag=None,verbose=False):
+    def transfer_factors(self,regions_map,onlyCentral=False,mapFitFunction=None,mapFitOption=None,plot=True,syst=None,tag=None,verbose=False):
         histomap={}
         removeFunction=not plot
         if syst is None:
@@ -358,7 +447,12 @@ class single_process(namecollection):
                 historatio_coll.update({str(historatio.GetName()+"central"):historatio})
                 if not (mapFitFunction is None):
                     try:
-                        hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="shape_only",fitrange=def_fitrange)
+                        mapfitoption = "SI"
+                        if not (mapFitOption is None):
+                            mapfitoption=mapFitOption[sr]
+                        print "sr ",sr," mapfitoption is ",mapfitoption
+                        hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption)
+#                        hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="shape_only",fitrange=def_fitrange, fitoption=mapfitoption)
                         historatio_coll.update(hs_ret)
                     except (ValueError):
                         print "fit mode failed! Only nominal will be saved"
@@ -376,7 +470,7 @@ class single_process(namecollection):
                     if not tag is None:
                         suffix=suffix+"_"+tag
                     namepng=plotpath+historatio.GetName()+suffix+".png"
-                    c.SetLogy()
+                    #c.SetLogy()
                     c.SaveAs(namepng)
             except (TypeError):
                 print "nothing done for ",hname_sr,hname_cr
@@ -513,7 +607,7 @@ class data_driven(single_process):
     def set_samples(self,samples):
         self.__samples=samples
 
-    def transfer_factor(self,regions,sample,path=None,sampleweights=None,namemap=None,onlyCentral=False,mapFitFunction=None,syst_sf=False,savecr=True,category=None,year=None,plot=True,syst=None,tag=None,verbose=False):
+    def transfer_factor(self,regions,sample,path=None,sampleweights=None,namemap=None,onlyCentral=False,mapFitFunction=None,mapFitOption=None,syst_sf=False,savecr=True,category=None,year=None,plot=True,syst=None,tag=None,verbose=False):
         if (namemap is None):
            namemap= self.__namemap
         systtmp=syst
@@ -552,7 +646,8 @@ class data_driven(single_process):
            
         #print "filename is ",self.__filename
         if(verbose):print "calling super  method"
-        histomap = super(data_driven,self).transfer_factors(regions_map=regions,onlyCentral=onlyCentral,mapFitFunction=mapFitFunction,tag=tag,plot=plot,verbose=verbose)
+        print "mapfit option passed to tf ",mapFitOption
+        histomap = super(data_driven,self).transfer_factors(regions_map=regions,onlyCentral=onlyCentral,mapFitFunction=mapFitFunction,mapFitOption=mapFitOption,tag=tag,plot=plot,verbose=verbose)
         self.reset_info()
         self.set_syst(systtmp)
         self.set_path(pathtmp)
@@ -688,13 +783,15 @@ class data_driven(single_process):
 
                 wsr=1.0
                 wcr=1.0
+                print "sampleweights is ", sampleweights
                 if not (sampleweights is None):
+                    print sampleweights[sl]
                     wsr=sampleweights[sl]
                     wcr=sampleweights[sl]
                 h_sr.Add(htempsr,wsr)
                 if savecr:
                     h_cr.Add(htempcr,wcr)
-                    #print "in savecr, integral after sum",h_cr.Integral()
+                    print "in savecr, integral after sum",h_cr.Integral()
             fout.cd()
             h_sr.Write()
             
@@ -712,7 +809,7 @@ class data_driven(single_process):
         self.set_tag(tagtmp)
         return sample
 
-    def tfratio(self,regions,samplelist,ddMapFitFunction=None, tfMapFitFunction=None,sampleweights=None,onlyCentral=False,savecr=True,option="histo",namemap=None,category=None,year=None,year_sf=None,plot=False,syst_sf=False,syst=None,tag=None,pathout=None,portname="",verbose=False): 
+    def tfratio(self,regions,samplelist,ddMapFitFunction=None, tfMapFitFunction=None,tfMapFitOption=None,sampleweights=None,onlyCentral=False,savecr=True,option="histo",namemap=None,category=None,year=None,year_sf=None,plot=False,syst_sf=False,syst=None,tag=None,pathout=None,portname="",verbose=False): 
         #Subtract
         if (namemap is None):
             namemap= self.__namemap
@@ -758,10 +855,10 @@ class data_driven(single_process):
 #        for sl in samplelist:
 #            hs_proj_ss[sl] = self.transfer_factor(regions,sl,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
         if(verbose):print "pathout is ",pathout, " mp is ",mp
-        if (year_sf is None): hs_proj_multiprocess = self.transfer_factor(regions,mp,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
+        if (year_sf is None): hs_proj_multiprocess = self.transfer_factor(regions,mp,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,mapFitOption=tfMapFitOption,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
         if not (year_sf is None):
             if(verbose):print " =========> tf what year it is ?", year_sf, " mpalternate is ",mpalternate
-            hs_proj_multiprocess = self.transfer_factor(regions,mpalternate,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,year=year_sf,category=category,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
+            hs_proj_multiprocess = self.transfer_factor(regions,mpalternate,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,mapFitOption=tfMapFitOption,year=year_sf,category=category,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
         
         self.set_syst(syst)
         if(verbose):print "before regions syst is" ,self.__syst
@@ -771,6 +868,14 @@ class data_driven(single_process):
             h_data_cr=self.getHisto(region=cr,sample="Data")
             if(verbose):print "before fit syst is" ,self.__syst
             h_data_cr_fit=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=data_fitrange)[0]
+            print "hdatsr integral ",  h_data_sr.Integral()
+            print "hdatcr integral ",  h_data_cr.Integral()
+            print "hdatacrfit integral ",  h_data_cr_fit.Integral()
+            opop="SI"
+            h_data_cr_fit_alt1=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=alt1_fitrange,fitoption=opop)[0]
+            h_data_cr_fit_alt2=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=alt2_fitrange,fitoption=opop)[0]
+            h_data_cr_fit_up=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=data_fitrange)[1]
+            h_data_cr_fit_down=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=data_fitrange)[2]
 #            h_data_cr_fit=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only")[0]
             if(verbose):print "after fit syst is" ,self.__syst
 
@@ -813,6 +918,10 @@ class data_driven(single_process):
             #h_dd_cr_fit=fittedHisto(h_dd_cr,ddMapFitFunction[cr],doRemove=False,npars=-1,behavior="shape_only")[0]
             #h_dd_cr_fit.SetName("DDFit"+"".join(samplelist)+"_"+cr+"_"+category)
             h_dd_cr_fit=h_data_cr_fit.Clone("DDFit"+"".join(samplelist)+"_"+cr+"_"+category)
+            h_dd_cr_fit_alt1=h_data_cr_fit_alt1.Clone("DDFitAlt1"+"".join(samplelist)+"_"+cr+"_"+category)
+            h_dd_cr_fit_alt2=h_data_cr_fit_alt2.Clone("DDFitAlt2"+"".join(samplelist)+"_"+cr+"_"+category)
+            h_dd_cr_fit_up = h_data_cr_fit_up.Clone("DDFitUp"+"".join(samplelist)+"_"+cr+"_"+category)
+            h_dd_cr_fit_down = h_data_cr_fit_down.Clone("DDFitDown"+"".join(samplelist)+"_"+cr+"_"+category)
             if(verbose):print "data integral before selection in sr is ",h_dd_sr.Integral(), " and in cr", h_dd_cr.Integral()
             samples = self.__samples
             if(verbose):print "samples are",samples
@@ -827,18 +936,21 @@ class data_driven(single_process):
                     
                     if(verbose):print "hsr integral",hsr.Integral()
                     h_dd_sr.Add(hsr,-1)
-                    if(verbose):print "data integral sr is ",h_dd_sr.Integral()
+                    #                    if(verbose):
+                    print "data integral sr is ",h_dd_sr.Integral()
                     self.writeHistoToFile(histo=hsr,pathout=pathout,region=sr,sample=s+portname,syst=syst,tag=tag)
 
                     if not savecr:
                         self.set_syst(None)
                     hcr= self.getHisto(region=cr,sample=s,verbose=False,nominaltag=True)
 
-                    if(verbose):print "hcr integral",hcr.Integral()
+                    #                    if(verbose):
+                    print "hcr integral",hcr.Integral()
                     h_dd_cr.Add(hcr,-1)
                     h_dd_cr_fit.Add(hcr,-1)
                     
-                    if(verbose):print "data integral cr is ",h_dd_cr.Integral()
+                    #                    if(verbose):
+                    print "data integral cr is ",h_dd_cr.Integral()
                     
                     self.writeHistoToFile(histo=hcr,pathout=pathout,region=cr,sample=s+portname,syst=syst,tag=tag)
                     self.set_syst(syst)
@@ -867,6 +979,8 @@ class data_driven(single_process):
             h_dd_cr.Write()
             h_dd_cr_fit.Write()
             h_data_cr_fit.Write("DDFitPreMult"+"".join(samplelist)+"_"+cr+"_"+category)
+            h_data_cr_fit_up.Write("DDFitPreMult"+"".join(samplelist)+"_"+cr+"up_"+category)
+            h_data_cr_fit_down.Write("DDFitPreMult"+"".join(samplelist)+"_"+cr+"down_"+category)
             if(verbose):print "ischanigng cr 1",h_dd_cr.Integral()
             if(plot):
                 h_dd_cr_fit.Draw()
@@ -876,12 +990,11 @@ class data_driven(single_process):
 
             if(verbose):print "ischanigng cr 2",h_dd_cr.Integral()
             for sc,hp in histoproj[sr].iteritems():
-                if(verbose):
-                    # if(True):
-                    if(verbose):
-                        print " checking sc hp"
-                        print "  sc ",sc," \n\n"
-                        print " hp ",hp," integral ",hp.Integral()," bin1 ",hp.GetBinContent(1)," bin4 ",hp.GetBinContent(4)
+                if(True):
+                    #if(verbose):
+                    print " checking sc hp"
+                    print "  sc ",sc," \n\n"
+                    print " hp ",hp," integral ",hp.Integral()," bin1 ",hp.GetBinContent(1)," bin4 ",hp.GetBinContent(4)
                     
                 h_dd_sr_proj=copy.deepcopy(hp)#.Clone(str(hp.GetName()+"mult"))
                
@@ -894,16 +1007,63 @@ class data_driven(single_process):
                 h_dd_sr_proj.Write()
 
                 h_dd_fit_sr_proj=copy.deepcopy(hp)#.Clone(str(hp.GetName()+"mult"))
-              
+                
                 h_dd_fit_sr_proj.SetName(str(hp.GetName()+"mult_dd_ddfit"))
                 h_dd_fit_sr_proj.Reset("ICES")
                 h_dd_fit_sr_proj.Add(hp)
 #                h_dd_fit_sr_proj.SetDirectory(0)
                 h_dd_fit_sr_proj.Write(str(hp.GetName()+"pre_mult_ddfit"))
+                print "central fit integral ", h_dd_cr_fit.Integral(), " tf integral ", h_dd_fit_sr_proj.Integral()
                 h_dd_fit_sr_proj.Multiply(h_dd_cr_fit)
+                print "after central fit integral ", h_dd_cr_fit.Integral(), " tf integral ", h_dd_fit_sr_proj.Integral()
                 h_dd_fit_sr_proj.Write()
+                
+                h_dd_fit_sr_proj_up = copy.deepcopy(hp)#Writing syst up for TF fit
+                h_dd_fit_sr_proj_up.SetName(str(hp.GetName()+"mult_dd_ddfitUp"))
+                h_dd_fit_sr_proj_up.Reset("ICES")
+                h_dd_fit_sr_proj_up.Add(hp)
+                h_dd_fit_sr_proj_up.Write(str(hp.GetName()+"pre_mult_ddfitUp"))
+                print "up fit integral ", h_dd_cr_fit_up.Integral(), " tf integral ", h_dd_fit_sr_proj_up.Integral()
+                h_dd_fit_sr_proj_up.Multiply(h_dd_cr_fit_up)
+                print "after up fit integral ", h_dd_cr_fit_up.Integral(), " tf integral ", h_dd_fit_sr_proj_up.Integral()
+                h_dd_fit_sr_proj_up.Write()
+
+                h_dd_fit_sr_proj_down = copy.deepcopy(hp)#Writing syst down for TF fit
+                h_dd_fit_sr_proj_down.SetName(str(hp.GetName()+"mult_dd_ddfitDown"))
+                h_dd_fit_sr_proj_down.Reset("ICES")
+                h_dd_fit_sr_proj_down.Add(hp)
+                h_dd_fit_sr_proj_down.Write(str(hp.GetName()+"pre_mult_ddfitDown"))
+                print "down fit integral ", h_dd_cr_fit_down.Integral(), " tf integral ", h_dd_fit_sr_proj_down.Integral()
+                h_dd_fit_sr_proj_down.Multiply(h_dd_cr_fit_down)
+                print "after down fit integral ", h_dd_cr_fit_down.Integral(), " tf integral ", h_dd_fit_sr_proj_down.Integral()
+                h_dd_fit_sr_proj_down.Write()
+
+                h_dd_fit_sr_proj_alt1=copy.deepcopy(hp)#.Clone(str(hp.GetName()+"mult"))
+                h_dd_fit_sr_proj_alt1.SetName(str(hp.GetName()+"mult_dd_ddfitAlt1"))
+                h_dd_fit_sr_proj_alt1.Reset("ICES")
+                h_dd_fit_sr_proj_alt1.Add(hp)
+                h_dd_fit_sr_proj_alt1.Write(str(hp.GetName()+"pre_mult_ddfitAlt1"))
+                print "alt1 fit integral ", h_dd_cr_fit_alt1.Integral(), " tf integral ", h_dd_fit_sr_proj_alt1.Integral()
+                h_dd_fit_sr_proj_alt1.Multiply(h_dd_cr_fit_alt1)
+                print "after alt1 fit integral ", h_dd_cr_fit_alt1.Integral(), " tf integral ", h_dd_fit_sr_proj_alt1.Integral()
+                h_dd_fit_sr_proj_alt1.Write()
+
+                h_dd_fit_sr_proj_alt2=copy.deepcopy(hp)#.Clone(str(hp.GetName()+"mult"))
+                h_dd_fit_sr_proj_alt2.SetName(str(hp.GetName()+"mult_dd_ddfitAlt2"))
+                h_dd_fit_sr_proj_alt2.Reset("ICES")
+                h_dd_fit_sr_proj_alt2.Add(hp)
+                h_dd_fit_sr_proj_alt2.Write(str(hp.GetName()+"pre_mult_ddfitAlt2"))
+                print "alt2 fit integral ", h_dd_cr_fit_alt2.Integral(), " tf integral ", h_dd_fit_sr_proj_alt2.Integral()
+                h_dd_fit_sr_proj_alt2.Multiply(h_dd_cr_fit_alt2)
+                print "after alt2 fit integral ", h_dd_cr_fit_alt2.Integral(), " tf integral ", h_dd_fit_sr_proj_alt2.Integral()
+                h_dd_fit_sr_proj_alt2.Write()
+
+
+
                 histo_res[sc]=h_dd_sr_proj
-                histo_res_fit[sc]=h_dd_fit_sr_proj
+                histo_res_fit[sc]=h_dd_fit_sr_proj, h_dd_fit_sr_proj_up, h_dd_fit_sr_proj_down
+                histo_res_fit["alt1"]=h_dd_fit_sr_proj_alt1
+                histo_res_fit["alt2"]=h_dd_fit_sr_proj_alt2
                 if(verbose): 
                     print " hp ",h_dd_sr_proj," integral ",h_dd_sr_proj.Integral()," bin1 ",h_dd_sr_proj.GetBinContent(1)," bin4 ",h_dd_sr_proj.GetBinContent(4)
                 if(plot):
@@ -979,13 +1139,24 @@ class data_driven(single_process):
                 h_cr.Draw("same hist")
                 c.SaveAs(str(plotpath+"DDvsMC"+"".join(samplelist)+"_"+cr+"_"+year+"_"+category+".png"))
             if(verbose): print "ischanigng cr 3",h_dd_cr.Integral()
-            #filename put it herer
+            #filename put it here
             self.writeHistoToFile(histo=h_data_sr,pathout=pathout,region=sr,sample="Data"+portname,syst=syst,tag=tag)
             self.writeHistoToFile(histo=h_data_cr,pathout=pathout,region=cr,sample="Data"+portname,syst=syst,tag=tag) 
             self.writeHistoToFile(histo=h_dd_cr,pathout=pathout,region=cr,sample="DD_counting"+"".join(samplelist),syst=syst,tag=tag)
             self.writeHistoToFile(histo=h_dd_sr,pathout=pathout,region=sr,sample="DD_counting"+"".join(samplelist),syst=syst,tag=tag)
             self.writeHistoToFile(histo=histo_res[0],pathout=pathout,region=sr,sample="DD"+"".join(samplelist),syst=syst,tag=tag)
-            self.writeHistoToFile(histo=histo_res_fit[0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag=tag)
+            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag=tag)
+            #            self.writeHistoToFile(histo=histo_res_fit[0][1],pathout=pathout,region=sr,sample="DDFitUp"+"".join(samplelist),syst=syst,tag=tag)
+            #            self.writeHistoToFile(histo=histo_res_fit[0][2],pathout=pathout,region=sr,sample="DDFitDown"+"".join(samplelist),syst=syst,tag=tag)
+           
+            if(not onlyCentral):
+                self.writeHistoToFile(histo=histo_res_fit[0][1],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit[0][2],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+year+"Down")
+                self.writeHistoToFile(histo=histo_res_fit[1][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit[2][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+year+"Down")
+                self.writeHistoToFile(histo=histo_res_fit["alt1"],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit["alt2"],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+year+"Down")
+
             #if not (pathout is None):
             srregions=regions
         if(verbose):   print "syst sf is ", savecr, " regions bef",srregions
@@ -1067,13 +1238,28 @@ allsamples.extend(["TT_Mtt","WJets","QCD","ST","Data"])
 
 print signalsamples
 
-testnominal=True
-copysignals=True
-altwjetstt=True
-systs=["jesDown","jesUp","jerUp","jerDown","PFUp","PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown", "q2Up", "q2Down"]
-doTFPlots=True
-#systs=["PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown"]
 
+systs=[]
+testnominal=False
+altwjetstt=False
+doTFPlots=False
+copysignals=False
+
+runall= "A" in runoptions
+copysignals=True
+if("N" in runoptions or runall):
+    testnominal=True
+if("B" in runoptions or runall):
+    altwjetstt=True
+if("S" in runoptions or runall):
+    #systs=["jesDown","jesUp","jerUp","jerDown","PFUp","PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown"]#, "q2Up", "q2Down"]
+    print "running syst  ",systs
+    systs=["jes2016Down","jes2016Up","jer2016Up","jer2016Down","PF2016Up","PF2016Down","pu2016Up","pu2016Down","btag2016Up","btag2016Down","mistag2016Up","mistag2016Down", "lep2016Up", "lep2016Down", "trig2016Up", "trig2016Down", "pdf_total2016Up", "pdf_total2016Down", "jes2017Down","jes2017Up","jer2017Up","jer2017Down","PF2017Up","PF2017Down","pu2017Up","pu2017Down","btag2017Up","btag2017Down","mistag2017Up","mistag2017Down", "lep2017Up", "lep2017Down", "trig2017Up", "trig2017Down", "pdf_total2017Up", "pdf_total2017Down" ,"jes2018Down","jes2018Up","jer2018Up","jer2018Down","PF2018Up","PF2018Down","pu2018Up","pu2018Down","btag2018Up","btag2018Down","mistag2018Up","mistag2018Down", "lep2018Up", "lep2018Down", "trig2018Up", "trig2018Down", "pdf_total2018Up", "pdf_total2018Down"]
+    print "running syst  ",systs
+
+if("T" in runoptions):
+    doTFPlots=True
+#systs=["PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown"]
 
 
 resetMF = opt.resetMF
@@ -1086,12 +1272,14 @@ for sy in systs:
     print "skiptmpt is ",skiptmp
     skipall=skipall or skiptmp
 
-realskip=skipall
+realsikp=skipall
+
+if "D" in runoptions: 
+    skipall=True
 
 if plotonly:
     skipall=True
-
-#skipall=True
+    
 if(skipall):
     systs=[]
     testnominal=False
@@ -1099,9 +1287,12 @@ if(skipall):
     doTFPlots=False
     copysignals=False
 
+
 mapTFFunctions= expo2_fit_map
+mapTFOptions=expo2_fit_map_option
 if opt.category=="electron" :
-    mapTFFunctions= expo2_fit_map
+    mapTFFunctions= expo2ele_fit_map
+    mapTFOptions=expo2ele_fit_map_option
 #    mapTFFunctions= expo2ele_fit_map
 
 year_sf=None
@@ -1110,25 +1301,45 @@ if opt.year_sf!="None":
 
 if plotonly:
     testnominal=True
+#testnominal=True
 
 if testnominal:
     dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None) #this takes CR as from nominal always
     
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=True,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=plotonly)
-#    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=True,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=True)
-#    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=True,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=plotonly)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False)
+    resetParameters()
+#    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=False)
+#    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=True,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=True)
+#    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=True,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=False)
 #    dd.transfer_factor(wjets_veto_map,namemap=namemap,mapFitFunction=mapTFFunctions,onlyCentral=True,tag=None,sample=["WJets","TT_Mtt"],plot=True,verbose=False)
 #        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="WJetsUp") #this takes CR as from nominal always
 
 
 if(altwjetstt):
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_wup,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],tag="WJetsUp",plot=False)
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_wdown,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],tag="WJetsDown",plot=False)
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttup,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttUp",plot=False)
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttdown,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttDown",plot=False)
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stup,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],tag="STUp",plot=False)
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stdown,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],tag="STDown",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_wup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="WJetsUp",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_wup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="WJetsUp",plot=False)
+    resetParameters()
 
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_wdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="WJetsDown",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_wdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="WJetsDown",plot=False)
+    resetParameters()
+
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttUp",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttUp",plot=False)
+    resetParameters()
+
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttDown",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttDown",plot=False)
+    resetParameters()
+
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="STUp",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="STUp",plot=False)
+    resetParameters()
+
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="STDown",plot=False)
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="STDown",plot=False)
+    resetParameters()
 
     if copysignals:
         dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="WJetsUp") #this takes CR as from nominal always
@@ -1139,7 +1350,10 @@ if(altwjetstt):
 
 
 for s in systs:
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=True,tfMapFitFunction=mapTFFunctions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=True,tag=None)#this should take the pathout default, which is the v14_rebin folder
+    print "running syst  ",s
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=True,tag=None)#this should take the pathout default, which is the v14_rebin folder
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=True,tag=None)#this should take the pathout default, which is the v14_rebin folder
+    resetParameters()
     if(copysignals):
         dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst=s,syst_sf=True,savecr=True) #this takes CR as from nominal always
 

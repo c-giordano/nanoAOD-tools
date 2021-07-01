@@ -7,45 +7,112 @@ import sympy
 def getIntegral(function, bmin, bmax):
     return function.Integral(bmin,bmax)/(bmax-bmin)
 
-def totalError(func, npars, pars, sigmas, cov_matrix, bmin, bmax):
+def totalError(func, npars, pars, sigmas, cov_matrix, bmin, bmax , status=0):
     errorup = 0.
     errordown = 0.
     for i in range(npars):
         for j in range(npars):
-            if i<= j:
-                print 'cov matrix element ', i, j, cov_matrix[i][j]
-                print 'pars' ,  pars[i], 'sigmas ', sigmas[i]
-                print 'pars' ,  pars[j], 'sigmas ', sigmas[j]
-                print 'func param ', i, func.GetParameter(i)
-                print 'func param ', j, func.GetParameter(j)
+            if True:
+#            if i<= j:
+                #print 'cov matrix element ', i, j, cov_matrix[i][j]
+                #print 'pars' ,  pars[i], 'sigmas ', sigmas[i]
+                #print 'pars' ,  pars[j], 'sigmas ', sigmas[j]
+                #print 'func param ', i, func.GetParameter(i)
+                #print 'func param ', j, func.GetParameter(j)
                 nominal = getIntegral(func, bmin, bmax)
-                print 'nominal ' , nominal
+                #print 'nominal ' , nominal
+
                 func.SetParameter(i, pars[i] + sigmas[i])
                 iup = getIntegral(func, bmin, bmax)
                 func.SetParameter(i, pars[i])
-                print 'iup ', iup
+                #print 'iup ', iup
+
                 func.SetParameter(j, pars[j] + sigmas[j])
                 jup = getIntegral(func, bmin, bmax)
                 func.SetParameter(j, pars[j])
-                print 'jup ', jup
-                print 'func param ', i, func.GetParameter(i)
-                print 'func param ', j, func.GetParameter(j)
+                #print 'jup ', jup
+                #print 'func param ', i, func.GetParameter(i)
+                #print 'func param ', j, func.GetParameter(j)
+                #print 'contrib up', (iup - nominal)/sigmas[i]*(jup - nominal)/sigmas[j]*cov_matrix[i][j]
                 errorup += (iup - nominal)/sigmas[i]*(jup - nominal)/sigmas[j]*cov_matrix[i][j]
                 func.SetParameter(i, pars[i])
-                print 'error up ', errorup
+                #print 'error up ', errorup
                 func.SetParameter(i, pars[i] - sigmas[i])
+                idowncent = func.Eval((bmax+bmin)/2)
                 idown = getIntegral(func, bmin, bmax)
                 func.SetParameter(i, pars[i])
-                print 'idown ', idown
+                #print 'idown ', idown
+                icent = func.Eval((bmax+bmin)/2)
+                #print 'icent ',icent,' idowncent ',idowncent, ' diff ',icent-idowncent
+                
                 func.SetParameter(j, pars[j] - sigmas[j])
                 jdown = getIntegral(func, bmin, bmax)
                 func.SetParameter(j, pars[j])
-                print 'jdown ', jdown
-                print 'func param ', i, func.GetParameter(i)
-                print 'func param ', j, func.GetParameter(j)
+                #print 'jdown ', jdown
+
+                #print 'func param ', i, func.GetParameter(i)
+                #print 'func param ', j, func.GetParameter(j)
+                #print 'contrib down', (nominal - idown)/sigmas[i]*(nominal - jdown)/sigmas[j]*cov_matrix[i][j]
                 errordown += (nominal - idown)/sigmas[i]*(nominal - jdown)/sigmas[j]*cov_matrix[i][j]
-                print 'error down ', errordown
-    return math.sqrt(errorup), math.sqrt(errordown)
+                #print 'error down ', errordown
+    errup= math.sqrt(errorup)
+    errdown= math.sqrt(errordown)
+    #sanity check: 
+    return errup,errdown
+
+def totalErrorCorr(func, npars, pars, sigmas, corr_matrix, bmin, bmax , status=0):
+    errorup = 0.
+    errordown = 0.
+    for i in range(npars):
+        for j in range(npars):
+            if True:
+#            if i<= j:
+                #print 'corr matrix element ', i, j, corr_matrix[i][j]
+                #print 'pars' ,  pars[i], 'sigmas ', sigmas[i]
+                #print 'pars' ,  pars[j], 'sigmas ', sigmas[j]
+                #print 'func param ', i, func.GetParameter(i)
+                #print 'func param ', j, func.GetParameter(j)
+                nominal = getIntegral(func, bmin, bmax)
+                #print 'nominal ' , nominal
+
+                func.SetParameter(i, pars[i] + sigmas[i])
+                iup = getIntegral(func, bmin, bmax)
+                func.SetParameter(i, pars[i])
+                #print 'iup ', iup
+
+                func.SetParameter(j, pars[j] + sigmas[j])
+                jup = getIntegral(func, bmin, bmax)
+                func.SetParameter(j, pars[j])
+                #print 'jup ', jup
+                #print 'func param ', i, func.GetParameter(i)
+                #print 'func param ', j, func.GetParameter(j)
+                #print 'contrib up', (iup - nominal)*(jup - nominal)*corr_matrix[i][j]
+                errorup += (iup - nominal)*(jup - nominal)*corr_matrix[i][j]
+                errorup += (iup - nominal)*(jup - nominal)*corr_matrix[i][j]
+                func.SetParameter(i, pars[i])
+                #print 'error up ', errorup
+                func.SetParameter(i, pars[i] - sigmas[i])
+                idowncent = func.Eval((bmax+bmin)/2)
+                idown = getIntegral(func, bmin, bmax)
+                func.SetParameter(i, pars[i])
+                #print 'idown ', idown
+                icent = func.Eval((bmax+bmin)/2)
+                #print 'icent ',icent,' idowncent ',idowncent, ' diff ',icent-idowncent
+                
+                func.SetParameter(j, pars[j] - sigmas[j])
+                jdown = getIntegral(func, bmin, bmax)
+                func.SetParameter(j, pars[j])
+                #print 'jdown ', jdown
+
+                #print 'func param ', i, func.GetParameter(i)
+                #print 'func param ', j, func.GetParameter(j)
+                #print 'contrib down', (nominal - idown)*(nominal - jdown)*corr_matrix[i][j]
+                errordown += (nominal - idown)*(nominal - jdown)*corr_matrix[i][j]
+                #print 'error down ', errordown
+    errup= math.sqrt(errorup)
+    errdown= math.sqrt(errordown)
+    #sanity check: 
+    return errup,errdown
 
 def resizeHisto(histo,varbins,normalizeToBinWidth=True,addUnderflow=False,addOverflow=True,verbose=False):
     nbins=histo.GetNbinsX()
@@ -122,13 +189,19 @@ def resizeHisto(histo,varbins,normalizeToBinWidth=True,addUnderflow=False,addOve
     return h_ret,maxs,mins,bincontent,binerrors    
 
 
-def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doRemove=True,verbose=True,fitrange=None):
+def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doRemove=True,verbose=True,fitrange=None,fitoption="SI"):
     if fitrange is None: 
-        fitresults=histo.Fit(function,"SI")
+        fitresults=histo.Fit(function,fitoption)
+#        if (fitoption !="SI" and fitresults.CovMatrixStatus()!=0):
+# u           Fitresults (9)=histo.Fit(function,"SI")
     else:
-        fitresults=histo.Fit(function,"SI","",fitrange[0],fitrange[1])
+        fitresults=histo.Fit(function,fitoption,"",fitrange[0],fitrange[1])
+#        if (fitoption !="SI" and fitresults.CovMatrixStatus()!=0):
+#            fitresults=histo.Fit(function,"SI","",fitrange[0],fitrange[1])
+
     covmatrix=fitresults.GetCovarianceMatrix()
     corrmatrix=fitresults.GetCorrelationMatrix()
+    status=fitresults.CovMatrixStatus()
     if(verbose):
         print fitresults
         print corrmatrix
@@ -142,6 +215,22 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
         if(verbose):print "parameter ", p, " value ",fitresults.Value(p), " error ",  fitresults.Error(p)
         pars.append(fitresults.Value(p))
         variations.append(fitresults.Error(p))
+
+    print " status is ", status, " corrmatrix"
+    print corrmatrix
+    corrmatrix_str = "corrmatrix str \n"
+    covmatrix_str=" covmatrix str \n"
+    #for i in range(npars):
+    #    for j in range(npars):
+    #        print " i, j  ", i,j
+    #        covmatrix_str= covmatrix_str + ' ' + str(covmatrix[i][j])
+    #        corrmatrix_str= corrmatrix_str+ ' ' + str(corrmatrix[i][j])
+    #    corrmatrix_str = corrmatrix_str+"\n"
+    #    covmatrix_str = covmatrix_str+"\n"#
+#
+#    print covmatrix_str
+ #   print corrmatrix_str
+
     if(doRemove):
         if(verbose):
             print histo.GetListOfFunctions().ls()
@@ -186,7 +275,8 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
         isOutOfBounds=False
         if not (fitrange is None):
             isOutOfBounds=(maxb<=fitrange[0] ) or ( minb>=fitrange[1] )   
-        content_x_up, content_x_down = totalError(function, npars, pars, variations, covmatrix, minb, maxb)
+        content_x_up, content_x_down = totalError(function, npars, pars, variations, covmatrix, minb, maxb,status=status)
+#        content_x_up_v2, content_x_down_v2 = totalErrorCorr(function, npars, pars, variations, corrmatrix, minb, maxb,status=status)
         print '********************************************************************************************************************'
         if(verbose): print "bin ",b," min , max ",minb," , ",maxb," orig ",histo.GetBinContent(b)," fit up ", content_x_up , " nominal, ", content_x, " fit down ",content_x_down
         h_ret_down.SetBinContent(b,content_x - content_x_down)
@@ -194,6 +284,14 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
         print 'h_ret_down bin content ', h_ret_down.GetBinContent(b), 'h_ret_up bin content ', h_ret_up.GetBinContent(b)
         print '********************************************************************************************************************'
 
+    if(status!=0 and hs_ret[0].Integral()!=0):
+        print "careful cov matrix not correctly evaluated! Rescaling to have shape parameters. status is ",status
+#        h_ret_up=(hs_ret[0]).Clone(h_ret_up.GetName())#
+#        h_ret_down=(hs_ret[0]).Clone(h_ret_down.GetName())
+#        h_ret_up.Scale(hs_ret[0].Integral()/h_ret_up.Integral())
+#        h_ret_down.Scale(hs_ret[0].Integral()/h_ret_down.Integral())
+        #h_ret_up.Scale(hs_ret[0].Integral()/h_ret_up.Integral())
+        #h_ret_down.Scale(hs_ret[0].Integral()/h_ret_down.Integral())
     hs_ret[1]=h_ret_up
     hs_ret[2]=h_ret_down
     return hs_ret

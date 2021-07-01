@@ -115,15 +115,15 @@ class lepSFProducer(Module):
             self.out.fillBranch("Electron_trigSF", sf_el)
             self.out.fillBranch("Muon_trigSF_Up", [errsf + sf for errsf, sf in zip(sferr_mu, sf_mu)])
             self.out.fillBranch("Electron_trigSF_Up", [errsf + sf for errsf, sf in zip(sferr_el, sf_el)])
-            self.out.fillBranch("Muon_trigSF_Down", [errsf - sf for errsf, sf in zip(sferr_mu, sf_mu)])
-            self.out.fillBranch("Electron_trigSF_Down", [errsf - sf for errsf, sf in zip(sferr_el, sf_el)])
+            self.out.fillBranch("Muon_trigSF_Down", [sf - errsf for errsf, sf in zip(sferr_mu, sf_mu)])
+            self.out.fillBranch("Electron_trigSF_Down", [sf - errsf for errsf, sf in zip(sferr_el, sf_el)])
         else:
             self.out.fillBranch("Muon_effSF", sf_mu)
             self.out.fillBranch("Electron_effSF", sf_el)
             self.out.fillBranch("Muon_effSF_Up", [errsf + sf for errsf, sf in zip(sferr_mu, sf_mu)])
             self.out.fillBranch("Electron_effSF_Up", [errsf + sf for errsf, sf in zip(sferr_el, sf_el)])
-            self.out.fillBranch("Muon_effSF_Down", [errsf - sf for errsf, sf in zip(sferr_mu, sf_mu)])
-            self.out.fillBranch("Electron_effSF_Down", [errsf - sf for errsf, sf in zip(sferr_el, sf_el)])
+            self.out.fillBranch("Muon_effSF_Down", [sf - errsf for errsf, sf in zip(sferr_mu, sf_mu)])
+            self.out.fillBranch("Electron_effSF_Down", [sf - errsf for errsf, sf in zip(sferr_el, sf_el)])
         return True
 # define modules using the syntax 'name = lambda : constructor' to avoid having them loaded when not needed
 

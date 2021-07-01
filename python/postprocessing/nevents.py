@@ -18,8 +18,8 @@ gStyle.SetOptStat(0)
 gROOT.SetBatch()        # don't pop up canvases
 
 leptons = {
-     "muon":["h_jets_lepton_pt_selection"],
-     "electron":["h_jets_lepton_pt_selection"]
+     "electron":["h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60", "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60","h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60","h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60", "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60", "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60","h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60","h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60"],
+#     "electron":["h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60", "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60","h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60","h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60"],
 }
 
 integrals = []
@@ -27,7 +27,8 @@ errors = []
 
 samples = {
 #     'DataMu_2016':'DataMuon', 'DataEle_2016':'DataElectron', 'DataHT_2016':'DataHT', 'ST_2016':'Single top', 'QCD_2016':'QCD', 'TT_Mtt_2016':'\\ttbar', 'WJets_2016':'\\wjets', 'WP_M2000W20_RH_2016':'\\PWpr 2\\tev(1\%)', 'WP_M3000W30_RH_2016':'\\PWpr 3\\tev(1\%)', 'WP_M4000W40_RH_2016':'\\PWpr 4\\tev(1\%)', 'WP_M4000W400_RH_2016':'\\PWpr 4\\tev(10\%)'
-     'DataMu_2017':'DataMuon', 'DataEle_2017':'DataElectron', 'DataHT_2017':'DataHT', 'ST_2017':'Single top', 'QCD_2017':'QCD', 'TT_Mtt_2017':'\\ttbar', 'WJets_2017':'\\wjets', 'WP_M2000W20_RH_2017':'\\PWpr 2\\tev(1\%)', 'WP_M3000W30_RH_2017':'\\PWpr 3\\tev(1\%)', 'WP_M4000W40_RH_2017':'\\PWpr 4\\tev(1\%)', 'WP_M4000W400_RH_2017':'\\PWpr 4\\tev(10\%)'
+     'Data_2017':'Data', 'ST_2017':'Single top', 'QCD_2017':'QCD', 'TT_Mtt_2017':'\\ttbar', 'WJets_2017':'\\wjets',# 'WP_M2000W20_RH_2017':'\\PWpr 2\\tev(1\%)', 'WP_M3000W30_RH_2017':'\\PWpr 3\\tev(1\%)', 'WP_M4000W40_RH_2017':'\\PWpr 4\\tev(1\%)',  'WP_M5000W50_RH_2017':'\\PWpr 5\\tev(1\%)', 'WP_M6000W60_RH_2017':'\\PWpr 6\\tev(1\%)',# 'WP_M4000W400_RH_2017':'\\PWpr 4\\tev(10\%)',
+#     'Data_2018':'DataMuon', 'ST_2018':'Single top', 'QCD_2018':'QCD', 'TT_Mtt_2018':'\\ttbar', 'WJets_2018':'\\wjets', 'WP_M2000W20_RH_2018':'\\PWpr 2\\tev(1\%)', 'WP_M3000W30_RH_2018':'\\PWpr 3\\tev(1\%)', 'WP_M4000W40_RH_2018':'\\PWpr 4\\tev(1\%)', 'WP_M4000W400_RH_2018':'\\PWpr 4\\tev(10\%)'
      }
 
 def getSumError(_list):
@@ -50,18 +51,26 @@ e = 0
 for lep in leptons.keys():
      p = ""
      for hist in leptons[lep]:
-          if lep == "muon" and hist == "h_2j1t_BDT_ST_vs_All_mtw_G_50": 
-               region = "muon_2j1t"
-          elif lep == "muon" and hist == "h_3j1t_BDT_STsd_vs_All_sr_3j1t_mtw_G_50_AND_etajprime_G_2p5": 
-               region = "muon_3j1t_forward"
-          elif lep == "muon" and hist == "h_3j2t_BDT_ST_vs_TT_3j2t":
-               region = "muon_3j2t"
-          elif lep == "electron" and hist == "h_2j1t_BDT_ST_vs_All_mtw_G_50": 
-               region = "electron_2j1t"
-          elif lep == "electron" and hist == "h_3j1t_BDT_STsd_vs_All_sr_3j1t_mtw_G_50_AND_etajprime_G_2p5": 
-               region = "electron_3j1t_forward"
-          elif lep == "electron" and hist == "h_3j2t_BDT_ST_vs_TT_3j2t":
-               region = "electron_3j2t"
+          if lep == "muon":
+               region = 'muon_'
+          else:
+               region = 'electron_'
+          if hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60": 
+               region += "SRT"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60":
+               region += "SRW"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60":
+               region += "SR2B"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60":
+               region += "CR0B"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60": 
+               region += "SRT_I"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60":
+               region += "SRW_I"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60":
+               region += "SR2B_I"
+          elif hist == "h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60":
+               region += "CR0B_I"
           if(signif):
                infile = TFile.Open(pathin+"/Data_"+lep+".root")
                tmp = (TH1F)(infile.Get(hist))
@@ -90,33 +99,33 @@ for lep in leptons.keys():
                #print e
           if(tex):
                print "**********************************************"
+               print "Region %s" %(region)
                print "\\begin{table}[]"
                print "\\begin{center}"
                print "\\caption{\label{tab:%s_%s} }" %(hist,lep)
-               print "\\begin{tabular}{l|c}"
-               print "Process  & Integral $\pm$  Uncertainty \\\\ " 
+               print "\\begin{tabular}{l|c c}"
+               print "Process  & Integral $\pm$  Uncertainty & Abundancy \\\\ " 
                print "\\hline"
                integrals = []
                errors = []
                integrals_data = []
                errors_data = []
+               snames = []
                for s, sname in samples.iteritems():
-                    if((lep == 'muon' and 'DataEle' in s) or (lep == 'electron' and 'DataMu' in s)):
-                         continue
                     error = Double(0)
                     infile = TFile.Open(pathin + "/" + lep + "/" + s + "_" + lep + ".root")
                     tmp = (TH1F)(infile.Get(hist))
                     if not 'Data' in s:
                          integrals.append(tmp.IntegralAndError(1,tmp.GetNbinsX()+1, error))
                          errors.append(error)
-                         if(tex):
-                              print "%-10s  & %-6i $\pm$  %-3i \\\\ " %(sname,integrals[-1],errors[-1])
+                         snames.append(sname)
                          tmp.Reset("ICES")
                     else:
                          integrals_data.append(tmp.IntegralAndError(1,tmp.GetNbinsX()+1, error))
                          errors_data.append(error)
-
-          if(tex):
+               for sname,integral,error in zip(snames, integrals, errors):
+                    if not 'Data' in sname:
+                         print "%-10s  & %-6i $\pm$  %-3i & %-3.2f \\\\ " %(sname, integral, error, integral/sum(integrals)*100)
                print "\\hline"
                print "Total MC  & %-6i $\pm$  %-3i \\\\ " %(sum(integrals),getSumError(errors))
                print "\\hline"
