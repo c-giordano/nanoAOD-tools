@@ -11,12 +11,11 @@ ROOT.gStyle.SetOptStat(0)
 fdir= "localhisto/test_new_nofitrange_v15/"
 fdir= "localhisto/new_v15/"
 fdir= "localhisto/new_tail_v16/"
-fdir= "localhisto/renewed_v17/"
+fdir= '/eos/user/a/adeiorio/Wprime/nosynch/v17/plot_merged/'
+fdir= '/eos/user/a/adeiorio/Wprime/nosynch/v17/plot_merged_explin_v3/'
 
-years=["2016"]
+years=["2020"]
 #years=["2016","2017","2018"]
-leptons=["muon","electron"]
-#years=["2017","2018",""]#
 leptons=["muon","electron"]
 postfix = ''
 filesc=collections.OrderedDict()
@@ -24,9 +23,9 @@ filesc=collections.OrderedDict()
 hsc={"DDFitWJetsTT_MttST":"DDFit","Data":"Data","WJetsTT_MttST":"MC","DDWJetsTT_MttST":"DDMC","tffile":"DDMC_MC"}
 
 #filesc={"DDFitWJetsTT_MttST":ROOT.kViolet,"WJetsTT_MttST":ROOT.kRed,"Data":ROOT.kBlack}
-#filesc["Data"]=ROOT.kBlack
+filesc["Data"]=ROOT.kBlack
 filesc["DDFitWJetsTT_MttST"]=ROOT.kViolet
-filesc["DDWJetsTT_MttST"]=ROOT.kRed
+#filesc["DDWJetsTT_MttST"]=ROOT.kRed
 #filesc["WJetsTT_MttST"]=ROOT.kRed
 #postfix="_DDvsData"
 #filesc["WJetsTT_MttST"]=ROOT.kRed
@@ -165,15 +164,15 @@ for y in years:
                 extra="_no_data"
             c1.SaveAs("comparisons_"+sr+"_"+y+"_"+l+extra+postfix+".png")
             c2.cd()
-            #histo_coll["Data"].SetTitle(";W' mass [GeV]; Events")
-            #ratio = ROOT.TRatioPlot(histo_coll["Data"], histo_coll["DDFitWJetsTT_MttST"])
-            histo_coll["DDWJetsTT_MttST"].SetTitle(";W' mass [GeV]; Events")
-            ratio = ROOT.TRatioPlot(histo_coll["DDWJetsTT_MttST"], histo_coll["DDFitWJetsTT_MttST"])
+            histo_coll["Data"].SetTitle(";W' mass [GeV]; Events")
+            ratio = ROOT.TRatioPlot(histo_coll["Data"], histo_coll["DDFitWJetsTT_MttST"])
+            #histo_coll["DDWJetsTT_MttST"].SetTitle(";W' mass [GeV]; Events")
+            #ratio = ROOT.TRatioPlot(histo_coll["DDWJetsTT_MttST"], histo_coll["DDFitWJetsTT_MttST"])
             c2.SetLogy()
             ratio.Draw()
             legratio.Draw()
             #ratio.GetLowerRefYaxis().SetRangeUser(0,8)
-            ratio.GetLowerRefGraph().SetMaximum(4)
+            #ratio.GetLowerRefGraph().SetMaximum(4)
             c2.SetLogy()
             c2.Update()
             c2.Print("comparisons_"+sr+"_"+y+"_"+l+extra+postfix+"_ratio.png")

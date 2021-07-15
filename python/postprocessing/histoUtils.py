@@ -20,21 +20,25 @@ def totalError(func, npars, pars, sigmas, cov_matrix, bmin, bmax , status=0):
                 #print 'func param ', i, func.GetParameter(i)
                 #print 'func param ', j, func.GetParameter(j)
                 nominal = getIntegral(func, bmin, bmax)
+                cent= func.Eval((bmax+bmin)/2)
                 #print 'nominal ' , nominal
 
                 func.SetParameter(i, pars[i] + sigmas[i])
                 iup = getIntegral(func, bmin, bmax)
+                iupcent = func.Eval((bmax+bmin)/2)
                 func.SetParameter(i, pars[i])
                 #print 'iup ', iup
 
                 func.SetParameter(j, pars[j] + sigmas[j])
                 jup = getIntegral(func, bmin, bmax)
+                jupcent = func.Eval((bmax+bmin)/2)
                 func.SetParameter(j, pars[j])
-                #print 'jup ', jup
                 #print 'func param ', i, func.GetParameter(i)
                 #print 'func param ', j, func.GetParameter(j)
+                #print 'sigmas i', sigmas[i]," j ", sigmas[j]," cov ", sigmas[i]*sigmas[j]*cov_matrix[i][j] 
                 #print 'contrib up', (iup - nominal)/sigmas[i]*(jup - nominal)/sigmas[j]*cov_matrix[i][j]
-                errorup += (iup - nominal)/sigmas[i]*(jup - nominal)/sigmas[j]*cov_matrix[i][j]
+                #               errorup += (iup - nominal)/sigmas[i]*(jup - nominal)/sigmas[j]*cov_matrix[i][j]
+                errorup += (iupcent - cent)/sigmas[i]*(jupcent - cent)/sigmas[j]*cov_matrix[i][j]
                 func.SetParameter(i, pars[i])
                 #print 'error up ', errorup
                 func.SetParameter(i, pars[i] - sigmas[i])
@@ -43,17 +47,22 @@ def totalError(func, npars, pars, sigmas, cov_matrix, bmin, bmax , status=0):
                 func.SetParameter(i, pars[i])
                 #print 'idown ', idown
                 icent = func.Eval((bmax+bmin)/2)
-                #print 'icent ',icent,' idowncent ',idowncent, ' diff ',icent-idowncent
+                #print 'icent ',icent,' upcent ',iupcent, ' diff ',icent-iupcent, " centrvalbin ",(bmin+bmax)/2
+                #print 'icent ',icent,' idowncent ',idowncent, ' diff ',icent-idowncent, " centrvalbin ",(bmin+bmax)/2
                 
                 func.SetParameter(j, pars[j] - sigmas[j])
                 jdown = getIntegral(func, bmin, bmax)
+                jdowncent = func.Eval((bmax+bmin)/2)
+
                 func.SetParameter(j, pars[j])
                 #print 'jdown ', jdown
 
                 #print 'func param ', i, func.GetParameter(i)
                 #print 'func param ', j, func.GetParameter(j)
                 #print 'contrib down', (nominal - idown)/sigmas[i]*(nominal - jdown)/sigmas[j]*cov_matrix[i][j]
-                errordown += (nominal - idown)/sigmas[i]*(nominal - jdown)/sigmas[j]*cov_matrix[i][j]
+                #print 'contrib down, center', (cent- idowncent)/sigmas[i]*(cent - jdowncent)/sigmas[j]*cov_matrix[i][j]
+#                errordown += (nominal - idown)/sigmas[i]*(nominal - jdown)/sigmas[j]*cov_matrix[i][j]
+                errordown += (cent - idowncent)/sigmas[i]*(cent - jdowncent)/sigmas[j]*cov_matrix[i][j]
                 #print 'error down ', errordown
     errup= math.sqrt(errorup)
     errdown= math.sqrt(errordown)
@@ -189,7 +198,7 @@ def resizeHisto(histo,varbins,normalizeToBinWidth=True,addUnderflow=False,addOve
     return h_ret,maxs,mins,bincontent,binerrors    
 
 
-def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doRemove=True,verbose=True,fitrange=None,fitoption="SI"):
+def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doRemove=True,verbose=True,fitrange=None,fitoption="SI",postfix=""):
     if fitrange is None: 
         fitresults=histo.Fit(function,fitoption)
 #        if (fitoption !="SI" and fitresults.CovMatrixStatus()!=0):
@@ -242,7 +251,7 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
         
     #h_ret=histo.Clone((str(histo.GetName()+"nominal")))
     h_ret=copy.deepcopy(histo)
-    h_ret.SetName((str(histo.GetName()+"nominal")))
+    h_ret.SetName((str(histo.GetName()+"nominal"+"postfix")))
     h_ret.Reset("ICES")
     for b in xrange(1,histo.GetNbinsX()+1):
         minb=histo.GetBinLowEdge(b)
@@ -262,9 +271,9 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
         return hs_ret
     if(verbose):print "zero integral ",h_ret.Integral()
     h_ret_up=copy.deepcopy(histo)
-    h_ret_up.SetName((str(histo.GetName()+"TFup")))
+    h_ret_up.SetName((str(histo.GetName()+"TFup"+"postfix")))
     h_ret_down=copy.deepcopy(histo)
-    h_ret_down.SetName((str(histo.GetName()+"TFdown")))
+    h_ret_down.SetName((str(histo.GetName()+"TFdown"+"postfix")))
     h_ret_up.Reset("ICES")
     h_ret_down.Reset("ICES")
     for b in xrange(1,histo.GetNbinsX()+1):
