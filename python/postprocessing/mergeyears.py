@@ -2,10 +2,10 @@ import os
 
 version = 'v17'
 pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot'
-pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_bis'
+pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_2017fix'
 
 systs_corr = ["jes", "jer", "btag", "mistag", "pdf_total", "q2", "pu", "PF", "lep", "trig"]
-systs_corr = ["PF", "lep", "trig"]
+#systs_corr = ["PF", "lep", "trig"]
 systs_uncorr = []
 #systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST", "TF", "DD"]
 samples = ["Data", "WJets", "TT_Mtt", "ST", "QCD", "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
@@ -13,16 +13,16 @@ samples = ["Data", "WJets", "TT_Mtt", "ST", "QCD", "WP_M2000W20_RH", "WP_M3000W3
 
 versus = ['Up', 'Down']
 leps = ['muon', 'electron']
-#leps = ['muon']
+leps = ['electron']
 years = ['2016', '2017', '2018']
 if os.path.exists(pathout):
-    #os.popen('rm -r '+ pathout + '/*')
+    os.popen('rm -r '+ pathout + '/*')
     print "ciao"
 else:
     os.makedirs(pathout)
 
 for lep in leps:
-    #os.makedirs(pathout + '/' + lep)
+    os.makedirs(pathout + '/' + lep)
     command = 'hadd -f ' + pathout + '/' + lep + '/Data_2020_' + lep + '.root '
     for year in years:
         command += pathin + '/' + lep + '/Data*_' + year + '_' + lep + '.root '

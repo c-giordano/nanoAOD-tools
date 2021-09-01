@@ -7,9 +7,9 @@ import sys
 import os
 import copy
 
-folder = 'v3trigger'
+folder = 'Trigger_v2'
 inputpath = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'
-plotpath = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/plot2D_EGMcheck_noHT/'
+plotpath = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/plot/'
 
 if not os.path.exists(plotpath):
     os.makedirs(plotpath)
@@ -31,8 +31,8 @@ def printh(filename, period, h, plotpath):
     c.Print(plotpath + c.GetName() + '.png')
     c.Print(plotpath + c.GetName() + '.pdf')
 
-inpfiles = {"muon_16":["DataMu_2016", "DataEle_2016", "DataPh_2016", "TT_dilep_2016"],
-            "electron_16":["DataMu_2016", "DataEle_2016", "DataPh_2016", "TT_dilep_2016"],
+inpfiles = {#"muon_16":["DataMu_2016", "DataEle_2016", "DataPh_2016", "TT_dilep_2016"],
+            #"electron_16":["DataMu_2016", "DataEle_2016", "DataPh_2016", "TT_dilep_2016"],
             "muon_17":["DataMu_2017", "DataEle_2017", "DataPh_2017", "TT_dilep_2017"],
             "electron_17":["DataMu_2017", "DataEle_2017", "DataPh_2017", "TT_dilep_2017"],
             "muon_18":["DataMu_2018",  "DataEle_2018", "TT_dilep_2018"],
@@ -81,14 +81,14 @@ for inpfile in inpfiles[period]:
         print h_HLT_num.Integral()
     else:
         if 'Data' not in infile.GetName():
-            tree.Project("HLT_num", "electron_pt:abs(electron_eta)", "w_nominal*PFSF*puSF*isdileptonic*electron_SF*(muon_pt>50)*passed_mu*(passed_ele||passed_ph)")
+            tree.Project("HLT_num", "electron_pt:abs(electron_eta)", "w_nominal*PFSF*puSF*isdileptonic*electron_SF*(muon_pt>50)*passed_mu*(passed_ele||passed_ph||passed_ht)")
             tree.Project("HLT_den", "electron_pt:abs(electron_eta)", "w_nominal*PFSF*puSF*isdileptonic*electron_SF*(muon_pt>50)*passed_mu")
             #tree.Project("HLT_num", "electron_pt:Event_HT", "w_nominal*PFSF*puSF*isdileptonic*electron_SF*(muon_pt>50)*passed_mu*(passed_ele||passed_ph)")
             #tree.Project("HLT_den", "electron_pt:Event_HT", "w_nominal*PFSF*puSF*isdileptonic*electron_SF*(muon_pt>50)*passed_mu")
             #tree.Project("HLT_num", "Event_HT", "w_nominal*PFSF*puSF*isdileptonic*passed_mu*(passed_ele||passed_ht)")
             #tree.Project("HLT_den", "Event_HT", "w_nominal*PFSF*puSF*isdileptonic*passed_mu")
         else:
-            tree.Project("HLT_num", "electron_pt:abs(electron_eta)", "w_nominal*PFSF*puSF*isdileptonic*(muon_pt>50)*passed_mu*(passed_ele||passed_ph)")
+            tree.Project("HLT_num", "electron_pt:abs(electron_eta)", "w_nominal*PFSF*puSF*isdileptonic*(muon_pt>50)*passed_mu*(passed_ele||passed_ph||passed_ht)")
             tree.Project("HLT_den", "electron_pt:abs(electron_eta)", "w_nominal*PFSF*puSF*isdileptonic*(muon_pt>50)*passed_mu")
             #tree.Project("HLT_num", "electron_pt:Event_HT", "w_nominal*PFSF*puSF*isdileptonic*(muon_pt>50)*passed_mu*(passed_ele||passed_ph)")
             #tree.Project("HLT_den", "electron_pt:Event_HT", "w_nominal*PFSF*puSF*isdileptonic*(muon_pt>50)*passed_mu")
@@ -156,8 +156,8 @@ if 'muon' in period:
     SF.SetTitle("Muon trigger scale factors; muon p_{T} [GeV]; #eta")
     #SF.GetXaxis().SetRangeUser(55, 1000)
 else:
-    #SF.SetTitle("Electron trigger scale factors; #eta; electron p_{T} [GeV]")
-    SF.SetTitle("Electron trigger scale factors;  H_{T} [GeV]; electron p_{T} [GeV]")
+    SF.SetTitle("Electron trigger scale factors; #eta; electron p_{T} [GeV]")
+    #SF.SetTitle("Electron trigger scale factors;  H_{T} [GeV]; electron p_{T} [GeV]")
     #SF.GetYaxis().SetRangeUser(50, 1000)
 printh("Data", period, SF, plotpath)
 fileout.cd()

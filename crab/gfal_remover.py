@@ -16,4 +16,4 @@ import os
 #os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger/SingleMuon/DataMuG_2016 &")
 #os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger/SingleMuon/DataMuH_2016 &")
 
-os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Highpt")
+os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger_v2")

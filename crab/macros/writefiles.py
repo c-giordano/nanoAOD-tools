@@ -37,9 +37,9 @@ for sample in samples:
     s2=s1[1].split('0000')
 
     path_xrd = 'root://cms-xrd-global.cern.ch//store/user/' + str(os.environ.get('USER')) + s2[0]
-    newurl = 'srm://stormfe1.pi.infn.it/cms/store/user/' + str(os.environ.get('USER')) + s2[0]
-    #path_xrd = 'root://cms-xrd-global.cern.ch//store/user/adeiorio/OutDir/JetHT/DataHTB_2016/200511_122826/'
-    #newurl = 'srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/OutDir/JetHT/DataHTB_2016/200511_122826/'
+    newurl = 'srm://stormfe1.pi.infn.it:8444/cms/store/user/' + str(os.environ.get('USER')) + s2[0] #:8444/srm/managerv2?SFN=
+    #path_xrd = 'root://cms-xrd-global.cern.ch//store/user/adeiorio/Trigger_v2/SinglePhoton/DataPhF_2017/210830_213641/'
+    #newurl = 'srm://stormfe1.pi.infn.it:8444/cms/store/user/adeiorio/Trigger_v2/SinglePhoton/DataPhF_2017/210830_213641/'
 
     print(newurl)
     

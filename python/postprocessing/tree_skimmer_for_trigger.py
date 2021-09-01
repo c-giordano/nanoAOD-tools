@@ -309,9 +309,13 @@ for i in range(tree.GetEntries()):
         continue
 
     if(isMC):
-        PF_SF = chain.PrefireWeight
-        PF_SFUp = chain.PrefireWeight_Up
-        PF_SFDown = chain.PrefireWeight_Down
+        PF_SF = 1.
+        PF_SFUp = 1.
+        PF_SFDown = 1.
+        if(year != 2018): 
+            PF_SF = chain.PrefireWeight
+            PF_SFUp = chain.PrefireWeight_Up
+            PF_SFDown = chain.PrefireWeight_Down
         systTree.setWeightName("PFSF", copy.deepcopy(PF_SF))
         systTree.setWeightName("PFUp", copy.deepcopy(PF_SFUp))
         systTree.setWeightName("PFDown", copy.deepcopy(PF_SFDown))

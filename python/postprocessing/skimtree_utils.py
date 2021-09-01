@@ -296,7 +296,7 @@ def trig_map(HLT, year, runPeriod, runN):
         if(HLT.PFHT900):
           passHT = True
     else:
-      if(HLT.PFHT780 or HLT.PFHT890):
+      if(HLT.PFHT1050):
         passHT = True
       if(year == 2017 and runPeriod == 'B'):
         if(HLT.Ele35_WPTight_Gsf):

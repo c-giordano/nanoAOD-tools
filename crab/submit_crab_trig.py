@@ -20,8 +20,8 @@ def cfg_writer(sample, isMC, outdir):
     f.write("\nconfig = Configuration()\n")
     f.write("config.section_('General')\n")
     f.write("config.General.requestName = '"+sample.label+"_for_trigger'\n")
-    if not isMC:
-        f.write("config.General.instance = 'preprod'\n") #needed to solve a bug with Oracle server... 
+    #if not isMC:
+    #    f.write("config.General.instance = 'preprod'\n") #needed to solve a bug with Oracle server... 
     f.write("config.General.transferLogs=True\n")
     f.write("config.section_('JobType')\n")
     f.write("config.JobType.pluginName = 'Analysis'\n")
@@ -155,9 +155,10 @@ for sample in samples:
         btag_mod = 'btagSF'+year+'()'
         met_hlt_mod = 'MET_HLT_Filter_'+year+'()'
         pu_mod = 'puAutoWeight_'+year+'()'
+        prefire_mod = 'PrefCorr_'+year+'()'
         if ('Data' in sample.label):
             isMC = False
-            presel = "Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter "
+            presel = "Flag_goodVertices && Flag_globalSuperTightHalo2016Filter && Flag_HBHENoiseFilter && Flag_HBHENoiseIsoFilter && Flag_EcalDeadCellTriggerPrimitiveFilter && Flag_BadPFMuonFilter && Flag_eeBadScFilter && Flag_ecalBadCalibFilterV2"
         else:
             isMC = True
             presel = ""
@@ -165,15 +166,15 @@ for sample in samples:
         print 'The flag isMC is: ' + str(isMC)
 
         print "Producing crab configuration file"
-        cfg_writer(sample, isMC, "Trigger")
+        cfg_writer(sample, isMC, "Trigger_v2")
 
         if isMC:
             if year != '2018':
-                modules = met_hlt_mod + ", preselection(), " + lep_mod + ", " + pu_mod + ", " + prefire_mod
+                modules = met_hlt_mod + ", trigger_preselection(), " + lep_mod + ", " + pu_mod + ", " + prefire_mod
             else:
-                modules = met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod
+                modules = met_hlt_mod + ", trigger_preselection(), " + lep_mod + ", " + pu_mod
         else:
-            modules = "HLT(), preselection()" # Put here all the modules you want to be runned by crab
+            modules = "HLT(), trigger_preselection()" # Put here all the modules you want to be runned by crab
             
         print "Producing crab script"
         crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Wprime/nosynch/', isMC, modules, presel)

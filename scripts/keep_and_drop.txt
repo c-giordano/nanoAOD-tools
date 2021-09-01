@@ -24,7 +24,6 @@ drop HLT_Mu4*
 drop HLT_Mu7*
 drop HLT_Mu8*
 drop HLT_Mu9*
-drop HLT_PFHT1*
 drop HLT_PFHT2*
 drop HLT_PFHT3*
 drop HLT_PFHT4*

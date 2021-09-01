@@ -68,21 +68,6 @@ namemap["CR0B_I"]="h_jets_best_Wprime_m_CR0B_I"
 namemap["CR0B_mu"]="h_jets_best_Wprime_m_CR0B"
 namemap["CR0B_I_mu"]="h_jets_best_Wprime_m_CR0B_I"
 
-namemap["CR1B"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_1_AND_" + sig_cut
-namemap["CR1B_I"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_1_AND_" + CR_cut
-
-namemap["SR2B"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_" + sig_cut
-namemap["SR2B_I"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_" + CR_cut
-
-namemap["SRW"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_" + sig_cut
-namemap["SRW_I"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_AND_" + CR_cut
-
-namemap["SRT"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_" + sig_cut
-namemap["SRT_I"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_EQ_0_AND_" + CR_cut
-
-namemap["CR0B"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_" + sig_cut
-namemap["CR0B_I"]="h_jets_best_Wprime_m_selection_"+lepcut+"AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_" + CR_cut
-
 wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I","CR1B":"CR1B_I"}
 wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I"}
 
