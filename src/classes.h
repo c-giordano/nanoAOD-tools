@@ -4,6 +4,7 @@
 #include "PhysicsTools/NanoAODTools/interface/WeightCalculatorFromHistogram.h"
 #include "PhysicsTools/NanoAODTools/interface/ReduceMantissa.h"
 #include "PhysicsTools/NanoAODTools/interface/LeptonEfficiencyCorrector.h"
+#include "PhysicsTools/NanoAODTools/interface/LHAPDFUncertaintiesCalculator.h"
 
 PyJetResolutionWrapper jetRes;
 PyJetResolutionScaleFactorWrapper jetResScaleFactor;
@@ -11,3 +12,4 @@ PyJetParametersWrapper jetParams;
 WeightCalculatorFromHistogram wcalc;
 ReduceMantissaToNbitsRounding red(12);
 LeptonEfficiencyCorrector lepSF;
+LHAPDFUncertaintiesCalculator lhaweight;
