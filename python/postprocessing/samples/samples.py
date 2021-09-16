@@ -708,6 +708,408 @@ WP_RH_2016.year = 2016
 WP_RH_2016.components = [ WP_M2000W20_RH_2016, WP_M2200W22_RH_2016, WP_M2400W24_RH_2016, WP_M2600W26_RH_2016, WP_M2800W28_RH_2016, WP_M3000W30_RH_2016, WP_M3200W32_RH_2016, WP_M3400W34_RH_2016, WP_M3600W36_RH_2016, WP_M3800W38_RH_2016, WP_M4000W40_RH_2016, WP_M4200W42_RH_2016, WP_M4400W44_RH_2016, WP_M4600W46_RH_2016, WP_M4800W48_RH_2016, WP_M5000W50_RH_2016, WP_M5200W52_RH_2016, WP_M5400W54_RH_2016, WP_M5600W56_RH_2016, WP_M5800W58_RH_2016, WP_M6000W60_RH_2016]
 #WP_RH_2016.components = [WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M4000W400_RH_2016]
 
+################################ Signal Sample LHSMinter ################################
+WP_M2000W200_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(10%) RH", "WP_M2000W200_LHSMinter_2016")
+WP_M2000W200_LHSMinter_2016.sigma = .2508
+WP_M2000W200_LHSMinter_2016.year = 2016
+WP_M2000W200_LHSMinter_2016.dataset = "/Wprimetotb_M2000W200_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2000W400_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(20%) RH", "WP_M2000W400_LHSMinter_2016")
+WP_M2000W400_LHSMinter_2016.sigma = .1953
+WP_M2000W400_LHSMinter_2016.year = 2016
+WP_M2000W400_LHSMinter_2016.dataset = "/Wprimetotb_M2000W400_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2000W600_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(30%) RH", "WP_M2000W600_LHSMinter_2016")
+WP_M2000W600_LHSMinter_2016.sigma = .1825
+WP_M2000W600_LHSMinter_2016.year = 2016
+WP_M2000W600_LHSMinter_2016.dataset = "/Wprimetotb_M2000W600_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W280_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(10%) RH", "WP_M2800W280_LHSMinter_2016")
+WP_M2800W280_LHSMinter_2016.sigma = .1969
+WP_M2800W280_LHSMinter_2016.year = 2016
+WP_M2800W280_LHSMinter_2016.dataset = "/Wprimetotb_M2800W280_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W560_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(20%) RH", "WP_M2800W560_LHSMinter_2016")
+WP_M2800W560_LHSMinter_2016.sigma = .1897
+WP_M2800W560_LHSMinter_2016.year = 2016
+WP_M2800W560_LHSMinter_2016.dataset = "/Wprimetotb_M2800W560_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W840_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(30%) RH", "WP_M2800W840_LHSMinter_2016")
+WP_M2800W840_LHSMinter_2016.sigma = .1898
+WP_M2800W840_LHSMinter_2016.year = 2016
+WP_M2800W840_LHSMinter_2016.dataset = "/Wprimetotb_M2800W840_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W360_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(10%) RH", "WP_M3600W360_LHSMinter_2016")
+WP_M3600W360_LHSMinter_2016.sigma = .2004
+WP_M3600W360_LHSMinter_2016.year = 2016
+WP_M3600W360_LHSMinter_2016.dataset = "/Wprimetotb_M3600W360_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W720_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(20%) RH", "WP_M3600W720_LHSMinter_2016")
+WP_M3600W720_LHSMinter_2016.sigma = .1998
+WP_M3600W720_LHSMinter_2016.year = 2016
+WP_M3600W720_LHSMinter_2016.dataset = "/Wprimetotb_M3600W720_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W1080_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(30%) RH", "WP_M3600W1080_LHSMinter_2016")
+WP_M3600W1080_LHSMinter_2016.sigma = .2009
+WP_M3600W1080_LHSMinter_2016.year = 2016
+WP_M3600W1080_LHSMinter_2016.dataset = "/Wprimetotb_M3600W1080_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W440_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(10%) RH", "WP_M4400W440_LHSMinter_2016")
+WP_M4400W440_LHSMinter_2016.sigma = .2069
+WP_M4400W440_LHSMinter_2016.year = 2016
+WP_M4400W440_LHSMinter_2016.dataset = "/Wprimetotb_M4400W440_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W880_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LHSMinter_2016")
+WP_M4400W880_LHSMinter_2016.sigma = .2072
+WP_M4400W880_LHSMinter_2016.year = 2016
+WP_M4400W880_LHSMinter_2016.dataset = "/Wprimetotb_M4400W880_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LHSMinter_2016")
+WP_M4400W1320_LHSMinter_2016.sigma = .2081
+WP_M4400W1320_LHSMinter_2016.year = 2016
+WP_M4400W1320_LHSMinter_2016.dataset = "/Wprimetotb_M4400W1320_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W520_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LHSMinter_2016")
+WP_M5200W520_LHSMinter_2016.sigma = .2116
+WP_M5200W520_LHSMinter_2016.year = 2016
+WP_M5200W520_LHSMinter_2016.dataset = "/Wprimetotb_M5200W520_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LHSMinter_2016")
+WP_M5200W1040_LHSMinter_2016.sigma = .212
+WP_M5200W1040_LHSMinter_2016.year = 2016
+WP_M5200W1040_LHSMinter_2016.dataset = "/Wprimetotb_M5200W1040_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LHSMinter_2016")
+WP_M5200W1560_LHSMinter_2016.sigma = .2129
+WP_M5200W1560_LHSMinter_2016.year = 2016
+WP_M5200W1560_LHSMinter_2016.dataset = "/Wprimetotb_M5200W1560_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W600_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LHSMinter_2016")
+WP_M6000W600_LHSMinter_2016.sigma = .2148
+WP_M6000W600_LHSMinter_2016.year = 2016
+WP_M6000W600_LHSMinter_2016.dataset = "/Wprimetotb_M6000W600_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LHSMinter_2016")
+WP_M6000W1200_LHSMinter_2016.sigma = .2153
+WP_M6000W1200_LHSMinter_2016.year = 2016
+WP_M6000W1200_LHSMinter_2016.dataset = "/Wprimetotb_M6000W1200_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LHSMinter_2016")
+WP_M6000W1800_LHSMinter_2016.sigma = .2155
+WP_M6000W1800_LHSMinter_2016.year = 2016
+WP_M6000W1800_LHSMinter_2016.dataset = "/Wprimetotb_M6000W1800_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2000W20_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LHSMinter_2016")
+WP_M2000W20_LHSMinter_2016.sigma = 1.375
+WP_M2000W20_LHSMinter_2016.year = 2016
+WP_M2000W20_LHSMinter_2016.dataset = "/Wprimetotb_M2000W20_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2200W22_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LHSMinter_2016")
+WP_M2200W22_LHSMinter_2016.sigma = .9087
+WP_M2200W22_LHSMinter_2016.year = 2016
+WP_M2200W22_LHSMinter_2016.dataset = "/Wprimetotb_M2200W22_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2400W24_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.4TeV(1%) RH", "WP_M2400W24_LHSMinter_2016")
+WP_M2400W24_LHSMinter_2016.sigma = .6308
+WP_M2400W24_LHSMinter_2016.year = 2016
+WP_M2400W24_LHSMinter_2016.dataset = "/Wprimetotb_M2400W24_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2600W26_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.6TeV(1%) RH", "WP_M2600W26_LHSMinter_2016")
+WP_M2600W26_LHSMinter_2016.sigma = .465
+WP_M2600W26_LHSMinter_2016.year = 2016
+WP_M2600W26_LHSMinter_2016.dataset = "/Wprimetotb_M2600W26_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W28_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(1%) RH", "WP_M2800W28_LHSMinter_2016")
+WP_M2800W28_LHSMinter_2016.sigma = .365
+WP_M2800W28_LHSMinter_2016.year = 2016
+WP_M2800W28_LHSMinter_2016.dataset = "/Wprimetotb_M2800W28_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3000W30_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.0TeV(1%) RH", "WP_M3000W30_LHSMinter_2016")
+WP_M3000W30_LHSMinter_2016.sigma = .3031
+WP_M3000W30_LHSMinter_2016.year = 2016
+WP_M3000W30_LHSMinter_2016.dataset = "/Wprimetotb_M3000W30_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3200W32_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.2TeV(1%) RH", "WP_M3200W32_LHSMinter_2016")
+WP_M3200W32_LHSMinter_2016.sigma = .266
+WP_M3200W32_LHSMinter_2016.year = 2016
+WP_M3200W32_LHSMinter_2016.dataset = "/Wprimetotb_M3200W32_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3400W34_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.4TeV(1%) RH", "WP_M3400W34_LHSMinter_2016")
+WP_M3400W34_LHSMinter_2016.sigma = .2434
+WP_M3400W34_LHSMinter_2016.year = 2016
+WP_M3400W34_LHSMinter_2016.dataset = "/Wprimetotb_M3400W34_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W36_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(1%) RH", "WP_M3600W36_LHSMinter_2016")
+WP_M3600W36_LHSMinter_2016.sigma = .2298
+WP_M3600W36_LHSMinter_2016.year = 2016
+WP_M3600W36_LHSMinter_2016.dataset = "/Wprimetotb_M3600W36_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3800W38_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.8TeV(1%) RH", "WP_M3800W38_LHSMinter_2016")
+WP_M3800W38_LHSMinter_2016.sigma = .2214
+WP_M3800W38_LHSMinter_2016.year = 2016
+WP_M3800W38_LHSMinter_2016.dataset = "/Wprimetotb_M3800W38_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4000W40_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.0TeV(1%) RH", "WP_M4000W40_LHSMinter_2016")
+WP_M4000W40_LHSMinter_2016.sigma = .2168
+WP_M4000W40_LHSMinter_2016.year = 2016
+WP_M4000W40_LHSMinter_2016.dataset = "/Wprimetotb_M4000W40_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4200W42_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.2TeV(1%) RH", "WP_M4200W42_LHSMinter_2016")
+WP_M4200W42_LHSMinter_2016.sigma = .2141
+WP_M4200W42_LHSMinter_2016.year = 2016
+WP_M4200W42_LHSMinter_2016.dataset = "/Wprimetotb_M4200W42_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W44_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(1%) RH", "WP_M4400W44_LHSMinter_2016")
+WP_M4400W44_LHSMinter_2016.sigma = .2131
+WP_M4400W44_LHSMinter_2016.year = 2016
+WP_M4400W44_LHSMinter_2016.dataset = "/Wprimetotb_M4400W44_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4600W46_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.6TeV(1%) RH", "WP_M4600W46_LHSMinter_2016")
+WP_M4600W46_LHSMinter_2016.sigma = .2125
+WP_M4600W46_LHSMinter_2016.year = 2016
+WP_M4600W46_LHSMinter_2016.dataset = "/Wprimetotb_M4600W46_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4800W48_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.8TeV(1%) RH", "WP_M4800W48_LHSMinter_2016")
+WP_M4800W48_LHSMinter_2016.sigma = .2125
+WP_M4800W48_LHSMinter_2016.year = 2016
+WP_M4800W48_LHSMinter_2016.dataset = "/Wprimetotb_M4800W48_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5000W50_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.0TeV(1%) RH", "WP_M5000W50_LHSMinter_2016")
+WP_M5000W50_LHSMinter_2016.sigma = .2128
+WP_M5000W50_LHSMinter_2016.year = 2016
+WP_M5000W50_LHSMinter_2016.dataset = "/Wprimetotb_M5000W50_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W52_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(1%) RH", "WP_M5200W52_LHSMinter_2016")
+WP_M5200W52_LHSMinter_2016.sigma = .2131
+WP_M5200W52_LHSMinter_2016.year = 2016
+WP_M5200W52_LHSMinter_2016.dataset = "/Wprimetotb_M5200W52_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5400W54_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.4TeV(1%) RH", "WP_M5400W54_LHSMinter_2016")
+WP_M5400W54_LHSMinter_2016.sigma = .2139
+WP_M5400W54_LHSMinter_2016.year = 2016
+WP_M5400W54_LHSMinter_2016.dataset = "/Wprimetotb_M5400W54_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5600W56_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.6TeV(1%) RH", "WP_M5600W56_LHSMinter_2016")
+WP_M5600W56_LHSMinter_2016.sigma = .2142
+WP_M5600W56_LHSMinter_2016.year = 2016
+WP_M5600W56_LHSMinter_2016.dataset = "/Wprimetotb_M5600W56_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5800W58_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.8TeV(1%) RH", "WP_M5800W58_LHSMinter_2016")
+WP_M5800W58_LHSMinter_2016.sigma = .2148
+WP_M5800W58_LHSMinter_2016.year = 2016
+WP_M5800W58_LHSMinter_2016.dataset = "/Wprimetotb_M5800W58_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W60_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(1%) RH", "WP_M6000W60_LHSMinter_2016")
+WP_M6000W60_LHSMinter_2016.sigma = .2154
+WP_M6000W60_LHSMinter_2016.year = 2016
+WP_M6000W60_LHSMinter_2016.dataset = "/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_LHSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' LHSMinter", "WP_LHSMinter_2016")
+WP_LHSMinter_2016.year = 2016
+WP_LHSMinter_2016.components = [M2000W200_LHSMinter_2016, M2000W400_LHSMinter_2016, M2000W600_LHSMinter_2016, M2800W280_LHSMinter_2016, M2800W560_LHSMinter_2016, M2800W840_LHSMinter_2016, M3600W360_LHSMinter_2016, M3600W720_LHSMinter_2016, M3600W1080_LHSMinter_2016, M4400W440_LHSMinter_2016, M4400W880_LHSMinter_2016, M4400W1320_LHSMinter_2016, M5200W520_LHSMinter_2016, M5200W1040_LHSMinter_2016, M5200W1560_LHSMinter_2016, M6000W600_LHSMinter_2016, M6000W1200_LHSMinter_2016, M6000W1800_LHSMinter_2016, M2000W20_LHSMinter_2016, M2200W22_LHSMinter_2016, M2400W24_LHSMinter_2016, M2600W26_LHSMinter_2016, M2800W28_LHSMinter_2016, M3000W30_LHSMinter_2016, M3200W32_LHSMinter_2016, M3400W34_LHSMinter_2016, M3600W36_LHSMinter_2016, M3800W38_LHSMinter_2016, M4000W40_LHSMinter_2016, M4200W42_LHSMinter_2016, M4400W44_LHSMinter_2016, M4600W46_LHSMinter_2016, M4800W48_LHSMinter_2016, M5000W50_LHSMinter_2016, M5200W52_LHSMinter_2016, M5400W54_LHSMinter_2016, M5600W56_LHSMinter_2016, M5800W58_LHSMinter_2016, M6000W60_LHSMinter_2016]
+
+################################ Signal Sample LRSMinter ################################
+WP_M2000W200_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(10%) RH", "WP_M2000W200_LRSMinter_2016")
+WP_M2000W200_LRSMinter_2016.sigma = .3059
+WP_M2000W200_LRSMinter_2016.year = 2016
+WP_M2000W200_LRSMinter_2016.dataset = "/Wprimetotb_M2000W200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2000W400_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(20%) RH", "WP_M2000W400_LRSMinter_2016")
+WP_M2000W400_LRSMinter_2016.sigma = .2436
+WP_M2000W400_LRSMinter_2016.year = 2016
+WP_M2000W400_LRSMinter_2016.dataset = "/Wprimetotb_M2000W400_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2000W600_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(30%) RH", "WP_M2000W600_LRSMinter_2016")
+WP_M2000W600_LRSMinter_2016.sigma = .2254
+WP_M2000W600_LRSMinter_2016.year = 2016
+WP_M2000W600_LRSMinter_2016.dataset = "/Wprimetotb_M2000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W280_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(10%) RH", "WP_M2800W280_LRSMinter_2016")
+WP_M2800W280_LRSMinter_2016.sigma = .2222
+WP_M2800W280_LRSMinter_2016.year = 2016
+WP_M2800W280_LRSMinter_2016.dataset = "/Wprimetotb_M2800W280_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W560_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(20%) RH", "WP_M2800W560_LRSMinter_2016")
+WP_M2800W560_LRSMinter_2016.sigma = .2132
+WP_M2800W560_LRSMinter_2016.year = 2016
+WP_M2800W560_LRSMinter_2016.dataset = "/Wprimetotb_M2800W560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W840_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(30%) RH", "WP_M2800W840_LRSMinter_2016")
+WP_M2800W840_LRSMinter_2016.sigma = .2115
+WP_M2800W840_LRSMinter_2016.year = 2016
+WP_M2800W840_LRSMinter_2016.dataset = "/Wprimetotb_M2800W840_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W360_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(10%) RH", "WP_M3600W360_LRSMinter_2016")
+WP_M3600W360_LRSMinter_2016.sigma = .215
+WP_M3600W360_LRSMinter_2016.year = 2016
+WP_M3600W360_LRSMinter_2016.dataset = "/Wprimetotb_M3600W360_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W720_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(20%) RH", "WP_M3600W720_LRSMinter_2016")
+WP_M3600W720_LRSMinter_2016.sigma = .2139
+WP_M3600W720_LRSMinter_2016.year = 2016
+WP_M3600W720_LRSMinter_2016.dataset = "/Wprimetotb_M3600W720_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W1080_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(30%) RH", "WP_M3600W1080_LRSMinter_2016")
+WP_M3600W1080_LRSMinter_2016.sigma = .214
+WP_M3600W1080_LRSMinter_2016.year = 2016
+WP_M3600W1080_LRSMinter_2016.dataset = "/Wprimetotb_M3600W1080_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W440_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(10%) RH", "WP_M4400W440_LRSMinter_2016")
+WP_M4400W440_LRSMinter_2016.sigma = .2165
+WP_M4400W440_LRSMinter_2016.year = 2016
+WP_M4400W440_LRSMinter_2016.dataset = "/Wprimetotb_M4400W440_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W880_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LRSMinter_2016")
+WP_M4400W880_LRSMinter_2016.sigma = .2165
+WP_M4400W880_LRSMinter_2016.year = 2016
+WP_M4400W880_LRSMinter_2016.dataset = "/Wprimetotb_M4400W880_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LRSMinter_2016")
+WP_M4400W1320_LRSMinter_2016.sigma = .2168
+WP_M4400W1320_LRSMinter_2016.year = 2016
+WP_M4400W1320_LRSMinter_2016.dataset = "/Wprimetotb_M4400W1320_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W520_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LRSMinter_2016")
+WP_M5200W520_LRSMinter_2016.sigma = .2185
+WP_M5200W520_LRSMinter_2016.year = 2016
+WP_M5200W520_LRSMinter_2016.dataset = "/Wprimetotb_M5200W520_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LRSMinter_2016")
+WP_M5200W1040_LRSMinter_2016.sigma = .2185
+WP_M5200W1040_LRSMinter_2016.year = 2016
+WP_M5200W1040_LRSMinter_2016.dataset = "/Wprimetotb_M5200W1040_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LRSMinter_2016")
+WP_M5200W1560_LRSMinter_2016.sigma = .2187
+WP_M5200W1560_LRSMinter_2016.year = 2016
+WP_M5200W1560_LRSMinter_2016.dataset = "/Wprimetotb_M5200W1560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W600_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LRSMinter_2016")
+WP_M6000W600_LRSMinter_2016.sigma = .2198
+WP_M6000W600_LRSMinter_2016.year = 2016
+WP_M6000W600_LRSMinter_2016.dataset = "/Wprimetotb_M6000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LRSMinter_2016")
+WP_M6000W1200_LRSMinter_2016.sigma = .2198
+WP_M6000W1200_LRSMinter_2016.year = 2016
+WP_M6000W1200_LRSMinter_2016.dataset = "/Wprimetotb_M6000W1200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LRSMinter_2016")
+WP_M6000W1800_LRSMinter_2016.sigma = .2198
+WP_M6000W1800_LRSMinter_2016.year = 2016
+WP_M6000W1800_LRSMinter_2016.dataset = "/Wprimetotb_M6000W1800_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2000W20_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LRSMinter_2016")
+WP_M2000W20_LRSMinter_2016.sigma = 1.462
+WP_M2000W20_LRSMinter_2016.year = 2016
+WP_M2000W20_LRSMinter_2016.dataset = "/Wprimetotb_M2000W20_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2200W22_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LRSMinter_2016")
+WP_M2200W22_LRSMinter_2016.sigma = .9701
+WP_M2200W22_LRSMinter_2016.year = 2016
+WP_M2200W22_LRSMinter_2016.dataset = "/Wprimetotb_M2200W22_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2400W24_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.4TeV(1%) RH", "WP_M2400W24_LRSMinter_2016")
+WP_M2400W24_LRSMinter_2016.sigma = .6756
+WP_M2400W24_LRSMinter_2016.year = 2016
+WP_M2400W24_LRSMinter_2016.dataset = "/Wprimetotb_M2400W24_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2600W26_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.6TeV(1%) RH", "WP_M2600W26_LRSMinter_2016")
+WP_M2600W26_LRSMinter_2016.sigma = .5016
+WP_M2600W26_LRSMinter_2016.year = 2016
+WP_M2600W26_LRSMinter_2016.dataset = "/Wprimetotb_M2600W26_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M2800W28_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(1%) RH", "WP_M2800W28_LRSMinter_2016")
+WP_M2800W28_LRSMinter_2016.sigma = .3945
+WP_M2800W28_LRSMinter_2016.year = 2016
+WP_M2800W28_LRSMinter_2016.dataset = "/Wprimetotb_M2800W28_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3000W30_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.0TeV(1%) RH", "WP_M3000W30_LRSMinter_2016")
+WP_M3000W30_LRSMinter_2016.sigma = .3277
+WP_M3000W30_LRSMinter_2016.year = 2016
+WP_M3000W30_LRSMinter_2016.dataset = "/Wprimetotb_M3000W30_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3200W32_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.2TeV(1%) RH", "WP_M3200W32_LRSMinter_2016")
+WP_M3200W32_LRSMinter_2016.sigma = .2863
+WP_M3200W32_LRSMinter_2016.year = 2016
+WP_M3200W32_LRSMinter_2016.dataset = "/Wprimetotb_M3200W32_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3400W34_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.4TeV(1%) RH", "WP_M3400W34_LRSMinter_2016")
+WP_M3400W34_LRSMinter_2016.sigma = .2612
+WP_M3400W34_LRSMinter_2016.year = 2016
+WP_M3400W34_LRSMinter_2016.dataset = "/Wprimetotb_M3400W34_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3600W36_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(1%) RH", "WP_M3600W36_LRSMinter_2016")
+WP_M3600W36_LRSMinter_2016.sigma = .2454
+WP_M3600W36_LRSMinter_2016.year = 2016
+WP_M3600W36_LRSMinter_2016.dataset = "/Wprimetotb_M3600W36_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M3800W38_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 3.8TeV(1%) RH", "WP_M3800W38_LRSMinter_2016")
+WP_M3800W38_LRSMinter_2016.sigma = .2355
+WP_M3800W38_LRSMinter_2016.year = 2016
+WP_M3800W38_LRSMinter_2016.dataset = "/Wprimetotb_M3800W38_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4000W40_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.0TeV(1%) RH", "WP_M4000W40_LRSMinter_2016")
+WP_M4000W40_LRSMinter_2016.sigma = .2293
+WP_M4000W40_LRSMinter_2016.year = 2016
+WP_M4000W40_LRSMinter_2016.dataset = "/Wprimetotb_M4000W40_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4200W42_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.2TeV(1%) RH", "WP_M4200W42_LRSMinter_2016")
+WP_M4200W42_LRSMinter_2016.sigma = .2255
+WP_M4200W42_LRSMinter_2016.year = 2016
+WP_M4200W42_LRSMinter_2016.dataset = "/Wprimetotb_M4200W42_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4400W44_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(1%) RH", "WP_M4400W44_LRSMinter_2016")
+WP_M4400W44_LRSMinter_2016.sigma = .223
+WP_M4400W44_LRSMinter_2016.year = 2016
+WP_M4400W44_LRSMinter_2016.dataset = "/Wprimetotb_M4400W44_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4600W46_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.6TeV(1%) RH", "WP_M4600W46_LRSMinter_2016")
+WP_M4600W46_LRSMinter_2016.sigma = .2217
+WP_M4600W46_LRSMinter_2016.year = 2016
+WP_M4600W46_LRSMinter_2016.dataset = "/Wprimetotb_M4600W46_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M4800W48_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 4.8TeV(1%) RH", "WP_M4800W48_LRSMinter_2016")
+WP_M4800W48_LRSMinter_2016.sigma = .221
+WP_M4800W48_LRSMinter_2016.year = 2016
+WP_M4800W48_LRSMinter_2016.dataset = "/Wprimetotb_M4800W48_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5000W50_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.0TeV(1%) RH", "WP_M5000W50_LRSMinter_2016")
+WP_M5000W50_LRSMinter_2016.sigma = .2204
+WP_M5000W50_LRSMinter_2016.year = 2016
+WP_M5000W50_LRSMinter_2016.dataset = "/Wprimetotb_M5000W50_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5200W52_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(1%) RH", "WP_M5200W52_LRSMinter_2016")
+WP_M5200W52_LRSMinter_2016.sigma = .2202
+WP_M5200W52_LRSMinter_2016.year = 2016
+WP_M5200W52_LRSMinter_2016.dataset = "/Wprimetotb_M5200W52_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5400W54_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.4TeV(1%) RH", "WP_M5400W54_LRSMinter_2016")
+WP_M5400W54_LRSMinter_2016.sigma = .2201
+WP_M5400W54_LRSMinter_2016.year = 2016
+WP_M5400W54_LRSMinter_2016.dataset = "/Wprimetotb_M5400W54_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5600W56_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.6TeV(1%) RH", "WP_M5600W56_LRSMinter_2016")
+WP_M5600W56_LRSMinter_2016.sigma = .22
+WP_M5600W56_LRSMinter_2016.year = 2016
+WP_M5600W56_LRSMinter_2016.dataset = "/Wprimetotb_M5600W56_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M5800W58_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 5.8TeV(1%) RH", "WP_M5800W58_LRSMinter_2016")
+WP_M5800W58_LRSMinter_2016.sigma = .2201
+WP_M5800W58_LRSMinter_2016.year = 2016
+WP_M5800W58_LRSMinter_2016.dataset = "/Wprimetotb_M5800W58_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_M6000W60_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(1%) RH", "WP_M6000W60_LRSMinter_2016")
+WP_M6000W60_LRSMinter_2016.sigma = .2203
+WP_M6000W60_LRSMinter_2016.year = 2016
+WP_M6000W60_LRSMinter_2016.dataset = "/Wprimetotb_M6000W60_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2016+"-v1/NANOAODSIM"
+
+WP_LRSMinter_2016 = sample(ROOT.kBlue, 1, 1001, "W' LRSMinter", "WP_LRSMinter_2016")
+WP_LRSMinter_2016.year = 2016
+WP_LRSMinter_2016.components = [M2000W200_LRSMinter_2016, M2000W400_LRSMinter_2016, M2000W600_LRSMinter_2016, M2800W280_LRSMinter_2016, M2800W560_LRSMinter_2016, M2800W840_LRSMinter_2016, M3600W360_LRSMinter_2016, M3600W720_LRSMinter_2016, M3600W1080_LRSMinter_2016, M4400W440_LRSMinter_2016, M4400W880_LRSMinter_2016, M4400W1320_LRSMinter_2016, M5200W520_LRSMinter_2016, M5200W1040_LRSMinter_2016, M5200W1560_LRSMinter_2016, M6000W600_LRSMinter_2016, M6000W1200_LRSMinter_2016, M6000W1800_LRSMinter_2016, M2000W20_LRSMinter_2016, M2200W22_LRSMinter_2016, M2400W24_LRSMinter_2016, M2600W26_LRSMinter_2016, M2800W28_LRSMinter_2016, M3000W30_LRSMinter_2016, M3200W32_LRSMinter_2016, M3400W34_LRSMinter_2016, M3600W36_LRSMinter_2016, M3800W38_LRSMinter_2016, M4000W40_LRSMinter_2016, M4200W42_LRSMinter_2016, M4400W44_LRSMinter_2016, M4600W46_LRSMinter_2016, M4800W48_LRSMinter_2016, M5000W50_LRSMinter_2016, M5200W52_LRSMinter_2016, M5400W54_LRSMinter_2016, M5600W56_LRSMinter_2016, M5800W58_LRSMinter_2016, M6000W60_LRSMinter_2016]
+
+
+
 WP_M1900_RH_COMP_2016 = sample(ROOT.kBlue, 1, 1001, "W' 1.9TeV(3%) RH", "WP_M1900_RH_COMP_2016")
 WP_M1900_RH_COMP_2016.sigma = 0.14922
 WP_M1900_RH_COMP_2016.year = 2016
@@ -726,6 +1128,8 @@ WP_M4000_RH_COMP_2016.dataset = "/WprimeToTB_TToLep_M-4000_RH_TuneCUETP8M1_13TeV
 WP_RH_COMP_2016 = sample(ROOT.kBlue, 1, 1001, "W' RH Comphep", "WP_RH_COMP_2016")
 WP_RH_COMP_2016.year = 2016
 WP_RH_COMP_2016.components = [WP_M1900_RH_COMP_2016, WP_M3000_RH_COMP_2016, WP_M4000_RH_COMP_2016]
+
+
 
 ###################################################################################################################################################################
 ############################################################                                           ############################################################
@@ -1410,6 +1814,406 @@ WP_M6000W60_RH_2017.dataset = "/Wprimetotb_M6000W60_RH_TuneCP5_13TeV-madgraph-py
 WP_RH_2017 = sample(ROOT.kBlue, 1, 1001, "W' RH", "WP_RH_2017")
 WP_RH_2017.year = 2017
 WP_RH_2017.components = [WP_M2000W200_RH_2017, WP_M2000W400_RH_2017, WP_M2000W600_RH_2017, WP_M2400W240_RH_2017, WP_M2400W480_RH_2017, WP_M2400W720_RH_2017, WP_M2800W280_RH_2017, WP_M2800W560_RH_2017, WP_M2800W840_RH_2017, WP_M3200W320_RH_2017, WP_M3200W640_RH_2017, WP_M3200W960_RH_2017, WP_M3600W360_RH_2017, WP_M3600W720_RH_2017, WP_M3600W1080_RH_2017, WP_M4000W400_RH_2017, WP_M4000W800_RH_2017, WP_M4000W1200_RH_2017, WP_M4400W440_RH_2017, WP_M4400W880_RH_2017, WP_M4400W1320_RH_2017, WP_M4800W480_RH_2017, WP_M4800W960_RH_2017, WP_M4800W1440_RH_2017, WP_M5200W520_RH_2017, WP_M5200W1040_RH_2017, WP_M5200W1560_RH_2017, WP_M5600W560_RH_2017, WP_M5600W1120_RH_2017, WP_M5600W1680_RH_2017, WP_M6000W600_RH_2017, WP_M6000W1200_RH_2017, WP_M6000W1800_RH_2017, WP_M2000W20_RH_2017, WP_M2200W22_RH_2017, WP_M2400W24_RH_2017, WP_M2600W26_RH_2017, WP_M2800W28_RH_2017, WP_M3000W30_RH_2017, WP_M3200W32_RH_2017, WP_M3400W34_RH_2017, WP_M3600W36_RH_2017, WP_M3800W38_RH_2017, WP_M4000W40_RH_2017, WP_M4200W42_RH_2017, WP_M4400W44_RH_2017, WP_M4600W46_RH_2017, WP_M4800W48_RH_2017, WP_M5000W50_RH_2017, WP_M5200W52_RH_2017, WP_M5400W54_RH_2017, WP_M5600W56_RH_2017, WP_M5800W58_RH_2017, WP_M6000W60_RH_2017]
+
+################################ Signal Sample LHSMinter ################################
+WP_M2000W200_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(10%) RH", "WP_M2000W200_LHSMinter_2017")
+WP_M2000W200_LHSMinter_2017.sigma = .2508
+WP_M2000W200_LHSMinter_2017.year = 2017
+WP_M2000W200_LHSMinter_2017.dataset = "/Wprimetotb_M2000W200_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2000W400_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(20%) RH", "WP_M2000W400_LHSMinter_2017")
+WP_M2000W400_LHSMinter_2017.sigma = .1953
+WP_M2000W400_LHSMinter_2017.year = 2017
+WP_M2000W400_LHSMinter_2017.dataset = "/Wprimetotb_M2000W400_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2000W600_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(30%) RH", "WP_M2000W600_LHSMinter_2017")
+WP_M2000W600_LHSMinter_2017.sigma = .1825
+WP_M2000W600_LHSMinter_2017.year = 2017
+WP_M2000W600_LHSMinter_2017.dataset = "/Wprimetotb_M2000W600_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W280_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(10%) RH", "WP_M2800W280_LHSMinter_2017")
+WP_M2800W280_LHSMinter_2017.sigma = .1969
+WP_M2800W280_LHSMinter_2017.year = 2017
+WP_M2800W280_LHSMinter_2017.dataset = "/Wprimetotb_M2800W280_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W560_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(20%) RH", "WP_M2800W560_LHSMinter_2017")
+WP_M2800W560_LHSMinter_2017.sigma = .1897
+WP_M2800W560_LHSMinter_2017.year = 2017
+WP_M2800W560_LHSMinter_2017.dataset = "/Wprimetotb_M2800W560_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W840_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(30%) RH", "WP_M2800W840_LHSMinter_2017")
+WP_M2800W840_LHSMinter_2017.sigma = .1898
+WP_M2800W840_LHSMinter_2017.year = 2017
+WP_M2800W840_LHSMinter_2017.dataset = "/Wprimetotb_M2800W840_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W360_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(10%) RH", "WP_M3600W360_LHSMinter_2017")
+WP_M3600W360_LHSMinter_2017.sigma = .2004
+WP_M3600W360_LHSMinter_2017.year = 2017
+WP_M3600W360_LHSMinter_2017.dataset = "/Wprimetotb_M3600W360_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W720_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(20%) RH", "WP_M3600W720_LHSMinter_2017")
+WP_M3600W720_LHSMinter_2017.sigma = .1998
+WP_M3600W720_LHSMinter_2017.year = 2017
+WP_M3600W720_LHSMinter_2017.dataset = "/Wprimetotb_M3600W720_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W1080_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(30%) RH", "WP_M3600W1080_LHSMinter_2017")
+WP_M3600W1080_LHSMinter_2017.sigma = .2009
+WP_M3600W1080_LHSMinter_2017.year = 2017
+WP_M3600W1080_LHSMinter_2017.dataset = "/Wprimetotb_M3600W1080_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W440_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(10%) RH", "WP_M4400W440_LHSMinter_2017")
+WP_M4400W440_LHSMinter_2017.sigma = .2069
+WP_M4400W440_LHSMinter_2017.year = 2017
+WP_M4400W440_LHSMinter_2017.dataset = "/Wprimetotb_M4400W440_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W880_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LHSMinter_2017")
+WP_M4400W880_LHSMinter_2017.sigma = .2072
+WP_M4400W880_LHSMinter_2017.year = 2017
+WP_M4400W880_LHSMinter_2017.dataset = "/Wprimetotb_M4400W880_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LHSMinter_2017")
+WP_M4400W1320_LHSMinter_2017.sigma = .2081
+WP_M4400W1320_LHSMinter_2017.year = 2017
+WP_M4400W1320_LHSMinter_2017.dataset = "/Wprimetotb_M4400W1320_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W520_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LHSMinter_2017")
+WP_M5200W520_LHSMinter_2017.sigma = .2116
+WP_M5200W520_LHSMinter_2017.year = 2017
+WP_M5200W520_LHSMinter_2017.dataset = "/Wprimetotb_M5200W520_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LHSMinter_2017")
+WP_M5200W1040_LHSMinter_2017.sigma = .212
+WP_M5200W1040_LHSMinter_2017.year = 2017
+WP_M5200W1040_LHSMinter_2017.dataset = "/Wprimetotb_M5200W1040_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LHSMinter_2017")
+WP_M5200W1560_LHSMinter_2017.sigma = .2129
+WP_M5200W1560_LHSMinter_2017.year = 2017
+WP_M5200W1560_LHSMinter_2017.dataset = "/Wprimetotb_M5200W1560_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W600_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LHSMinter_2017")
+WP_M6000W600_LHSMinter_2017.sigma = .2148
+WP_M6000W600_LHSMinter_2017.year = 2017
+WP_M6000W600_LHSMinter_2017.dataset = "/Wprimetotb_M6000W600_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LHSMinter_2017")
+WP_M6000W1200_LHSMinter_2017.sigma = .2153
+WP_M6000W1200_LHSMinter_2017.year = 2017
+WP_M6000W1200_LHSMinter_2017.dataset = "/Wprimetotb_M6000W1200_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LHSMinter_2017")
+WP_M6000W1800_LHSMinter_2017.sigma = .2155
+WP_M6000W1800_LHSMinter_2017.year = 2017
+WP_M6000W1800_LHSMinter_2017.dataset = "/Wprimetotb_M6000W1800_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2000W20_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LHSMinter_2017")
+WP_M2000W20_LHSMinter_2017.sigma = 1.375
+WP_M2000W20_LHSMinter_2017.year = 2017
+WP_M2000W20_LHSMinter_2017.dataset = "/Wprimetotb_M2000W20_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2200W22_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LHSMinter_2017")
+WP_M2200W22_LHSMinter_2017.sigma = .9087
+WP_M2200W22_LHSMinter_2017.year = 2017
+WP_M2200W22_LHSMinter_2017.dataset = "/Wprimetotb_M2200W22_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2400W24_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.4TeV(1%) RH", "WP_M2400W24_LHSMinter_2017")
+WP_M2400W24_LHSMinter_2017.sigma = .6308
+WP_M2400W24_LHSMinter_2017.year = 2017
+WP_M2400W24_LHSMinter_2017.dataset = "/Wprimetotb_M2400W24_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2600W26_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.6TeV(1%) RH", "WP_M2600W26_LHSMinter_2017")
+WP_M2600W26_LHSMinter_2017.sigma = .465
+WP_M2600W26_LHSMinter_2017.year = 2017
+WP_M2600W26_LHSMinter_2017.dataset = "/Wprimetotb_M2600W26_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W28_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(1%) RH", "WP_M2800W28_LHSMinter_2017")
+WP_M2800W28_LHSMinter_2017.sigma = .365
+WP_M2800W28_LHSMinter_2017.year = 2017
+WP_M2800W28_LHSMinter_2017.dataset = "/Wprimetotb_M2800W28_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3000W30_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.0TeV(1%) RH", "WP_M3000W30_LHSMinter_2017")
+WP_M3000W30_LHSMinter_2017.sigma = .3031
+WP_M3000W30_LHSMinter_2017.year = 2017
+WP_M3000W30_LHSMinter_2017.dataset = "/Wprimetotb_M3000W30_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3200W32_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.2TeV(1%) RH", "WP_M3200W32_LHSMinter_2017")
+WP_M3200W32_LHSMinter_2017.sigma = .266
+WP_M3200W32_LHSMinter_2017.year = 2017
+WP_M3200W32_LHSMinter_2017.dataset = "/Wprimetotb_M3200W32_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3400W34_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.4TeV(1%) RH", "WP_M3400W34_LHSMinter_2017")
+WP_M3400W34_LHSMinter_2017.sigma = .2434
+WP_M3400W34_LHSMinter_2017.year = 2017
+WP_M3400W34_LHSMinter_2017.dataset = "/Wprimetotb_M3400W34_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W36_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(1%) RH", "WP_M3600W36_LHSMinter_2017")
+WP_M3600W36_LHSMinter_2017.sigma = .2298
+WP_M3600W36_LHSMinter_2017.year = 2017
+WP_M3600W36_LHSMinter_2017.dataset = "/Wprimetotb_M3600W36_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3800W38_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.8TeV(1%) RH", "WP_M3800W38_LHSMinter_2017")
+WP_M3800W38_LHSMinter_2017.sigma = .2214
+WP_M3800W38_LHSMinter_2017.year = 2017
+WP_M3800W38_LHSMinter_2017.dataset = "/Wprimetotb_M3800W38_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4000W40_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.0TeV(1%) RH", "WP_M4000W40_LHSMinter_2017")
+WP_M4000W40_LHSMinter_2017.sigma = .2168
+WP_M4000W40_LHSMinter_2017.year = 2017
+WP_M4000W40_LHSMinter_2017.dataset = "/Wprimetotb_M4000W40_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4200W42_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.2TeV(1%) RH", "WP_M4200W42_LHSMinter_2017")
+WP_M4200W42_LHSMinter_2017.sigma = .2141
+WP_M4200W42_LHSMinter_2017.year = 2017
+WP_M4200W42_LHSMinter_2017.dataset = "/Wprimetotb_M4200W42_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W44_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(1%) RH", "WP_M4400W44_LHSMinter_2017")
+WP_M4400W44_LHSMinter_2017.sigma = .2131
+WP_M4400W44_LHSMinter_2017.year = 2017
+WP_M4400W44_LHSMinter_2017.dataset = "/Wprimetotb_M4400W44_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4600W46_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.6TeV(1%) RH", "WP_M4600W46_LHSMinter_2017")
+WP_M4600W46_LHSMinter_2017.sigma = .2125
+WP_M4600W46_LHSMinter_2017.year = 2017
+WP_M4600W46_LHSMinter_2017.dataset = "/Wprimetotb_M4600W46_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4800W48_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.8TeV(1%) RH", "WP_M4800W48_LHSMinter_2017")
+WP_M4800W48_LHSMinter_2017.sigma = .2125
+WP_M4800W48_LHSMinter_2017.year = 2017
+WP_M4800W48_LHSMinter_2017.dataset = "/Wprimetotb_M4800W48_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5000W50_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.0TeV(1%) RH", "WP_M5000W50_LHSMinter_2017")
+WP_M5000W50_LHSMinter_2017.sigma = .2128
+WP_M5000W50_LHSMinter_2017.year = 2017
+WP_M5000W50_LHSMinter_2017.dataset = "/Wprimetotb_M5000W50_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W52_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(1%) RH", "WP_M5200W52_LHSMinter_2017")
+WP_M5200W52_LHSMinter_2017.sigma = .2131
+WP_M5200W52_LHSMinter_2017.year = 2017
+WP_M5200W52_LHSMinter_2017.dataset = "/Wprimetotb_M5200W52_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5400W54_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.4TeV(1%) RH", "WP_M5400W54_LHSMinter_2017")
+WP_M5400W54_LHSMinter_2017.sigma = .2139
+WP_M5400W54_LHSMinter_2017.year = 2017
+WP_M5400W54_LHSMinter_2017.dataset = "/Wprimetotb_M5400W54_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5600W56_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.6TeV(1%) RH", "WP_M5600W56_LHSMinter_2017")
+WP_M5600W56_LHSMinter_2017.sigma = .2142
+WP_M5600W56_LHSMinter_2017.year = 2017
+WP_M5600W56_LHSMinter_2017.dataset = "/Wprimetotb_M5600W56_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5800W58_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.8TeV(1%) RH", "WP_M5800W58_LHSMinter_2017")
+WP_M5800W58_LHSMinter_2017.sigma = .2148
+WP_M5800W58_LHSMinter_2017.year = 2017
+WP_M5800W58_LHSMinter_2017.dataset = "/Wprimetotb_M5800W58_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W60_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(1%) RH", "WP_M6000W60_LHSMinter_2017")
+WP_M6000W60_LHSMinter_2017.sigma = .2154
+WP_M6000W60_LHSMinter_2017.year = 2017
+WP_M6000W60_LHSMinter_2017.dataset = "/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_LHSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' LHSMinter", "WP_LHSMinter_2017")
+WP_LHSMinter_2017.year = 2017
+WP_LHSMinter_2017.components = [M2000W200_LHSMinter_2017, M2000W400_LHSMinter_2017, M2000W600_LHSMinter_2017, M2800W280_LHSMinter_2017, M2800W560_LHSMinter_2017, M2800W840_LHSMinter_2017, M3600W360_LHSMinter_2017, M3600W720_LHSMinter_2017, M3600W1080_LHSMinter_2017, M4400W440_LHSMinter_2017, M4400W880_LHSMinter_2017, M4400W1320_LHSMinter_2017, M5200W520_LHSMinter_2017, M5200W1040_LHSMinter_2017, M5200W1560_LHSMinter_2017, M6000W600_LHSMinter_2017, M6000W1200_LHSMinter_2017, M6000W1800_LHSMinter_2017, M2000W20_LHSMinter_2017, M2200W22_LHSMinter_2017, M2400W24_LHSMinter_2017, M2600W26_LHSMinter_2017, M2800W28_LHSMinter_2017, M3000W30_LHSMinter_2017, M3200W32_LHSMinter_2017, M3400W34_LHSMinter_2017, M3600W36_LHSMinter_2017, M3800W38_LHSMinter_2017, M4000W40_LHSMinter_2017, M4200W42_LHSMinter_2017, M4400W44_LHSMinter_2017, M4600W46_LHSMinter_2017, M4800W48_LHSMinter_2017, M5000W50_LHSMinter_2017, M5200W52_LHSMinter_2017, M5400W54_LHSMinter_2017, M5600W56_LHSMinter_2017, M5800W58_LHSMinter_2017, M6000W60_LHSMinter_2017]
+
+################################ Signal Sample LRSMinter ################################
+WP_M2000W200_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(10%) RH", "WP_M2000W200_LRSMinter_2017")
+WP_M2000W200_LRSMinter_2017.sigma = .3059
+WP_M2000W200_LRSMinter_2017.year = 2017
+WP_M2000W200_LRSMinter_2017.dataset = "/Wprimetotb_M2000W200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2000W400_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(20%) RH", "WP_M2000W400_LRSMinter_2017")
+WP_M2000W400_LRSMinter_2017.sigma = .2436
+WP_M2000W400_LRSMinter_2017.year = 2017
+WP_M2000W400_LRSMinter_2017.dataset = "/Wprimetotb_M2000W400_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2000W600_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(30%) RH", "WP_M2000W600_LRSMinter_2017")
+WP_M2000W600_LRSMinter_2017.sigma = .2254
+WP_M2000W600_LRSMinter_2017.year = 2017
+WP_M2000W600_LRSMinter_2017.dataset = "/Wprimetotb_M2000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W280_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(10%) RH", "WP_M2800W280_LRSMinter_2017")
+WP_M2800W280_LRSMinter_2017.sigma = .2222
+WP_M2800W280_LRSMinter_2017.year = 2017
+WP_M2800W280_LRSMinter_2017.dataset = "/Wprimetotb_M2800W280_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W560_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(20%) RH", "WP_M2800W560_LRSMinter_2017")
+WP_M2800W560_LRSMinter_2017.sigma = .2132
+WP_M2800W560_LRSMinter_2017.year = 2017
+WP_M2800W560_LRSMinter_2017.dataset = "/Wprimetotb_M2800W560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W840_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(30%) RH", "WP_M2800W840_LRSMinter_2017")
+WP_M2800W840_LRSMinter_2017.sigma = .2115
+WP_M2800W840_LRSMinter_2017.year = 2017
+WP_M2800W840_LRSMinter_2017.dataset = "/Wprimetotb_M2800W840_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W360_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(10%) RH", "WP_M3600W360_LRSMinter_2017")
+WP_M3600W360_LRSMinter_2017.sigma = .215
+WP_M3600W360_LRSMinter_2017.year = 2017
+WP_M3600W360_LRSMinter_2017.dataset = "/Wprimetotb_M3600W360_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W720_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(20%) RH", "WP_M3600W720_LRSMinter_2017")
+WP_M3600W720_LRSMinter_2017.sigma = .2139
+WP_M3600W720_LRSMinter_2017.year = 2017
+WP_M3600W720_LRSMinter_2017.dataset = "/Wprimetotb_M3600W720_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W1080_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(30%) RH", "WP_M3600W1080_LRSMinter_2017")
+WP_M3600W1080_LRSMinter_2017.sigma = .214
+WP_M3600W1080_LRSMinter_2017.year = 2017
+WP_M3600W1080_LRSMinter_2017.dataset = "/Wprimetotb_M3600W1080_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W440_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(10%) RH", "WP_M4400W440_LRSMinter_2017")
+WP_M4400W440_LRSMinter_2017.sigma = .2165
+WP_M4400W440_LRSMinter_2017.year = 2017
+WP_M4400W440_LRSMinter_2017.dataset = "/Wprimetotb_M4400W440_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W880_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LRSMinter_2017")
+WP_M4400W880_LRSMinter_2017.sigma = .2165
+WP_M4400W880_LRSMinter_2017.year = 2017
+WP_M4400W880_LRSMinter_2017.dataset = "/Wprimetotb_M4400W880_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LRSMinter_2017")
+WP_M4400W1320_LRSMinter_2017.sigma = .2168
+WP_M4400W1320_LRSMinter_2017.year = 2017
+WP_M4400W1320_LRSMinter_2017.dataset = "/Wprimetotb_M4400W1320_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W520_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LRSMinter_2017")
+WP_M5200W520_LRSMinter_2017.sigma = .2185
+WP_M5200W520_LRSMinter_2017.year = 2017
+WP_M5200W520_LRSMinter_2017.dataset = "/Wprimetotb_M5200W520_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LRSMinter_2017")
+WP_M5200W1040_LRSMinter_2017.sigma = .2185
+WP_M5200W1040_LRSMinter_2017.year = 2017
+WP_M5200W1040_LRSMinter_2017.dataset = "/Wprimetotb_M5200W1040_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LRSMinter_2017")
+WP_M5200W1560_LRSMinter_2017.sigma = .2187
+WP_M5200W1560_LRSMinter_2017.year = 2017
+WP_M5200W1560_LRSMinter_2017.dataset = "/Wprimetotb_M5200W1560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W600_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LRSMinter_2017")
+WP_M6000W600_LRSMinter_2017.sigma = .2198
+WP_M6000W600_LRSMinter_2017.year = 2017
+WP_M6000W600_LRSMinter_2017.dataset = "/Wprimetotb_M6000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LRSMinter_2017")
+WP_M6000W1200_LRSMinter_2017.sigma = .2198
+WP_M6000W1200_LRSMinter_2017.year = 2017
+WP_M6000W1200_LRSMinter_2017.dataset = "/Wprimetotb_M6000W1200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LRSMinter_2017")
+WP_M6000W1800_LRSMinter_2017.sigma = .2198
+WP_M6000W1800_LRSMinter_2017.year = 2017
+WP_M6000W1800_LRSMinter_2017.dataset = "/Wprimetotb_M6000W1800_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2000W20_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LRSMinter_2017")
+WP_M2000W20_LRSMinter_2017.sigma = 1.462
+WP_M2000W20_LRSMinter_2017.year = 2017
+WP_M2000W20_LRSMinter_2017.dataset = "/Wprimetotb_M2000W20_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2200W22_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LRSMinter_2017")
+WP_M2200W22_LRSMinter_2017.sigma = .9701
+WP_M2200W22_LRSMinter_2017.year = 2017
+WP_M2200W22_LRSMinter_2017.dataset = "/Wprimetotb_M2200W22_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2400W24_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.4TeV(1%) RH", "WP_M2400W24_LRSMinter_2017")
+WP_M2400W24_LRSMinter_2017.sigma = .6756
+WP_M2400W24_LRSMinter_2017.year = 2017
+WP_M2400W24_LRSMinter_2017.dataset = "/Wprimetotb_M2400W24_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2600W26_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.6TeV(1%) RH", "WP_M2600W26_LRSMinter_2017")
+WP_M2600W26_LRSMinter_2017.sigma = .5016
+WP_M2600W26_LRSMinter_2017.year = 2017
+WP_M2600W26_LRSMinter_2017.dataset = "/Wprimetotb_M2600W26_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M2800W28_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(1%) RH", "WP_M2800W28_LRSMinter_2017")
+WP_M2800W28_LRSMinter_2017.sigma = .3945
+WP_M2800W28_LRSMinter_2017.year = 2017
+WP_M2800W28_LRSMinter_2017.dataset = "/Wprimetotb_M2800W28_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3000W30_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.0TeV(1%) RH", "WP_M3000W30_LRSMinter_2017")
+WP_M3000W30_LRSMinter_2017.sigma = .3277
+WP_M3000W30_LRSMinter_2017.year = 2017
+WP_M3000W30_LRSMinter_2017.dataset = "/Wprimetotb_M3000W30_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3200W32_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.2TeV(1%) RH", "WP_M3200W32_LRSMinter_2017")
+WP_M3200W32_LRSMinter_2017.sigma = .2863
+WP_M3200W32_LRSMinter_2017.year = 2017
+WP_M3200W32_LRSMinter_2017.dataset = "/Wprimetotb_M3200W32_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3400W34_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.4TeV(1%) RH", "WP_M3400W34_LRSMinter_2017")
+WP_M3400W34_LRSMinter_2017.sigma = .2612
+WP_M3400W34_LRSMinter_2017.year = 2017
+WP_M3400W34_LRSMinter_2017.dataset = "/Wprimetotb_M3400W34_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3600W36_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(1%) RH", "WP_M3600W36_LRSMinter_2017")
+WP_M3600W36_LRSMinter_2017.sigma = .2454
+WP_M3600W36_LRSMinter_2017.year = 2017
+WP_M3600W36_LRSMinter_2017.dataset = "/Wprimetotb_M3600W36_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M3800W38_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 3.8TeV(1%) RH", "WP_M3800W38_LRSMinter_2017")
+WP_M3800W38_LRSMinter_2017.sigma = .2355
+WP_M3800W38_LRSMinter_2017.year = 2017
+WP_M3800W38_LRSMinter_2017.dataset = "/Wprimetotb_M3800W38_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4000W40_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.0TeV(1%) RH", "WP_M4000W40_LRSMinter_2017")
+WP_M4000W40_LRSMinter_2017.sigma = .2293
+WP_M4000W40_LRSMinter_2017.year = 2017
+WP_M4000W40_LRSMinter_2017.dataset = "/Wprimetotb_M4000W40_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4200W42_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.2TeV(1%) RH", "WP_M4200W42_LRSMinter_2017")
+WP_M4200W42_LRSMinter_2017.sigma = .2255
+WP_M4200W42_LRSMinter_2017.year = 2017
+WP_M4200W42_LRSMinter_2017.dataset = "/Wprimetotb_M4200W42_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4400W44_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(1%) RH", "WP_M4400W44_LRSMinter_2017")
+WP_M4400W44_LRSMinter_2017.sigma = .223
+WP_M4400W44_LRSMinter_2017.year = 2017
+WP_M4400W44_LRSMinter_2017.dataset = "/Wprimetotb_M4400W44_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4600W46_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.6TeV(1%) RH", "WP_M4600W46_LRSMinter_2017")
+WP_M4600W46_LRSMinter_2017.sigma = .2217
+WP_M4600W46_LRSMinter_2017.year = 2017
+WP_M4600W46_LRSMinter_2017.dataset = "/Wprimetotb_M4600W46_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M4800W48_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 4.8TeV(1%) RH", "WP_M4800W48_LRSMinter_2017")
+WP_M4800W48_LRSMinter_2017.sigma = .221
+WP_M4800W48_LRSMinter_2017.year = 2017
+WP_M4800W48_LRSMinter_2017.dataset = "/Wprimetotb_M4800W48_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5000W50_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.0TeV(1%) RH", "WP_M5000W50_LRSMinter_2017")
+WP_M5000W50_LRSMinter_2017.sigma = .2204
+WP_M5000W50_LRSMinter_2017.year = 2017
+WP_M5000W50_LRSMinter_2017.dataset = "/Wprimetotb_M5000W50_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5200W52_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(1%) RH", "WP_M5200W52_LRSMinter_2017")
+WP_M5200W52_LRSMinter_2017.sigma = .2202
+WP_M5200W52_LRSMinter_2017.year = 2017
+WP_M5200W52_LRSMinter_2017.dataset = "/Wprimetotb_M5200W52_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5400W54_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.4TeV(1%) RH", "WP_M5400W54_LRSMinter_2017")
+WP_M5400W54_LRSMinter_2017.sigma = .2201
+WP_M5400W54_LRSMinter_2017.year = 2017
+WP_M5400W54_LRSMinter_2017.dataset = "/Wprimetotb_M5400W54_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5600W56_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.6TeV(1%) RH", "WP_M5600W56_LRSMinter_2017")
+WP_M5600W56_LRSMinter_2017.sigma = .22
+WP_M5600W56_LRSMinter_2017.year = 2017
+WP_M5600W56_LRSMinter_2017.dataset = "/Wprimetotb_M5600W56_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M5800W58_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 5.8TeV(1%) RH", "WP_M5800W58_LRSMinter_2017")
+WP_M5800W58_LRSMinter_2017.sigma = .2201
+WP_M5800W58_LRSMinter_2017.year = 2017
+WP_M5800W58_LRSMinter_2017.dataset = "/Wprimetotb_M5800W58_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_M6000W60_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(1%) RH", "WP_M6000W60_LRSMinter_2017")
+WP_M6000W60_LRSMinter_2017.sigma = .2203
+WP_M6000W60_LRSMinter_2017.year = 2017
+WP_M6000W60_LRSMinter_2017.dataset = "/Wprimetotb_M6000W60_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
+
+WP_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' LRSMinter", "WP_LRSMinter_2017")
+WP_LRSMinter_2017.year = 2017
+WP_LRSMinter_2017.components = [M2000W200_LRSMinter_2017, M2000W400_LRSMinter_2017, M2000W600_LRSMinter_2017, M2800W280_LRSMinter_2017, M2800W560_LRSMinter_2017, M2800W840_LRSMinter_2017, M3600W360_LRSMinter_2017, M3600W720_LRSMinter_2017, M3600W1080_LRSMinter_2017, M4400W440_LRSMinter_2017, M4400W880_LRSMinter_2017, M4400W1320_LRSMinter_2017, M5200W520_LRSMinter_2017, M5200W1040_LRSMinter_2017, M5200W1560_LRSMinter_2017, M6000W600_LRSMinter_2017, M6000W1200_LRSMinter_2017, M6000W1800_LRSMinter_2017, M2000W20_LRSMinter_2017, M2200W22_LRSMinter_2017, M2400W24_LRSMinter_2017, M2600W26_LRSMinter_2017, M2800W28_LRSMinter_2017, M3000W30_LRSMinter_2017, M3200W32_LRSMinter_2017, M3400W34_LRSMinter_2017, M3600W36_LRSMinter_2017, M3800W38_LRSMinter_2017, M4000W40_LRSMinter_2017, M4200W42_LRSMinter_2017, M4400W44_LRSMinter_2017, M4600W46_LRSMinter_2017, M4800W48_LRSMinter_2017, M5000W50_LRSMinter_2017, M5200W52_LRSMinter_2017, M5400W54_LRSMinter_2017, M5600W56_LRSMinter_2017, M5800W58_LRSMinter_2017, M6000W60_LRSMinter_2017]
 
 ###################################################################################################################################################################
 ############################################################                                           ############################################################
@@ -2108,6 +2912,455 @@ WP_RH_2018.components = [WP_M2000W200_RH_2018, WP_M2000W400_RH_2018, WP_M2000W60
 
 ##WP_RH_2018.components = [ WP_M4000W800_RH_2018, WP_M4000W1200_RH_2018, WP_M4400W440_RH_2018, WP_M4400W880_RH_2018, WP_M4400W1320_RH_2018, WP_M4800W480_RH_2018, WP_M4800W960_RH_2018, WP_M4800W1440_RH_2018, WP_M5200W520_RH_2018, WP_M5200W1040_RH_2018, WP_M5200W1560_RH_2018, WP_M5600W560_RH_2018, WP_M5600W1120_RH_2018, WP_M5600W1680_RH_2018, WP_M6000W600_RH_2018, WP_M6000W1200_RH_2018, WP_M6000W1800_RH_2018, WP_M2000W20_RH_2018, WP_M2200W22_RH_2018, WP_M2400W24_RH_2018, WP_M2600W26_RH_2018, WP_M2800W28_RH_2018, WP_M3000W30_RH_2018, WP_M3200W32_RH_2018, WP_M3400W34_RH_2018, WP_M3600W36_RH_2018, WP_M3800W38_RH_2018, WP_M4000W40_RH_2018, WP_M4200W42_RH_2018, WP_M4400W44_RH_2018, WP_M4600W46_RH_2018, WP_M4800W48_RH_2018, WP_M5000W50_RH_2018, WP_M5200W52_RH_2018, WP_M5400W54_RH_2018, WP_M5600W56_RH_2018, WP_M5800W58_RH_2018, WP_M6000W60_RH_2018]
 
+################################ Signal Sample LHSMinter ################################
+WP_M2000W200_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(10%) RH", "WP_M2000W200_LHSMinter_2018")
+WP_M2000W200_LHSMinter_2018.sigma = .2508
+WP_M2000W200_LHSMinter_2018.year = 2018
+WP_M2000W200_LHSMinter_2018.dataset = "/Wprimetotb_M2000W200_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W400_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(20%) RH", "WP_M2000W400_LHSMinter_2018")
+WP_M2000W400_LHSMinter_2018.sigma = .1953
+WP_M2000W400_LHSMinter_2018.year = 2018
+WP_M2000W400_LHSMinter_2018.dataset = "/Wprimetotb_M2000W400_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W600_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(30%) RH", "WP_M2000W600_LHSMinter_2018")
+WP_M2000W600_LHSMinter_2018.sigma = .1825
+WP_M2000W600_LHSMinter_2018.year = 2018
+WP_M2000W600_LHSMinter_2018.dataset = "/Wprimetotb_M2000W600_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W280_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(10%) RH", "WP_M2800W280_LHSMinter_2018")
+WP_M2800W280_LHSMinter_2018.sigma = .1969
+WP_M2800W280_LHSMinter_2018.year = 2018
+WP_M2800W280_LHSMinter_2018.dataset = "/Wprimetotb_M2800W280_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W560_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(20%) RH", "WP_M2800W560_LHSMinter_2018")
+WP_M2800W560_LHSMinter_2018.sigma = .1897
+WP_M2800W560_LHSMinter_2018.year = 2018
+WP_M2800W560_LHSMinter_2018.dataset = "/Wprimetotb_M2800W560_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W840_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(30%) RH", "WP_M2800W840_LHSMinter_2018")
+WP_M2800W840_LHSMinter_2018.sigma = .1898
+WP_M2800W840_LHSMinter_2018.year = 2018
+WP_M2800W840_LHSMinter_2018.dataset = "/Wprimetotb_M2800W840_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W360_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(10%) RH", "WP_M3600W360_LHSMinter_2018")
+WP_M3600W360_LHSMinter_2018.sigma = .2004
+WP_M3600W360_LHSMinter_2018.year = 2018
+WP_M3600W360_LHSMinter_2018.dataset = "/Wprimetotb_M3600W360_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W720_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(20%) RH", "WP_M3600W720_LHSMinter_2018")
+WP_M3600W720_LHSMinter_2018.sigma = .1998
+WP_M3600W720_LHSMinter_2018.year = 2018
+WP_M3600W720_LHSMinter_2018.dataset = "/Wprimetotb_M3600W720_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W1080_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(30%) RH", "WP_M3600W1080_LHSMinter_2018")
+WP_M3600W1080_LHSMinter_2018.sigma = .2009
+WP_M3600W1080_LHSMinter_2018.year = 2018
+WP_M3600W1080_LHSMinter_2018.dataset = "/Wprimetotb_M3600W1080_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W440_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(10%) RH", "WP_M4400W440_LHSMinter_2018")
+WP_M4400W440_LHSMinter_2018.sigma = .2069
+WP_M4400W440_LHSMinter_2018.year = 2018
+WP_M4400W440_LHSMinter_2018.dataset = "/Wprimetotb_M4400W440_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W880_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LHSMinter_2018")
+WP_M4400W880_LHSMinter_2018.sigma = .2072
+WP_M4400W880_LHSMinter_2018.year = 2018
+WP_M4400W880_LHSMinter_2018.dataset = "/Wprimetotb_M4400W880_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LHSMinter_2018")
+WP_M4400W1320_LHSMinter_2018.sigma = .2081
+WP_M4400W1320_LHSMinter_2018.year = 2018
+WP_M4400W1320_LHSMinter_2018.dataset = "/Wprimetotb_M4400W1320_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W520_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LHSMinter_2018")
+WP_M5200W520_LHSMinter_2018.sigma = .2116
+WP_M5200W520_LHSMinter_2018.year = 2018
+WP_M5200W520_LHSMinter_2018.dataset = "/Wprimetotb_M5200W520_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LHSMinter_2018")
+WP_M5200W1040_LHSMinter_2018.sigma = .212
+WP_M5200W1040_LHSMinter_2018.year = 2018
+WP_M5200W1040_LHSMinter_2018.dataset = "/Wprimetotb_M5200W1040_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LHSMinter_2018")
+WP_M5200W1560_LHSMinter_2018.sigma = .2129
+WP_M5200W1560_LHSMinter_2018.year = 2018
+WP_M5200W1560_LHSMinter_2018.dataset = "/Wprimetotb_M5200W1560_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W600_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LHSMinter_2018")
+WP_M6000W600_LHSMinter_2018.sigma = .2148
+WP_M6000W600_LHSMinter_2018.year = 2018
+WP_M6000W600_LHSMinter_2018.dataset = "/Wprimetotb_M6000W600_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LHSMinter_2018")
+WP_M6000W1200_LHSMinter_2018.sigma = .2153
+WP_M6000W1200_LHSMinter_2018.year = 2018
+WP_M6000W1200_LHSMinter_2018.dataset = "/Wprimetotb_M6000W1200_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LHSMinter_2018")
+WP_M6000W1800_LHSMinter_2018.sigma = .2155
+WP_M6000W1800_LHSMinter_2018.year = 2018
+WP_M6000W1800_LHSMinter_2018.dataset = "/Wprimetotb_M6000W1800_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W20_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LHSMinter_2018")
+WP_M2000W20_LHSMinter_2018.sigma = 1.375
+WP_M2000W20_LHSMinter_2018.year = 2018
+WP_M2000W20_LHSMinter_2018.dataset = "/Wprimetotb_M2000W20_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2200W22_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LHSMinter_2018")
+WP_M2200W22_LHSMinter_2018.sigma = .9087
+WP_M2200W22_LHSMinter_2018.year = 2018
+WP_M2200W22_LHSMinter_2018.dataset = "/Wprimetotb_M2200W22_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2400W24_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.4TeV(1%) RH", "WP_M2400W24_LHSMinter_2018")
+WP_M2400W24_LHSMinter_2018.sigma = .6308
+WP_M2400W24_LHSMinter_2018.year = 2018
+WP_M2400W24_LHSMinter_2018.dataset = "/Wprimetotb_M2400W24_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2600W26_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.6TeV(1%) RH", "WP_M2600W26_LHSMinter_2018")
+WP_M2600W26_LHSMinter_2018.sigma = .465
+WP_M2600W26_LHSMinter_2018.year = 2018
+WP_M2600W26_LHSMinter_2018.dataset = "/Wprimetotb_M2600W26_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W28_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(1%) RH", "WP_M2800W28_LHSMinter_2018")
+WP_M2800W28_LHSMinter_2018.sigma = .365
+WP_M2800W28_LHSMinter_2018.year = 2018
+WP_M2800W28_LHSMinter_2018.dataset = "/Wprimetotb_M2800W28_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3000W30_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.0TeV(1%) RH", "WP_M3000W30_LHSMinter_2018")
+WP_M3000W30_LHSMinter_2018.sigma = .3031
+WP_M3000W30_LHSMinter_2018.year = 2018
+WP_M3000W30_LHSMinter_2018.dataset = "/Wprimetotb_M3000W30_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3200W32_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.2TeV(1%) RH", "WP_M3200W32_LHSMinter_2018")
+WP_M3200W32_LHSMinter_2018.sigma = .266
+WP_M3200W32_LHSMinter_2018.year = 2018
+WP_M3200W32_LHSMinter_2018.dataset = "/Wprimetotb_M3200W32_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3400W34_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.4TeV(1%) RH", "WP_M3400W34_LHSMinter_2018")
+WP_M3400W34_LHSMinter_2018.sigma = .2434
+WP_M3400W34_LHSMinter_2018.year = 2018
+WP_M3400W34_LHSMinter_2018.dataset = "/Wprimetotb_M3400W34_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W36_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(1%) RH", "WP_M3600W36_LHSMinter_2018")
+WP_M3600W36_LHSMinter_2018.sigma = .2298
+WP_M3600W36_LHSMinter_2018.year = 2018
+WP_M3600W36_LHSMinter_2018.dataset = "/Wprimetotb_M3600W36_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3800W38_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.8TeV(1%) RH", "WP_M3800W38_LHSMinter_2018")
+WP_M3800W38_LHSMinter_2018.sigma = .2214
+WP_M3800W38_LHSMinter_2018.year = 2018
+WP_M3800W38_LHSMinter_2018.dataset = "/Wprimetotb_M3800W38_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4000W40_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.0TeV(1%) RH", "WP_M4000W40_LHSMinter_2018")
+WP_M4000W40_LHSMinter_2018.sigma = .2168
+WP_M4000W40_LHSMinter_2018.year = 2018
+WP_M4000W40_LHSMinter_2018.dataset = "/Wprimetotb_M4000W40_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4200W42_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.2TeV(1%) RH", "WP_M4200W42_LHSMinter_2018")
+WP_M4200W42_LHSMinter_2018.sigma = .2141
+WP_M4200W42_LHSMinter_2018.year = 2018
+WP_M4200W42_LHSMinter_2018.dataset = "/Wprimetotb_M4200W42_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W44_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(1%) RH", "WP_M4400W44_LHSMinter_2018")
+WP_M4400W44_LHSMinter_2018.sigma = .2131
+WP_M4400W44_LHSMinter_2018.year = 2018
+WP_M4400W44_LHSMinter_2018.dataset = "/Wprimetotb_M4400W44_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4600W46_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.6TeV(1%) RH", "WP_M4600W46_LHSMinter_2018")
+WP_M4600W46_LHSMinter_2018.sigma = .2125
+WP_M4600W46_LHSMinter_2018.year = 2018
+WP_M4600W46_LHSMinter_2018.dataset = "/Wprimetotb_M4600W46_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4800W48_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.8TeV(1%) RH", "WP_M4800W48_LHSMinter_2018")
+WP_M4800W48_LHSMinter_2018.sigma = .2125
+WP_M4800W48_LHSMinter_2018.year = 2018
+WP_M4800W48_LHSMinter_2018.dataset = "/Wprimetotb_M4800W48_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5000W50_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.0TeV(1%) RH", "WP_M5000W50_LHSMinter_2018")
+WP_M5000W50_LHSMinter_2018.sigma = .2128
+WP_M5000W50_LHSMinter_2018.year = 2018
+WP_M5000W50_LHSMinter_2018.dataset = "/Wprimetotb_M5000W50_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W52_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(1%) RH", "WP_M5200W52_LHSMinter_2018")
+WP_M5200W52_LHSMinter_2018.sigma = .2131
+WP_M5200W52_LHSMinter_2018.year = 2018
+WP_M5200W52_LHSMinter_2018.dataset = "/Wprimetotb_M5200W52_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5400W54_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.4TeV(1%) RH", "WP_M5400W54_LHSMinter_2018")
+WP_M5400W54_LHSMinter_2018.sigma = .2139
+WP_M5400W54_LHSMinter_2018.year = 2018
+WP_M5400W54_LHSMinter_2018.dataset = "/Wprimetotb_M5400W54_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5600W56_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.6TeV(1%) RH", "WP_M5600W56_LHSMinter_2018")
+WP_M5600W56_LHSMinter_2018.sigma = .2142
+WP_M5600W56_LHSMinter_2018.year = 2018
+WP_M5600W56_LHSMinter_2018.dataset = "/Wprimetotb_M5600W56_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5800W58_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.8TeV(1%) RH", "WP_M5800W58_LHSMinter_2018")
+WP_M5800W58_LHSMinter_2018.sigma = .2148
+WP_M5800W58_LHSMinter_2018.year = 2018
+WP_M5800W58_LHSMinter_2018.dataset = "/Wprimetotb_M5800W58_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W60_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(1%) RH", "WP_M6000W60_LHSMinter_2018")
+WP_M6000W60_LHSMinter_2018.sigma = .2154
+WP_M6000W60_LHSMinter_2018.year = 2018
+WP_M6000W60_LHSMinter_2018.dataset = "/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_LHSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' LHSMinter", "WP_LHSMinter_2018")
+WP_LHSMinter_2018.year = 2018
+WP_LHSMinter_2018.components = [M2000W200_LHSMinter_2018, M2000W400_LHSMinter_2018, M2000W600_LHSMinter_2018, M2800W280_LHSMinter_2018, M2800W560_LHSMinter_2018, M2800W840_LHSMinter_2018, M3600W360_LHSMinter_2018, M3600W720_LHSMinter_2018, M3600W1080_LHSMinter_2018, M4400W440_LHSMinter_2018, M4400W880_LHSMinter_2018, M4400W1320_LHSMinter_2018, M5200W520_LHSMinter_2018, M5200W1040_LHSMinter_2018, M5200W1560_LHSMinter_2018, M6000W600_LHSMinter_2018, M6000W1200_LHSMinter_2018, M6000W1800_LHSMinter_2018, M2000W20_LHSMinter_2018, M2200W22_LHSMinter_2018, M2400W24_LHSMinter_2018, M2600W26_LHSMinter_2018, M2800W28_LHSMinter_2018, M3000W30_LHSMinter_2018, M3200W32_LHSMinter_2018, M3400W34_LHSMinter_2018, M3600W36_LHSMinter_2018, M3800W38_LHSMinter_2018, M4000W40_LHSMinter_2018, M4200W42_LHSMinter_2018, M4400W44_LHSMinter_2018, M4600W46_LHSMinter_2018, M4800W48_LHSMinter_2018, M5000W50_LHSMinter_2018, M5200W52_LHSMinter_2018, M5400W54_LHSMinter_2018, M5600W56_LHSMinter_2018, M5800W58_LHSMinter_2018, M6000W60_LHSMinter_2018]
+
+################################ Signal Sample LRSMinter ################################
+WP_M2000W200_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(10%) RH", "WP_M2000W200_LRSMinter_2018")
+WP_M2000W200_LRSMinter_2018.sigma = .3059
+WP_M2000W200_LRSMinter_2018.year = 2018
+WP_M2000W200_LRSMinter_2018.dataset = "/Wprimetotb_M2000W200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W400_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(20%) RH", "WP_M2000W400_LRSMinter_2018")
+WP_M2000W400_LRSMinter_2018.sigma = .2436
+WP_M2000W400_LRSMinter_2018.year = 2018
+WP_M2000W400_LRSMinter_2018.dataset = "/Wprimetotb_M2000W400_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W600_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(30%) RH", "WP_M2000W600_LRSMinter_2018")
+WP_M2000W600_LRSMinter_2018.sigma = .2254
+WP_M2000W600_LRSMinter_2018.year = 2018
+WP_M2000W600_LRSMinter_2018.dataset = "/Wprimetotb_M2000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W280_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(10%) RH", "WP_M2800W280_LRSMinter_2018")
+WP_M2800W280_LRSMinter_2018.sigma = .2222
+WP_M2800W280_LRSMinter_2018.year = 2018
+WP_M2800W280_LRSMinter_2018.dataset = "/Wprimetotb_M2800W280_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W560_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(20%) RH", "WP_M2800W560_LRSMinter_2018")
+WP_M2800W560_LRSMinter_2018.sigma = .2132
+WP_M2800W560_LRSMinter_2018.year = 2018
+WP_M2800W560_LRSMinter_2018.dataset = "/Wprimetotb_M2800W560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W840_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(30%) RH", "WP_M2800W840_LRSMinter_2018")
+WP_M2800W840_LRSMinter_2018.sigma = .2115
+WP_M2800W840_LRSMinter_2018.year = 2018
+WP_M2800W840_LRSMinter_2018.dataset = "/Wprimetotb_M2800W840_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W360_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(10%) RH", "WP_M3600W360_LRSMinter_2018")
+WP_M3600W360_LRSMinter_2018.sigma = .215
+WP_M3600W360_LRSMinter_2018.year = 2018
+WP_M3600W360_LRSMinter_2018.dataset = "/Wprimetotb_M3600W360_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W720_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(20%) RH", "WP_M3600W720_LRSMinter_2018")
+WP_M3600W720_LRSMinter_2018.sigma = .2139
+WP_M3600W720_LRSMinter_2018.year = 2018
+WP_M3600W720_LRSMinter_2018.dataset = "/Wprimetotb_M3600W720_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W1080_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(30%) RH", "WP_M3600W1080_LRSMinter_2018")
+WP_M3600W1080_LRSMinter_2018.sigma = .214
+WP_M3600W1080_LRSMinter_2018.year = 2018
+WP_M3600W1080_LRSMinter_2018.dataset = "/Wprimetotb_M3600W1080_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W440_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(10%) RH", "WP_M4400W440_LRSMinter_2018")
+WP_M4400W440_LRSMinter_2018.sigma = .2165
+WP_M4400W440_LRSMinter_2018.year = 2018
+WP_M4400W440_LRSMinter_2018.dataset = "/Wprimetotb_M4400W440_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W880_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LRSMinter_2018")
+WP_M4400W880_LRSMinter_2018.sigma = .2165
+WP_M4400W880_LRSMinter_2018.year = 2018
+WP_M4400W880_LRSMinter_2018.dataset = "/Wprimetotb_M4400W880_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LRSMinter_2018")
+WP_M4400W1320_LRSMinter_2018.sigma = .2168
+WP_M4400W1320_LRSMinter_2018.year = 2018
+WP_M4400W1320_LRSMinter_2018.dataset = "/Wprimetotb_M4400W1320_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W520_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LRSMinter_2018")
+WP_M5200W520_LRSMinter_2018.sigma = .2185
+WP_M5200W520_LRSMinter_2018.year = 2018
+WP_M5200W520_LRSMinter_2018.dataset = "/Wprimetotb_M5200W520_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LRSMinter_2018")
+WP_M5200W1040_LRSMinter_2018.sigma = .2185
+WP_M5200W1040_LRSMinter_2018.year = 2018
+WP_M5200W1040_LRSMinter_2018.dataset = "/Wprimetotb_M5200W1040_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LRSMinter_2018")
+WP_M5200W1560_LRSMinter_2018.sigma = .2187
+WP_M5200W1560_LRSMinter_2018.year = 2018
+WP_M5200W1560_LRSMinter_2018.dataset = "/Wprimetotb_M5200W1560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W600_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LRSMinter_2018")
+WP_M6000W600_LRSMinter_2018.sigma = .2198
+WP_M6000W600_LRSMinter_2018.year = 2018
+WP_M6000W600_LRSMinter_2018.dataset = "/Wprimetotb_M6000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LRSMinter_2018")
+WP_M6000W1200_LRSMinter_2018.sigma = .2198
+WP_M6000W1200_LRSMinter_2018.year = 2018
+WP_M6000W1200_LRSMinter_2018.dataset = "/Wprimetotb_M6000W1200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LRSMinter_2018")
+WP_M6000W1800_LRSMinter_2018.sigma = .2198
+WP_M6000W1800_LRSMinter_2018.year = 2018
+WP_M6000W1800_LRSMinter_2018.dataset = "/Wprimetotb_M6000W1800_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W20_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LRSMinter_2018")
+WP_M2000W20_LRSMinter_2018.sigma = 1.462
+WP_M2000W20_LRSMinter_2018.year = 2018
+WP_M2000W20_LRSMinter_2018.dataset = "/Wprimetotb_M2000W20_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2200W22_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LRSMinter_2018")
+WP_M2200W22_LRSMinter_2018.sigma = .9701
+WP_M2200W22_LRSMinter_2018.year = 2018
+WP_M2200W22_LRSMinter_2018.dataset = "/Wprimetotb_M2200W22_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W880_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(20%) RH", "WP_M4400W880_LRSMinter_2018")
+WP_M4400W880_LRSMinter_2018.sigma = .2165
+WP_M4400W880_LRSMinter_2018.year = 2018
+WP_M4400W880_LRSMinter_2018.dataset = "/Wprimetotb_M4400W880_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W1320_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(30%) RH", "WP_M4400W1320_LRSMinter_2018")
+WP_M4400W1320_LRSMinter_2018.sigma = .2168
+WP_M4400W1320_LRSMinter_2018.year = 2018
+WP_M4400W1320_LRSMinter_2018.dataset = "/Wprimetotb_M4400W1320_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W520_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(10%) RH", "WP_M5200W520_LRSMinter_2018")
+WP_M5200W520_LRSMinter_2018.sigma = .2185
+WP_M5200W520_LRSMinter_2018.year = 2018
+WP_M5200W520_LRSMinter_2018.dataset = "/Wprimetotb_M5200W520_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W1040_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(20%) RH", "WP_M5200W1040_LRSMinter_2018")
+WP_M5200W1040_LRSMinter_2018.sigma = .2185
+WP_M5200W1040_LRSMinter_2018.year = 2018
+WP_M5200W1040_LRSMinter_2018.dataset = "/Wprimetotb_M5200W1040_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W1560_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(30%) RH", "WP_M5200W1560_LRSMinter_2018")
+WP_M5200W1560_LRSMinter_2018.sigma = .2187
+WP_M5200W1560_LRSMinter_2018.year = 2018
+WP_M5200W1560_LRSMinter_2018.dataset = "/Wprimetotb_M5200W1560_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W600_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(10%) RH", "WP_M6000W600_LRSMinter_2018")
+WP_M6000W600_LRSMinter_2018.sigma = .2198
+WP_M6000W600_LRSMinter_2018.year = 2018
+WP_M6000W600_LRSMinter_2018.dataset = "/Wprimetotb_M6000W600_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W1200_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(20%) RH", "WP_M6000W1200_LRSMinter_2018")
+WP_M6000W1200_LRSMinter_2018.sigma = .2198
+WP_M6000W1200_LRSMinter_2018.year = 2018
+WP_M6000W1200_LRSMinter_2018.dataset = "/Wprimetotb_M6000W1200_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W1800_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", "WP_M6000W1800_LRSMinter_2018")
+WP_M6000W1800_LRSMinter_2018.sigma = .2198
+WP_M6000W1800_LRSMinter_2018.year = 2018
+WP_M6000W1800_LRSMinter_2018.dataset = "/Wprimetotb_M6000W1800_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2000W20_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LRSMinter_2018")
+WP_M2000W20_LRSMinter_2018.sigma = 1.462
+WP_M2000W20_LRSMinter_2018.year = 2018
+WP_M2000W20_LRSMinter_2018.dataset = "/Wprimetotb_M2000W20_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2200W22_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.2TeV(1%) RH", "WP_M2200W22_LRSMinter_2018")
+WP_M2200W22_LRSMinter_2018.sigma = .9701
+WP_M2200W22_LRSMinter_2018.year = 2018
+WP_M2200W22_LRSMinter_2018.dataset = "/Wprimetotb_M2200W22_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2400W24_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.4TeV(1%) RH", "WP_M2400W24_LRSMinter_2018")
+WP_M2400W24_LRSMinter_2018.sigma = .6756
+WP_M2400W24_LRSMinter_2018.year = 2018
+WP_M2400W24_LRSMinter_2018.dataset = "/Wprimetotb_M2400W24_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2600W26_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.6TeV(1%) RH", "WP_M2600W26_LRSMinter_2018")
+WP_M2600W26_LRSMinter_2018.sigma = .5016
+WP_M2600W26_LRSMinter_2018.year = 2018
+WP_M2600W26_LRSMinter_2018.dataset = "/Wprimetotb_M2600W26_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M2800W28_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.8TeV(1%) RH", "WP_M2800W28_LRSMinter_2018")
+WP_M2800W28_LRSMinter_2018.sigma = .3945
+WP_M2800W28_LRSMinter_2018.year = 2018
+WP_M2800W28_LRSMinter_2018.dataset = "/Wprimetotb_M2800W28_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3000W30_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.0TeV(1%) RH", "WP_M3000W30_LRSMinter_2018")
+WP_M3000W30_LRSMinter_2018.sigma = .3277
+WP_M3000W30_LRSMinter_2018.year = 2018
+WP_M3000W30_LRSMinter_2018.dataset = "/Wprimetotb_M3000W30_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3200W32_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.2TeV(1%) RH", "WP_M3200W32_LRSMinter_2018")
+WP_M3200W32_LRSMinter_2018.sigma = .2863
+WP_M3200W32_LRSMinter_2018.year = 2018
+WP_M3200W32_LRSMinter_2018.dataset = "/Wprimetotb_M3200W32_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3400W34_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.4TeV(1%) RH", "WP_M3400W34_LRSMinter_2018")
+WP_M3400W34_LRSMinter_2018.sigma = .2612
+WP_M3400W34_LRSMinter_2018.year = 2018
+WP_M3400W34_LRSMinter_2018.dataset = "/Wprimetotb_M3400W34_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3600W36_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.6TeV(1%) RH", "WP_M3600W36_LRSMinter_2018")
+WP_M3600W36_LRSMinter_2018.sigma = .2454
+WP_M3600W36_LRSMinter_2018.year = 2018
+WP_M3600W36_LRSMinter_2018.dataset = "/Wprimetotb_M3600W36_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M3800W38_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 3.8TeV(1%) RH", "WP_M3800W38_LRSMinter_2018")
+WP_M3800W38_LRSMinter_2018.sigma = .2355
+WP_M3800W38_LRSMinter_2018.year = 2018
+WP_M3800W38_LRSMinter_2018.dataset = "/Wprimetotb_M3800W38_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4000W40_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.0TeV(1%) RH", "WP_M4000W40_LRSMinter_2018")
+WP_M4000W40_LRSMinter_2018.sigma = .2293
+WP_M4000W40_LRSMinter_2018.year = 2018
+WP_M4000W40_LRSMinter_2018.dataset = "/Wprimetotb_M4000W40_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4200W42_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.2TeV(1%) RH", "WP_M4200W42_LRSMinter_2018")
+WP_M4200W42_LRSMinter_2018.sigma = .2255
+WP_M4200W42_LRSMinter_2018.year = 2018
+WP_M4200W42_LRSMinter_2018.dataset = "/Wprimetotb_M4200W42_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4400W44_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.4TeV(1%) RH", "WP_M4400W44_LRSMinter_2018")
+WP_M4400W44_LRSMinter_2018.sigma = .223
+WP_M4400W44_LRSMinter_2018.year = 2018
+WP_M4400W44_LRSMinter_2018.dataset = "/Wprimetotb_M4400W44_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4600W46_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.6TeV(1%) RH", "WP_M4600W46_LRSMinter_2018")
+WP_M4600W46_LRSMinter_2018.sigma = .2217
+WP_M4600W46_LRSMinter_2018.year = 2018
+WP_M4600W46_LRSMinter_2018.dataset = "/Wprimetotb_M4600W46_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M4800W48_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 4.8TeV(1%) RH", "WP_M4800W48_LRSMinter_2018")
+WP_M4800W48_LRSMinter_2018.sigma = .221
+WP_M4800W48_LRSMinter_2018.year = 2018
+WP_M4800W48_LRSMinter_2018.dataset = "/Wprimetotb_M4800W48_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5000W50_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.0TeV(1%) RH", "WP_M5000W50_LRSMinter_2018")
+WP_M5000W50_LRSMinter_2018.sigma = .2204
+WP_M5000W50_LRSMinter_2018.year = 2018
+WP_M5000W50_LRSMinter_2018.dataset = "/Wprimetotb_M5000W50_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5200W52_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.2TeV(1%) RH", "WP_M5200W52_LRSMinter_2018")
+WP_M5200W52_LRSMinter_2018.sigma = .2202
+WP_M5200W52_LRSMinter_2018.year = 2018
+WP_M5200W52_LRSMinter_2018.dataset = "/Wprimetotb_M5200W52_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5400W54_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.4TeV(1%) RH", "WP_M5400W54_LRSMinter_2018")
+WP_M5400W54_LRSMinter_2018.sigma = .2201
+WP_M5400W54_LRSMinter_2018.year = 2018
+WP_M5400W54_LRSMinter_2018.dataset = "/Wprimetotb_M5400W54_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5600W56_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.6TeV(1%) RH", "WP_M5600W56_LRSMinter_2018")
+WP_M5600W56_LRSMinter_2018.sigma = .22
+WP_M5600W56_LRSMinter_2018.year = 2018
+WP_M5600W56_LRSMinter_2018.dataset = "/Wprimetotb_M5600W56_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M5800W58_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 5.8TeV(1%) RH", "WP_M5800W58_LRSMinter_2018")
+WP_M5800W58_LRSMinter_2018.sigma = .2201
+WP_M5800W58_LRSMinter_2018.year = 2018
+WP_M5800W58_LRSMinter_2018.dataset = "/Wprimetotb_M5800W58_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_M6000W60_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(1%) RH", "WP_M6000W60_LRSMinter_2018")
+WP_M6000W60_LRSMinter_2018.sigma = .2203
+WP_M6000W60_LRSMinter_2018.year = 2018
+WP_M6000W60_LRSMinter_2018.dataset = "/Wprimetotb_M6000W60_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
+
+WP_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' LRSMinter", "WP_LRSMinter_2018")
+WP_LRSMinter_2018.year = 2018
+WP_LRSMinter_2018.components = [M2000W200_LRSMinter_2018, M2000W400_LRSMinter_2018, M2000W600_LRSMinter_2018, M2800W280_LRSMinter_2018, M2800W560_LRSMinter_2018, M2800W840_LRSMinter_2018, M3600W360_LRSMinter_2018, M3600W720_LRSMinter_2018, M3600W1080_LRSMinter_2018, M4400W440_LRSMinter_2018, M4400W880_LRSMinter_2018, M4400W1320_LRSMinter_2018, M5200W520_LRSMinter_2018, M5200W1040_LRSMinter_2018, M5200W1560_LRSMinter_2018, M6000W600_LRSMinter_2018, M6000W1200_LRSMinter_2018, M6000W1800_LRSMinter_2018, M2000W20_LRSMinter_2018, M2200W22_LRSMinter_2018, M2400W24_LRSMinter_2018, M2600W26_LRSMinter_2018, M2800W28_LRSMinter_2018, M3000W30_LRSMinter_2018, M3200W32_LRSMinter_2018, M3400W34_LRSMinter_2018, M3600W36_LRSMinter_2018, M3800W38_LRSMinter_2018, M4000W40_LRSMinter_2018, M4200W42_LRSMinter_2018, M4400W44_LRSMinter_2018, M4600W46_LRSMinter_2018, M4800W48_LRSMinter_2018, M5000W50_LRSMinter_2018, M5200W52_LRSMinter_2018, M5400W54_LRSMinter_2018, M5600W56_LRSMinter_2018, M5800W58_LRSMinter_2018, M6000W60_LRSMinter_2018]
 
 ####################################################### Data #####################################################################################
 tag_data = '02Apr2020'
@@ -2249,7 +3502,7 @@ DataMuC_2017.runP = 'C'
 DataMuC_2017.year = 2017
 DataMuC_2017.dataset = '/SingleMuon/Run2017C-'+tag_data + '-v1/NANOAOD'
 DataMuD_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuD_2017")
-DataMuD_2017.runP = 'D'
+0DataMuD_2017.runP = 'D'
 DataMuD_2017.year = 2017
 DataMuD_2017.dataset = '/SingleMuon/Run2017D-'+tag_data + '-v1/NANOAOD'
 DataMuE_2017 = sample(ROOT.kBlack, 1, 1001, "Data", "DataMuE_2017")
@@ -2403,6 +3656,8 @@ sample_dict = {
     'QCD_2016':QCD_2016, 'QCDHT_300to500_2016':QCDHT_300to500_2016, 'QCDHT_500to700_2016':QCDHT_500to700_2016, 'QCDHT_700to1000_2016':QCDHT_700to1000_2016, 'QCDHT_1000to1500_2016':QCDHT_1000to1500_2016, 'QCDHT_1500to2000_2016':QCDHT_1500to2000_2016, 'QCDHT_2000toInf_2016':QCDHT_2000toInf_2016,
     'WP_LH_2016':WP_LH_2016,'WP_M2000W200_LH_2016':WP_M2000W200_LH_2016, 'WP_M2000W400_LH_2016':WP_M2000W400_LH_2016, 'WP_M2000W600_LH_2016':WP_M2000W600_LH_2016, 'WP_M2400W240_LH_2016':WP_M2400W240_LH_2016, 'WP_M2400W480_LH_2016':WP_M2400W480_LH_2016, 'WP_M2400W720_LH_2016':WP_M2400W720_LH_2016, 'WP_M2800W280_LH_2016':WP_M2800W280_LH_2016, 'WP_M2800W560_LH_2016':WP_M2800W560_LH_2016, 'WP_M2800W840_LH_2016':WP_M2800W840_LH_2016, 'WP_M3200W320_LH_2016':WP_M3200W320_LH_2016, 'WP_M3200W640_LH_2016':WP_M3200W640_LH_2016, 'WP_M3200W960_LH_2016':WP_M3200W960_LH_2016, 'WP_M3600W360_LH_2016':WP_M3600W360_LH_2016, 'WP_M3600W720_LH_2016':WP_M3600W720_LH_2016, 'WP_M3600W1080_LH_2016':WP_M3600W1080_LH_2016, 'WP_M4000W400_LH_2016':WP_M4000W400_LH_2016, 'WP_M4000W800_LH_2016':WP_M4000W800_LH_2016, 'WP_M4000W1200_LH_2016':WP_M4000W1200_LH_2016, 'WP_M4400W440_LH_2016':WP_M4400W440_LH_2016, 'WP_M4400W880_LH_2016':WP_M4400W880_LH_2016, 'WP_M4400W1320_LH_2016':WP_M4400W1320_LH_2016, 'WP_M4800W480_LH_2016':WP_M4800W480_LH_2016, 'WP_M4800W960_LH_2016':WP_M4800W960_LH_2016, 'WP_M4800W1440_LH_2016':WP_M4800W1440_LH_2016, 'WP_M5200W520_LH_2016':WP_M5200W520_LH_2016, 'WP_M5200W1040_LH_2016':WP_M5200W1040_LH_2016, 'WP_M5200W1560_LH_2016':WP_M5200W1560_LH_2016, 'WP_M5600W560_LH_2016':WP_M5600W560_LH_2016, 'WP_M5600W1120_LH_2016':WP_M5600W1120_LH_2016, 'WP_M5600W1680_LH_2016':WP_M5600W1680_LH_2016, 'WP_M6000W600_LH_2016':WP_M6000W600_LH_2016, 'WP_M6000W1200_LH_2016':WP_M6000W1200_LH_2016, 'WP_M6000W1800_LH_2016':WP_M6000W1800_LH_2016, 'WP_M2000W20_LH_2016':WP_M2000W20_LH_2016, 'WP_M2200W22_LH_2016':WP_M2200W22_LH_2016, 'WP_M2400W24_LH_2016':WP_M2400W24_LH_2016, 'WP_M2600W26_LH_2016':WP_M2600W26_LH_2016, 'WP_M2800W28_LH_2016':WP_M2800W28_LH_2016, 'WP_M3000W30_LH_2016':WP_M3000W30_LH_2016, 'WP_M3200W32_LH_2016':WP_M3200W32_LH_2016, 'WP_M3400W34_LH_2016':WP_M3400W34_LH_2016, 'WP_M3600W36_LH_2016':WP_M3600W36_LH_2016, 'WP_M3800W38_LH_2016':WP_M3800W38_LH_2016, 'WP_M4000W40_LH_2016':WP_M4000W40_LH_2016, 'WP_M4200W42_LH_2016':WP_M4200W42_LH_2016, 'WP_M4400W44_LH_2016':WP_M4400W44_LH_2016, 'WP_M4600W46_LH_2016':WP_M4600W46_LH_2016, 'WP_M4800W48_LH_2016':WP_M4800W48_LH_2016, 'WP_M5000W50_LH_2016':WP_M5000W50_LH_2016, 'WP_M5200W52_LH_2016':WP_M5200W52_LH_2016, 'WP_M5400W54_LH_2016':WP_M5400W54_LH_2016, 'WP_M5600W56_LH_2016':WP_M5600W56_LH_2016, 'WP_M5800W58_LH_2016':WP_M5800W58_LH_2016, 'WP_M6000W60_LH_2016':WP_M6000W60_LH_2016,
     'WP_RH_2016':WP_RH_2016,'WP_M2000W200_RH_2016':WP_M2000W200_RH_2016, 'WP_M2000W400_RH_2016':WP_M2000W400_RH_2016, 'WP_M2000W600_RH_2016':WP_M2000W600_RH_2016, 'WP_M2400W240_RH_2016':WP_M2400W240_RH_2016, 'WP_M2400W480_RH_2016':WP_M2400W480_RH_2016, 'WP_M2400W720_RH_2016':WP_M2400W720_RH_2016, 'WP_M2800W280_RH_2016':WP_M2800W280_RH_2016, 'WP_M2800W560_RH_2016':WP_M2800W560_RH_2016, 'WP_M2800W840_RH_2016':WP_M2800W840_RH_2016, 'WP_M3200W320_RH_2016':WP_M3200W320_RH_2016, 'WP_M3200W640_RH_2016':WP_M3200W640_RH_2016, 'WP_M3200W960_RH_2016':WP_M3200W960_RH_2016, 'WP_M3600W360_RH_2016':WP_M3600W360_RH_2016, 'WP_M3600W720_RH_2016':WP_M3600W720_RH_2016, 'WP_M3600W1080_RH_2016':WP_M3600W1080_RH_2016, 'WP_M4000W400_RH_2016':WP_M4000W400_RH_2016, 'WP_M4000W800_RH_2016':WP_M4000W800_RH_2016, 'WP_M4000W1200_RH_2016':WP_M4000W1200_RH_2016, 'WP_M4400W440_RH_2016':WP_M4400W440_RH_2016, 'WP_M4400W880_RH_2016':WP_M4400W880_RH_2016, 'WP_M4400W1320_RH_2016':WP_M4400W1320_RH_2016, 'WP_M4800W480_RH_2016':WP_M4800W480_RH_2016, 'WP_M4800W960_RH_2016':WP_M4800W960_RH_2016, 'WP_M4800W1440_RH_2016':WP_M4800W1440_RH_2016, 'WP_M5200W520_RH_2016':WP_M5200W520_RH_2016, 'WP_M5200W1040_RH_2016':WP_M5200W1040_RH_2016, 'WP_M5200W1560_RH_2016':WP_M5200W1560_RH_2016, 'WP_M5600W560_RH_2016':WP_M5600W560_RH_2016, 'WP_M5600W1120_RH_2016':WP_M5600W1120_RH_2016, 'WP_M5600W1680_RH_2016':WP_M5600W1680_RH_2016, 'WP_M6000W600_RH_2016':WP_M6000W600_RH_2016, 'WP_M6000W1200_RH_2016':WP_M6000W1200_RH_2016, 'WP_M6000W1800_RH_2016':WP_M6000W1800_RH_2016, 'WP_M2000W20_RH_2016':WP_M2000W20_RH_2016, 'WP_M2200W22_RH_2016':WP_M2200W22_RH_2016, 'WP_M2400W24_RH_2016':WP_M2400W24_RH_2016, 'WP_M2600W26_RH_2016':WP_M2600W26_RH_2016, 'WP_M2800W28_RH_2016':WP_M2800W28_RH_2016, 'WP_M3000W30_RH_2016':WP_M3000W30_RH_2016, 'WP_M3200W32_RH_2016':WP_M3200W32_RH_2016, 'WP_M3400W34_RH_2016':WP_M3400W34_RH_2016, 'WP_M3600W36_RH_2016':WP_M3600W36_RH_2016, 'WP_M3800W38_RH_2016':WP_M3800W38_RH_2016, 'WP_M4000W40_RH_2016':WP_M4000W40_RH_2016, 'WP_M4200W42_RH_2016':WP_M4200W42_RH_2016, 'WP_M4400W44_RH_2016':WP_M4400W44_RH_2016, 'WP_M4600W46_RH_2016':WP_M4600W46_RH_2016, 'WP_M4800W48_RH_2016':WP_M4800W48_RH_2016, 'WP_M5000W50_RH_2016':WP_M5000W50_RH_2016, 'WP_M5200W52_RH_2016':WP_M5200W52_RH_2016, 'WP_M5400W54_RH_2016':WP_M5400W54_RH_2016, 'WP_M5600W56_RH_2016':WP_M5600W56_RH_2016, 'WP_M5800W58_RH_2016':WP_M5800W58_RH_2016, 'WP_M6000W60_RH_2016':WP_M6000W60_RH_2016,
+    'WP_M2000W200_LHSMinter_2016':WP_M2000W200_LHSMinter_2016, 'WP_M2000W400_LHSMinter_2016':WP_M2000W400_LHSMinter_2016, 'WP_M2000W600_LHSMinter_2016':WP_M2000W600_LHSMinter_2016, 'WP_M2800W280_LHSMinter_2016':WP_M2800W280_LHSMinter_2016, 'WP_M2800W560_LHSMinter_2016':WP_M2800W560_LHSMinter_2016, 'WP_M2800W840_LHSMinter_2016':WP_M2800W840_LHSMinter_2016, 'WP_M3600W360_LHSMinter_2016':WP_M3600W360_LHSMinter_2016, 'WP_M3600W720_LHSMinter_2016':WP_M3600W720_LHSMinter_2016, 'WP_M3600W1080_LHSMinter_2016':WP_M3600W1080_LHSMinter_2016, 'WP_M4400W440_LHSMinter_2016':WP_M4400W440_LHSMinter_2016, 'WP_M4400W880_LHSMinter_2016':WP_M4400W880_LHSMinter_2016, 'WP_M4400W1320_LHSMinter_2016':WP_M4400W1320_LHSMinter_2016, 'WP_M5200W520_LHSMinter_2016':WP_M5200W520_LHSMinter_2016, 'WP_M5200W1040_LHSMinter_2016':WP_M5200W1040_LHSMinter_2016, 'WP_M5200W1560_LHSMinter_2016':WP_M5200W1560_LHSMinter_2016, 'WP_M6000W600_LHSMinter_2016':WP_M6000W600_LHSMinter_2016, 'WP_M6000W1200_LHSMinter_2016':WP_M6000W1200_LHSMinter_2016, 'WP_M6000W1800_LHSMinter_2016':WP_M6000W1800_LHSMinter_2016, 'WP_M2000W20_LHSMinter_2016':WP_M2000W20_LHSMinter_2016, 'WP_M2200W22_LHSMinter_2016':WP_M2200W22_LHSMinter_2016, 'WP_M2400W24_LHSMinter_2016':WP_M2400W24_LHSMinter_2016, 'WP_M2600W26_LHSMinter_2016':WP_M2600W26_LHSMinter_2016, 'WP_M2800W28_LHSMinter_2016':WP_M2800W28_LHSMinter_2016, 'WP_M3000W30_LHSMinter_2016':WP_M3000W30_LHSMinter_2016, 'WP_M3200W32_LHSMinter_2016':WP_M3200W32_LHSMinter_2016, 'WP_M3400W34_LHSMinter_2016':WP_M3400W34_LHSMinter_2016, 'WP_M3600W36_LHSMinter_2016':WP_M3600W36_LHSMinter_2016, 'WP_M3800W38_LHSMinter_2016':WP_M3800W38_LHSMinter_2016, 'WP_M4000W40_LHSMinter_2016':WP_M4000W40_LHSMinter_2016, 'WP_M4200W42_LHSMinter_2016':WP_M4200W42_LHSMinter_2016, 'WP_M4400W44_LHSMinter_2016':WP_M4400W44_LHSMinter_2016, 'WP_M4600W46_LHSMinter_2016':WP_M4600W46_LHSMinter_2016, 'WP_M4800W48_LHSMinter_2016':WP_M4800W48_LHSMinter_2016, 'WP_M5000W50_LHSMinter_2016':WP_M5000W50_LHSMinter_2016, 'WP_M5200W52_LHSMinter_2016':WP_M5200W52_LHSMinter_2016, 'WP_M5400W54_LHSMinter_2016':WP_M5400W54_LHSMinter_2016, 'WP_M5600W56_LHSMinter_2016':WP_M5600W56_LHSMinter_2016, 'WP_M5800W58_LHSMinter_2016':WP_M5800W58_LHSMinter_2016, 'WP_M6000W60_LHSMinter_2016':WP_M6000W60_LHSMinter_2016,
+'WP_M2000W200_LRSMinter_2016':WP_M2000W200_LRSMinter_2016, 'WP_M2000W400_LRSMinter_2016':WP_M2000W400_LRSMinter_2016, 'WP_M2000W600_LRSMinter_2016':WP_M2000W600_LRSMinter_2016, 'WP_M2800W280_LRSMinter_2016':WP_M2800W280_LRSMinter_2016, 'WP_M2800W560_LRSMinter_2016':WP_M2800W560_LRSMinter_2016, 'WP_M2800W840_LRSMinter_2016':WP_M2800W840_LRSMinter_2016, 'WP_M3600W360_LRSMinter_2016':WP_M3600W360_LRSMinter_2016, 'WP_M3600W720_LRSMinter_2016':WP_M3600W720_LRSMinter_2016, 'WP_M3600W1080_LRSMinter_2016':WP_M3600W1080_LRSMinter_2016, 'WP_M4400W440_LRSMinter_2016':WP_M4400W440_LRSMinter_2016, 'WP_M4400W880_LRSMinter_2016':WP_M4400W880_LRSMinter_2016, 'WP_M4400W1320_LRSMinter_2016':WP_M4400W1320_LRSMinter_2016, 'WP_M5200W520_LRSMinter_2016':WP_M5200W520_LRSMinter_2016, 'WP_M5200W1040_LRSMinter_2016':WP_M5200W1040_LRSMinter_2016, 'WP_M5200W1560_LRSMinter_2016':WP_M5200W1560_LRSMinter_2016, 'WP_M6000W600_LRSMinter_2016':WP_M6000W600_LRSMinter_2016, 'WP_M6000W1200_LRSMinter_2016':WP_M6000W1200_LRSMinter_2016, 'WP_M6000W1800_LRSMinter_2016':WP_M6000W1800_LRSMinter_2016, 'WP_M2000W20_LRSMinter_2016':WP_M2000W20_LRSMinter_2016, 'WP_M2200W22_LRSMinter_2016':WP_M2200W22_LRSMinter_2016, 'WP_M2400W24_LRSMinter_2016':WP_M2400W24_LRSMinter_2016, 'WP_M2600W26_LRSMinter_2016':WP_M2600W26_LRSMinter_2016, 'WP_M2800W28_LRSMinter_2016':WP_M2800W28_LRSMinter_2016, 'WP_M3000W30_LRSMinter_2016':WP_M3000W30_LRSMinter_2016, 'WP_M3200W32_LRSMinter_2016':WP_M3200W32_LRSMinter_2016, 'WP_M3400W34_LRSMinter_2016':WP_M3400W34_LRSMinter_2016, 'WP_M3600W36_LRSMinter_2016':WP_M3600W36_LRSMinter_2016, 'WP_M3800W38_LRSMinter_2016':WP_M3800W38_LRSMinter_2016, 'WP_M4000W40_LRSMinter_2016':WP_M4000W40_LRSMinter_2016, 'WP_M4200W42_LRSMinter_2016':WP_M4200W42_LRSMinter_2016, 'WP_M4400W44_LRSMinter_2016':WP_M4400W44_LRSMinter_2016, 'WP_M4600W46_LRSMinter_2016':WP_M4600W46_LRSMinter_2016, 'WP_M4800W48_LRSMinter_2016':WP_M4800W48_LRSMinter_2016, 'WP_M5000W50_LRSMinter_2016':WP_M5000W50_LRSMinter_2016, 'WP_M5200W52_LRSMinter_2016':WP_M5200W52_LRSMinter_2016, 'WP_M5400W54_LRSMinter_2016':WP_M5400W54_LRSMinter_2016, 'WP_M5600W56_LRSMinter_2016':WP_M5600W56_LRSMinter_2016, 'WP_M5800W58_LRSMinter_2016':WP_M5800W58_LRSMinter_2016, 'WP_M6000W60_LRSMinter_2016':WP_M6000W60_LRSMinter_2016,
     'WP_RH_COMP_2016':WP_RH_COMP_2016, 'WP_M1900_RH_COMP_2016':WP_M1900_RH_COMP_2016, 'WP_M3000_RH_COMP_2016':WP_M3000_RH_COMP_2016, 'WP_M4000_RH_COMP_2016':WP_M4000_RH_COMP_2016,
     'DataMu_2016':DataMu_2016, 'DataMuB_2016':DataMuB_2016,  'DataMuC_2016':DataMuC_2016, 'DataMuD_2016':DataMuD_2016, 'DataMuE_2016':DataMuE_2016, 'DataMuF_2016':DataMuF_2016, 'DataMuG_2016':DataMuG_2016, 'DataMuH_2016':DataMuH_2016,
     'DataEle_2016':DataEle_2016, 'DataEleB_2016':DataEleB_2016, 'DataEleC_2016':DataEleC_2016, 'DataEleD_2016':DataEleD_2016, 'DataEleE_2016':DataEleE_2016, 'DataEleF_2016':DataEleF_2016, 'DataEleG_2016':DataEleG_2016, 'DataEleH_2016':DataEleH_2016,
@@ -2414,6 +3669,8 @@ sample_dict = {
     'QCD_2017':QCD_2017, 'QCDHT_300to500_2017':QCDHT_300to500_2017, 'QCDHT_500to700_2017':QCDHT_500to700_2017, 'QCDHT_700to1000_2017':QCDHT_700to1000_2017, 'QCDHT_1000to1500_2017':QCDHT_1000to1500_2017, 'QCDHT_1500to2000_2017':QCDHT_1500to2000_2017, 'QCDHT_2000toInf_2017':QCDHT_2000toInf_2017,
     'WP_LH_2017':WP_LH_2017, 'WP_M2000W200_LH_2017':WP_M2000W200_LH_2017, 'WP_M2000W400_LH_2017':WP_M2000W400_LH_2017, 'WP_M2000W600_LH_2017':WP_M2000W600_LH_2017, 'WP_M2400W240_LH_2017':WP_M2400W240_LH_2017, 'WP_M2400W480_LH_2017':WP_M2400W480_LH_2017, 'WP_M2400W720_LH_2017':WP_M2400W720_LH_2017, 'WP_M2800W280_LH_2017':WP_M2800W280_LH_2017, 'WP_M2800W560_LH_2017':WP_M2800W560_LH_2017, 'WP_M2800W840_LH_2017':WP_M2800W840_LH_2017, 'WP_M3200W320_LH_2017':WP_M3200W320_LH_2017, 'WP_M3200W640_LH_2017':WP_M3200W640_LH_2017, 'WP_M3200W960_LH_2017':WP_M3200W960_LH_2017, 'WP_M3600W360_LH_2017':WP_M3600W360_LH_2017, 'WP_M3600W720_LH_2017':WP_M3600W720_LH_2017, 'WP_M3600W1080_LH_2017':WP_M3600W1080_LH_2017, 'WP_M4000W400_LH_2017':WP_M4000W400_LH_2017, 'WP_M4000W800_LH_2017':WP_M4000W800_LH_2017, 'WP_M4000W1200_LH_2017':WP_M4000W1200_LH_2017, 'WP_M4400W440_LH_2017':WP_M4400W440_LH_2017, 'WP_M4400W880_LH_2017':WP_M4400W880_LH_2017, 'WP_M4400W1320_LH_2017':WP_M4400W1320_LH_2017, 'WP_M4800W480_LH_2017':WP_M4800W480_LH_2017, 'WP_M4800W960_LH_2017':WP_M4800W960_LH_2017, 'WP_M4800W1440_LH_2017':WP_M4800W1440_LH_2017, 'WP_M5200W520_LH_2017':WP_M5200W520_LH_2017, 'WP_M5200W1040_LH_2017':WP_M5200W1040_LH_2017, 'WP_M5200W1560_LH_2017':WP_M5200W1560_LH_2017, 'WP_M5600W560_LH_2017':WP_M5600W560_LH_2017, 'WP_M5600W1120_LH_2017':WP_M5600W1120_LH_2017, 'WP_M5600W1680_LH_2017':WP_M5600W1680_LH_2017, 'WP_M6000W600_LH_2017':WP_M6000W600_LH_2017, 'WP_M6000W1200_LH_2017':WP_M6000W1200_LH_2017, 'WP_M6000W1800_LH_2017':WP_M6000W1800_LH_2017, 'WP_M2000W20_LH_2017':WP_M2000W20_LH_2017, 'WP_M2200W22_LH_2017':WP_M2200W22_LH_2017, 'WP_M2400W24_LH_2017':WP_M2400W24_LH_2017, 'WP_M2600W26_LH_2017':WP_M2600W26_LH_2017, 'WP_M2800W28_LH_2017':WP_M2800W28_LH_2017, 'WP_M3000W30_LH_2017':WP_M3000W30_LH_2017, 'WP_M3200W32_LH_2017':WP_M3200W32_LH_2017, 'WP_M3400W34_LH_2017':WP_M3400W34_LH_2017, 'WP_M3600W36_LH_2017':WP_M3600W36_LH_2017, 'WP_M3800W38_LH_2017':WP_M3800W38_LH_2017, 'WP_M4000W40_LH_2017':WP_M4000W40_LH_2017, 'WP_M4200W42_LH_2017':WP_M4200W42_LH_2017, 'WP_M4400W44_LH_2017':WP_M4400W44_LH_2017, 'WP_M4600W46_LH_2017':WP_M4600W46_LH_2017, 'WP_M4800W48_LH_2017':WP_M4800W48_LH_2017, 'WP_M5000W50_LH_2017':WP_M5000W50_LH_2017, 'WP_M5200W52_LH_2017':WP_M5200W52_LH_2017, 'WP_M5400W54_LH_2017':WP_M5400W54_LH_2017, 'WP_M5600W56_LH_2017':WP_M5600W56_LH_2017, 'WP_M5800W58_LH_2017':WP_M5800W58_LH_2017, 'WP_M6000W60_LH_2017':WP_M6000W60_LH_2017,
     'WP_RH_2017':WP_RH_2017, 'WP_M2000W200_RH_2017':WP_M2000W200_RH_2017, 'WP_M2000W400_RH_2017':WP_M2000W400_RH_2017, 'WP_M2000W600_RH_2017':WP_M2000W600_RH_2017, 'WP_M2400W240_RH_2017':WP_M2400W240_RH_2017, 'WP_M2400W480_RH_2017':WP_M2400W480_RH_2017, 'WP_M2400W720_RH_2017':WP_M2400W720_RH_2017, 'WP_M2800W280_RH_2017':WP_M2800W280_RH_2017, 'WP_M2800W560_RH_2017':WP_M2800W560_RH_2017, 'WP_M2800W840_RH_2017':WP_M2800W840_RH_2017, 'WP_M3200W320_RH_2017':WP_M3200W320_RH_2017, 'WP_M3200W640_RH_2017':WP_M3200W640_RH_2017, 'WP_M3200W960_RH_2017':WP_M3200W960_RH_2017, 'WP_M3600W360_RH_2017':WP_M3600W360_RH_2017, 'WP_M3600W720_RH_2017':WP_M3600W720_RH_2017, 'WP_M3600W1080_RH_2017':WP_M3600W1080_RH_2017, 'WP_M4000W400_RH_2017':WP_M4000W400_RH_2017, 'WP_M4000W800_RH_2017':WP_M4000W800_RH_2017, 'WP_M4000W1200_RH_2017':WP_M4000W1200_RH_2017, 'WP_M4400W440_RH_2017':WP_M4400W440_RH_2017, 'WP_M4400W880_RH_2017':WP_M4400W880_RH_2017, 'WP_M4400W1320_RH_2017':WP_M4400W1320_RH_2017, 'WP_M4800W480_RH_2017':WP_M4800W480_RH_2017, 'WP_M4800W960_RH_2017':WP_M4800W960_RH_2017, 'WP_M4800W1440_RH_2017':WP_M4800W1440_RH_2017, 'WP_M5200W520_RH_2017':WP_M5200W520_RH_2017, 'WP_M5200W1040_RH_2017':WP_M5200W1040_RH_2017, 'WP_M5200W1560_RH_2017':WP_M5200W1560_RH_2017, 'WP_M5600W560_RH_2017':WP_M5600W560_RH_2017, 'WP_M5600W1120_RH_2017':WP_M5600W1120_RH_2017, 'WP_M5600W1680_RH_2017':WP_M5600W1680_RH_2017, 'WP_M6000W600_RH_2017':WP_M6000W600_RH_2017, 'WP_M6000W1200_RH_2017':WP_M6000W1200_RH_2017, 'WP_M6000W1800_RH_2017':WP_M6000W1800_RH_2017, 'WP_M2000W20_RH_2017':WP_M2000W20_RH_2017, 'WP_M2200W22_RH_2017':WP_M2200W22_RH_2017, 'WP_M2400W24_RH_2017':WP_M2400W24_RH_2017, 'WP_M2600W26_RH_2017':WP_M2600W26_RH_2017, 'WP_M2800W28_RH_2017':WP_M2800W28_RH_2017, 'WP_M3000W30_RH_2017':WP_M3000W30_RH_2017, 'WP_M3200W32_RH_2017':WP_M3200W32_RH_2017, 'WP_M3400W34_RH_2017':WP_M3400W34_RH_2017, 'WP_M3600W36_RH_2017':WP_M3600W36_RH_2017, 'WP_M3800W38_RH_2017':WP_M3800W38_RH_2017, 'WP_M4000W40_RH_2017':WP_M4000W40_RH_2017, 'WP_M4200W42_RH_2017':WP_M4200W42_RH_2017, 'WP_M4400W44_RH_2017':WP_M4400W44_RH_2017, 'WP_M4600W46_RH_2017':WP_M4600W46_RH_2017, 'WP_M4800W48_RH_2017':WP_M4800W48_RH_2017, 'WP_M5000W50_RH_2017':WP_M5000W50_RH_2017, 'WP_M5200W52_RH_2017':WP_M5200W52_RH_2017, 'WP_M5400W54_RH_2017':WP_M5400W54_RH_2017, 'WP_M5600W56_RH_2017':WP_M5600W56_RH_2017, 'WP_M5800W58_RH_2017':WP_M5800W58_RH_2017, 'WP_M6000W60_RH_2017':WP_M6000W60_RH_2017,
+'WP_M2000W200_LHSMinter_2017':WP_M2000W200_LHSMinter_2017, 'WP_M2000W400_LHSMinter_2017':WP_M2000W400_LHSMinter_2017, 'WP_M2000W600_LHSMinter_2017':WP_M2000W600_LHSMinter_2017, 'WP_M2800W280_LHSMinter_2017':WP_M2800W280_LHSMinter_2017, 'WP_M2800W560_LHSMinter_2017':WP_M2800W560_LHSMinter_2017, 'WP_M2800W840_LHSMinter_2017':WP_M2800W840_LHSMinter_2017, 'WP_M3600W360_LHSMinter_2017':WP_M3600W360_LHSMinter_2017, 'WP_M3600W720_LHSMinter_2017':WP_M3600W720_LHSMinter_2017, 'WP_M3600W1080_LHSMinter_2017':WP_M3600W1080_LHSMinter_2017, 'WP_M4400W440_LHSMinter_2017':WP_M4400W440_LHSMinter_2017, 'WP_M4400W880_LHSMinter_2017':WP_M4400W880_LHSMinter_2017, 'WP_M4400W1320_LHSMinter_2017':WP_M4400W1320_LHSMinter_2017, 'WP_M5200W520_LHSMinter_2017':WP_M5200W520_LHSMinter_2017, 'WP_M5200W1040_LHSMinter_2017':WP_M5200W1040_LHSMinter_2017, 'WP_M5200W1560_LHSMinter_2017':WP_M5200W1560_LHSMinter_2017, 'WP_M6000W600_LHSMinter_2017':WP_M6000W600_LHSMinter_2017, 'WP_M6000W1200_LHSMinter_2017':WP_M6000W1200_LHSMinter_2017, 'WP_M6000W1800_LHSMinter_2017':WP_M6000W1800_LHSMinter_2017, 'WP_M2000W20_LHSMinter_2017':WP_M2000W20_LHSMinter_2017, 'WP_M2200W22_LHSMinter_2017':WP_M2200W22_LHSMinter_2017, 'WP_M2400W24_LHSMinter_2017':WP_M2400W24_LHSMinter_2017, 'WP_M2600W26_LHSMinter_2017':WP_M2600W26_LHSMinter_2017, 'WP_M2800W28_LHSMinter_2017':WP_M2800W28_LHSMinter_2017, 'WP_M3000W30_LHSMinter_2017':WP_M3000W30_LHSMinter_2017, 'WP_M3200W32_LHSMinter_2017':WP_M3200W32_LHSMinter_2017, 'WP_M3400W34_LHSMinter_2017':WP_M3400W34_LHSMinter_2017, 'WP_M3600W36_LHSMinter_2017':WP_M3600W36_LHSMinter_2017, 'WP_M3800W38_LHSMinter_2017':WP_M3800W38_LHSMinter_2017, 'WP_M4000W40_LHSMinter_2017':WP_M4000W40_LHSMinter_2017, 'WP_M4200W42_LHSMinter_2017':WP_M4200W42_LHSMinter_2017, 'WP_M4400W44_LHSMinter_2017':WP_M4400W44_LHSMinter_2017, 'WP_M4600W46_LHSMinter_2017':WP_M4600W46_LHSMinter_2017, 'WP_M4800W48_LHSMinter_2017':WP_M4800W48_LHSMinter_2017, 'WP_M5000W50_LHSMinter_2017':WP_M5000W50_LHSMinter_2017, 'WP_M5200W52_LHSMinter_2017':WP_M5200W52_LHSMinter_2017, 'WP_M5400W54_LHSMinter_2017':WP_M5400W54_LHSMinter_2017, 'WP_M5600W56_LHSMinter_2017':WP_M5600W56_LHSMinter_2017, 'WP_M5800W58_LHSMinter_2017':WP_M5800W58_LHSMinter_2017, 'WP_M6000W60_LHSMinter_2017':WP_M6000W60_LHSMinter_2017,
+'WP_M2000W200_LRSMinter_2017':WP_M2000W200_LRSMinter_2017, 'WP_M2000W400_LRSMinter_2017':WP_M2000W400_LRSMinter_2017, 'WP_M2000W600_LRSMinter_2017':WP_M2000W600_LRSMinter_2017, 'WP_M2800W280_LRSMinter_2017':WP_M2800W280_LRSMinter_2017, 'WP_M2800W560_LRSMinter_2017':WP_M2800W560_LRSMinter_2017, 'WP_M2800W840_LRSMinter_2017':WP_M2800W840_LRSMinter_2017, 'WP_M3600W360_LRSMinter_2017':WP_M3600W360_LRSMinter_2017, 'WP_M3600W720_LRSMinter_2017':WP_M3600W720_LRSMinter_2017, 'WP_M3600W1080_LRSMinter_2017':WP_M3600W1080_LRSMinter_2017, 'WP_M4400W440_LRSMinter_2017':WP_M4400W440_LRSMinter_2017, 'WP_M4400W880_LRSMinter_2017':WP_M4400W880_LRSMinter_2017, 'WP_M4400W1320_LRSMinter_2017':WP_M4400W1320_LRSMinter_2017, 'WP_M5200W520_LRSMinter_2017':WP_M5200W520_LRSMinter_2017, 'WP_M5200W1040_LRSMinter_2017':WP_M5200W1040_LRSMinter_2017, 'WP_M5200W1560_LRSMinter_2017':WP_M5200W1560_LRSMinter_2017, 'WP_M6000W600_LRSMinter_2017':WP_M6000W600_LRSMinter_2017, 'WP_M6000W1200_LRSMinter_2017':WP_M6000W1200_LRSMinter_2017, 'WP_M6000W1800_LRSMinter_2017':WP_M6000W1800_LRSMinter_2017, 'WP_M2000W20_LRSMinter_2017':WP_M2000W20_LRSMinter_2017, 'WP_M2200W22_LRSMinter_2017':WP_M2200W22_LRSMinter_2017, 'WP_M2400W24_LRSMinter_2017':WP_M2400W24_LRSMinter_2017, 'WP_M2600W26_LRSMinter_2017':WP_M2600W26_LRSMinter_2017, 'WP_M2800W28_LRSMinter_2017':WP_M2800W28_LRSMinter_2017, 'WP_M3000W30_LRSMinter_2017':WP_M3000W30_LRSMinter_2017, 'WP_M3200W32_LRSMinter_2017':WP_M3200W32_LRSMinter_2017, 'WP_M3400W34_LRSMinter_2017':WP_M3400W34_LRSMinter_2017, 'WP_M3600W36_LRSMinter_2017':WP_M3600W36_LRSMinter_2017, 'WP_M3800W38_LRSMinter_2017':WP_M3800W38_LRSMinter_2017, 'WP_M4000W40_LRSMinter_2017':WP_M4000W40_LRSMinter_2017, 'WP_M4200W42_LRSMinter_2017':WP_M4200W42_LRSMinter_2017, 'WP_M4400W44_LRSMinter_2017':WP_M4400W44_LRSMinter_2017, 'WP_M4600W46_LRSMinter_2017':WP_M4600W46_LRSMinter_2017, 'WP_M4800W48_LRSMinter_2017':WP_M4800W48_LRSMinter_2017, 'WP_M5000W50_LRSMinter_2017':WP_M5000W50_LRSMinter_2017, 'WP_M5200W52_LRSMinter_2017':WP_M5200W52_LRSMinter_2017, 'WP_M5400W54_LRSMinter_2017':WP_M5400W54_LRSMinter_2017, 'WP_M5600W56_LRSMinter_2017':WP_M5600W56_LRSMinter_2017, 'WP_M5800W58_LRSMinter_2017':WP_M5800W58_LRSMinter_2017, 'WP_M6000W60_LRSMinter_2017':WP_M6000W60_LRSMinter_2017,
     'DataMu_2017':DataMu_2017, 'DataMuB_2017':DataMuB_2017, 'DataMuC_2017':DataMuC_2017, 'DataMuD_2017':DataMuD_2017, 'DataMuE_2017':DataMuE_2017, 'DataMuF_2017':DataMuF_2017,
     'DataEle_2017':DataEle_2017, 'DataEleB_2017':DataEleB_2017, 'DataEleC_2017':DataEleC_2017, 'DataEleD_2017':DataEleD_2017, 'DataEleE_2017':DataEleE_2017, 'DataEleF_2017':DataEleF_2017,
     'DataPh_2017':DataPh_2017, 'DataPhB_2017':DataPhB_2017, 'DataPhC_2017':DataPhC_2017, 'DataPhD_2017':DataPhD_2017, 'DataPhE_2017':DataPhE_2017, 'DataPhF_2017':DataPhF_2017,
@@ -2424,6 +3681,8 @@ sample_dict = {
     'QCD_2018':QCD_2018, 'QCDHT_300to500_2018':QCDHT_300to500_2018, 'QCDHT_500to700_2018':QCDHT_500to700_2018, 'QCDHT_700to1000_2018':QCDHT_700to1000_2018, 'QCDHT_1000to1500_2018':QCDHT_1000to1500_2018, 'QCDHT_1500to2000_2018':QCDHT_1500to2000_2018, 'QCDHT_2000toInf_2018':QCDHT_2000toInf_2018,
     'WP_LH_2018':WP_LH_2018, 'WP_M2000W200_LH_2018':WP_M2000W200_LH_2018, 'WP_M2000W400_LH_2018':WP_M2000W400_LH_2018, 'WP_M2000W600_LH_2018':WP_M2000W600_LH_2018, 'WP_M2400W240_LH_2018':WP_M2400W240_LH_2018, 'WP_M2400W480_LH_2018':WP_M2400W480_LH_2018, 'WP_M2400W720_LH_2018':WP_M2400W720_LH_2018, 'WP_M2800W280_LH_2018':WP_M2800W280_LH_2018, 'WP_M2800W560_LH_2018':WP_M2800W560_LH_2018, 'WP_M2800W840_LH_2018':WP_M2800W840_LH_2018, 'WP_M3200W320_LH_2018':WP_M3200W320_LH_2018, 'WP_M3200W640_LH_2018':WP_M3200W640_LH_2018, 'WP_M3200W960_LH_2018':WP_M3200W960_LH_2018, 'WP_M3600W360_LH_2018':WP_M3600W360_LH_2018, 'WP_M3600W720_LH_2018':WP_M3600W720_LH_2018, 'WP_M3600W1080_LH_2018':WP_M3600W1080_LH_2018, 'WP_M4000W400_LH_2018':WP_M4000W400_LH_2018, 'WP_M4000W800_LH_2018':WP_M4000W800_LH_2018, 'WP_M4000W1200_LH_2018':WP_M4000W1200_LH_2018, 'WP_M4400W440_LH_2018':WP_M4400W440_LH_2018, 'WP_M4400W880_LH_2018':WP_M4400W880_LH_2018, 'WP_M4400W1320_LH_2018':WP_M4400W1320_LH_2018, 'WP_M4800W480_LH_2018':WP_M4800W480_LH_2018, 'WP_M4800W960_LH_2018':WP_M4800W960_LH_2018, 'WP_M4800W1440_LH_2018':WP_M4800W1440_LH_2018, 'WP_M5200W520_LH_2018':WP_M5200W520_LH_2018, 'WP_M5200W1040_LH_2018':WP_M5200W1040_LH_2018, 'WP_M5200W1560_LH_2018':WP_M5200W1560_LH_2018, 'WP_M5600W560_LH_2018':WP_M5600W560_LH_2018, 'WP_M5600W1120_LH_2018':WP_M5600W1120_LH_2018, 'WP_M5600W1680_LH_2018':WP_M5600W1680_LH_2018, 'WP_M6000W600_LH_2018':WP_M6000W600_LH_2018, 'WP_M6000W1200_LH_2018':WP_M6000W1200_LH_2018, 'WP_M6000W1800_LH_2018':WP_M6000W1800_LH_2018, 'WP_M2000W20_LH_2018':WP_M2000W20_LH_2018, 'WP_M2200W22_LH_2018':WP_M2200W22_LH_2018, 'WP_M2400W24_LH_2018':WP_M2400W24_LH_2018, 'WP_M2600W26_LH_2018':WP_M2600W26_LH_2018, 'WP_M2800W28_LH_2018':WP_M2800W28_LH_2018, 'WP_M3000W30_LH_2018':WP_M3000W30_LH_2018, 'WP_M3200W32_LH_2018':WP_M3200W32_LH_2018, 'WP_M3400W34_LH_2018':WP_M3400W34_LH_2018, 'WP_M3600W36_LH_2018':WP_M3600W36_LH_2018, 'WP_M3800W38_LH_2018':WP_M3800W38_LH_2018, 'WP_M4000W40_LH_2018':WP_M4000W40_LH_2018, 'WP_M4200W42_LH_2018':WP_M4200W42_LH_2018, 'WP_M4400W44_LH_2018':WP_M4400W44_LH_2018, 'WP_M4600W46_LH_2018':WP_M4600W46_LH_2018, 'WP_M4800W48_LH_2018':WP_M4800W48_LH_2018, 'WP_M5000W50_LH_2018':WP_M5000W50_LH_2018, 'WP_M5200W52_LH_2018':WP_M5200W52_LH_2018, 'WP_M5400W54_LH_2018':WP_M5400W54_LH_2018, 'WP_M5600W56_LH_2018':WP_M5600W56_LH_2018, 'WP_M5800W58_LH_2018':WP_M5800W58_LH_2018, 'WP_M6000W60_LH_2018':WP_M6000W60_LH_2018,
     'WP_RH_2018':WP_RH_2018, 'WP_M2000W200_RH_2018':WP_M2000W200_RH_2018, 'WP_M2000W400_RH_2018':WP_M2000W400_RH_2018, 'WP_M2000W600_RH_2018':WP_M2000W600_RH_2018, 'WP_M2400W240_RH_2018':WP_M2400W240_RH_2018, 'WP_M2400W480_RH_2018':WP_M2400W480_RH_2018, 'WP_M2400W720_RH_2018':WP_M2400W720_RH_2018, 'WP_M2800W280_RH_2018':WP_M2800W280_RH_2018, 'WP_M2800W560_RH_2018':WP_M2800W560_RH_2018, 'WP_M2800W840_RH_2018':WP_M2800W840_RH_2018, 'WP_M3200W320_RH_2018':WP_M3200W320_RH_2018, 'WP_M3200W640_RH_2018':WP_M3200W640_RH_2018, 'WP_M3200W960_RH_2018':WP_M3200W960_RH_2018, 'WP_M3600W360_RH_2018':WP_M3600W360_RH_2018, 'WP_M3600W720_RH_2018':WP_M3600W720_RH_2018, 'WP_M3600W1080_RH_2018':WP_M3600W1080_RH_2018, 'WP_M4000W400_RH_2018':WP_M4000W400_RH_2018, 'WP_M4000W800_RH_2018':WP_M4000W800_RH_2018, 'WP_M4000W1200_RH_2018':WP_M4000W1200_RH_2018, 'WP_M4400W440_RH_2018':WP_M4400W440_RH_2018, 'WP_M4400W880_RH_2018':WP_M4400W880_RH_2018, 'WP_M4400W1320_RH_2018':WP_M4400W1320_RH_2018, 'WP_M4800W480_RH_2018':WP_M4800W480_RH_2018, 'WP_M4800W960_RH_2018':WP_M4800W960_RH_2018, 'WP_M4800W1440_RH_2018':WP_M4800W1440_RH_2018, 'WP_M5200W520_RH_2018':WP_M5200W520_RH_2018, 'WP_M5200W1040_RH_2018':WP_M5200W1040_RH_2018, 'WP_M5200W1560_RH_2018':WP_M5200W1560_RH_2018, 'WP_M5600W560_RH_2018':WP_M5600W560_RH_2018, 'WP_M5600W1120_RH_2018':WP_M5600W1120_RH_2018, 'WP_M5600W1680_RH_2018':WP_M5600W1680_RH_2018, 'WP_M6000W600_RH_2018':WP_M6000W600_RH_2018, 'WP_M6000W1200_RH_2018':WP_M6000W1200_RH_2018, 'WP_M6000W1800_RH_2018':WP_M6000W1800_RH_2018, 'WP_M2000W20_RH_2018':WP_M2000W20_RH_2018, 'WP_M2200W22_RH_2018':WP_M2200W22_RH_2018, 'WP_M2400W24_RH_2018':WP_M2400W24_RH_2018, 'WP_M2600W26_RH_2018':WP_M2600W26_RH_2018, 'WP_M2800W28_RH_2018':WP_M2800W28_RH_2018, 'WP_M3000W30_RH_2018':WP_M3000W30_RH_2018, 'WP_M3200W32_RH_2018':WP_M3200W32_RH_2018, 'WP_M3400W34_RH_2018':WP_M3400W34_RH_2018, 'WP_M3600W36_RH_2018':WP_M3600W36_RH_2018, 'WP_M3800W38_RH_2018':WP_M3800W38_RH_2018, 'WP_M4000W40_RH_2018':WP_M4000W40_RH_2018, 'WP_M4200W42_RH_2018':WP_M4200W42_RH_2018, 'WP_M4400W44_RH_2018':WP_M4400W44_RH_2018, 'WP_M4600W46_RH_2018':WP_M4600W46_RH_2018, 'WP_M4800W48_RH_2018':WP_M4800W48_RH_2018, 'WP_M5000W50_RH_2018':WP_M5000W50_RH_2018, 'WP_M5200W52_RH_2018':WP_M5200W52_RH_2018, 'WP_M5400W54_RH_2018':WP_M5400W54_RH_2018, 'WP_M5600W56_RH_2018':WP_M5600W56_RH_2018, 'WP_M5800W58_RH_2018':WP_M5800W58_RH_2018, 'WP_M6000W60_RH_2018':WP_M6000W60_RH_2018,
+'WP_M2000W200_LHSMinter_2018':WP_M2000W200_LHSMinter_2018, 'WP_M2000W400_LHSMinter_2018':WP_M2000W400_LHSMinter_2018, 'WP_M2000W600_LHSMinter_2018':WP_M2000W600_LHSMinter_2018, 'WP_M2800W280_LHSMinter_2018':WP_M2800W280_LHSMinter_2018, 'WP_M2800W560_LHSMinter_2018':WP_M2800W560_LHSMinter_2018, 'WP_M2800W840_LHSMinter_2018':WP_M2800W840_LHSMinter_2018, 'WP_M3600W360_LHSMinter_2018':WP_M3600W360_LHSMinter_2018, 'WP_M3600W720_LHSMinter_2018':WP_M3600W720_LHSMinter_2018, 'WP_M3600W1080_LHSMinter_2018':WP_M3600W1080_LHSMinter_2018, 'WP_M4400W440_LHSMinter_2018':WP_M4400W440_LHSMinter_2018, 'WP_M4400W880_LHSMinter_2018':WP_M4400W880_LHSMinter_2018, 'WP_M4400W1320_LHSMinter_2018':WP_M4400W1320_LHSMinter_2018, 'WP_M5200W520_LHSMinter_2018':WP_M5200W520_LHSMinter_2018, 'WP_M5200W1040_LHSMinter_2018':WP_M5200W1040_LHSMinter_2018, 'WP_M5200W1560_LHSMinter_2018':WP_M5200W1560_LHSMinter_2018, 'WP_M6000W600_LHSMinter_2018':WP_M6000W600_LHSMinter_2018, 'WP_M6000W1200_LHSMinter_2018':WP_M6000W1200_LHSMinter_2018, 'WP_M6000W1800_LHSMinter_2018':WP_M6000W1800_LHSMinter_2018, 'WP_M2000W20_LHSMinter_2018':WP_M2000W20_LHSMinter_2018, 'WP_M2200W22_LHSMinter_2018':WP_M2200W22_LHSMinter_2018, 'WP_M2400W24_LHSMinter_2018':WP_M2400W24_LHSMinter_2018, 'WP_M2600W26_LHSMinter_2018':WP_M2600W26_LHSMinter_2018, 'WP_M2800W28_LHSMinter_2018':WP_M2800W28_LHSMinter_2018, 'WP_M3000W30_LHSMinter_2018':WP_M3000W30_LHSMinter_2018, 'WP_M3200W32_LHSMinter_2018':WP_M3200W32_LHSMinter_2018, 'WP_M3400W34_LHSMinter_2018':WP_M3400W34_LHSMinter_2018, 'WP_M3600W36_LHSMinter_2018':WP_M3600W36_LHSMinter_2018, 'WP_M3800W38_LHSMinter_2018':WP_M3800W38_LHSMinter_2018, 'WP_M4000W40_LHSMinter_2018':WP_M4000W40_LHSMinter_2018, 'WP_M4200W42_LHSMinter_2018':WP_M4200W42_LHSMinter_2018, 'WP_M4400W44_LHSMinter_2018':WP_M4400W44_LHSMinter_2018, 'WP_M4600W46_LHSMinter_2018':WP_M4600W46_LHSMinter_2018, 'WP_M4800W48_LHSMinter_2018':WP_M4800W48_LHSMinter_2018, 'WP_M5000W50_LHSMinter_2018':WP_M5000W50_LHSMinter_2018, 'WP_M5200W52_LHSMinter_2018':WP_M5200W52_LHSMinter_2018, 'WP_M5400W54_LHSMinter_2018':WP_M5400W54_LHSMinter_2018, 'WP_M5600W56_LHSMinter_2018':WP_M5600W56_LHSMinter_2018, 'WP_M5800W58_LHSMinter_2018':WP_M5800W58_LHSMinter_2018, 'WP_M6000W60_LHSMinter_2018':WP_M6000W60_LHSMinter_2018,
+'WP_M2000W200_LRSMinter_2018':WP_M2000W200_LRSMinter_2018, 'WP_M2000W400_LRSMinter_2018':WP_M2000W400_LRSMinter_2018, 'WP_M2000W600_LRSMinter_2018':WP_M2000W600_LRSMinter_2018, 'WP_M2800W280_LRSMinter_2018':WP_M2800W280_LRSMinter_2018, 'WP_M2800W560_LRSMinter_2018':WP_M2800W560_LRSMinter_2018, 'WP_M2800W840_LRSMinter_2018':WP_M2800W840_LRSMinter_2018, 'WP_M3600W360_LRSMinter_2018':WP_M3600W360_LRSMinter_2018, 'WP_M3600W720_LRSMinter_2018':WP_M3600W720_LRSMinter_2018, 'WP_M3600W1080_LRSMinter_2018':WP_M3600W1080_LRSMinter_2018, 'WP_M4400W440_LRSMinter_2018':WP_M4400W440_LRSMinter_2018, 'WP_M4400W880_LRSMinter_2018':WP_M4400W880_LRSMinter_2018, 'WP_M4400W1320_LRSMinter_2018':WP_M4400W1320_LRSMinter_2018, 'WP_M5200W520_LRSMinter_2018':WP_M5200W520_LRSMinter_2018, 'WP_M5200W1040_LRSMinter_2018':WP_M5200W1040_LRSMinter_2018, 'WP_M5200W1560_LRSMinter_2018':WP_M5200W1560_LRSMinter_2018, 'WP_M6000W600_LRSMinter_2018':WP_M6000W600_LRSMinter_2018, 'WP_M6000W1200_LRSMinter_2018':WP_M6000W1200_LRSMinter_2018, 'WP_M6000W1800_LRSMinter_2018':WP_M6000W1800_LRSMinter_2018, 'WP_M2000W20_LRSMinter_2018':WP_M2000W20_LRSMinter_2018, 'WP_M2200W22_LRSMinter_2018':WP_M2200W22_LRSMinter_2018, 'WP_M2400W24_LRSMinter_2018':WP_M2400W24_LRSMinter_2018, 'WP_M2600W26_LRSMinter_2018':WP_M2600W26_LRSMinter_2018, 'WP_M2800W28_LRSMinter_2018':WP_M2800W28_LRSMinter_2018, 'WP_M3000W30_LRSMinter_2018':WP_M3000W30_LRSMinter_2018, 'WP_M3200W32_LRSMinter_2018':WP_M3200W32_LRSMinter_2018, 'WP_M3400W34_LRSMinter_2018':WP_M3400W34_LRSMinter_2018, 'WP_M3600W36_LRSMinter_2018':WP_M3600W36_LRSMinter_2018, 'WP_M3800W38_LRSMinter_2018':WP_M3800W38_LRSMinter_2018, 'WP_M4000W40_LRSMinter_2018':WP_M4000W40_LRSMinter_2018, 'WP_M4200W42_LRSMinter_2018':WP_M4200W42_LRSMinter_2018, 'WP_M4400W44_LRSMinter_2018':WP_M4400W44_LRSMinter_2018, 'WP_M4600W46_LRSMinter_2018':WP_M4600W46_LRSMinter_2018, 'WP_M4800W48_LRSMinter_2018':WP_M4800W48_LRSMinter_2018, 'WP_M5000W50_LRSMinter_2018':WP_M5000W50_LRSMinter_2018, 'WP_M5200W52_LRSMinter_2018':WP_M5200W52_LRSMinter_2018, 'WP_M5400W54_LRSMinter_2018':WP_M5400W54_LRSMinter_2018, 'WP_M5600W56_LRSMinter_2018':WP_M5600W56_LRSMinter_2018, 'WP_M5800W58_LRSMinter_2018':WP_M5800W58_LRSMinter_2018, 'WP_M6000W60_LRSMinter_2018':WP_M6000W60_LRSMinter_2018,
     'DataMu_2018':DataMu_2018, 'DataMuA_2018':DataMuA_2018, 'DataMuB_2018':DataMuB_2018, 'DataMuC_2018':DataMuC_2018, 'DataMuD_2018':DataMuD_2018,
     'DataEle_2018':DataEle_2018, 'DataEleA_2018':DataEleA_2018, 'DataEleB_2018':DataEleB_2018, 'DataEleC_2018':DataEleC_2018, 'DataEleD_2018':DataEleD_2018,
     'DataHT_2018':DataHT_2018,'DataHTA_2018':DataHTA_2018,  'DataHTB_2018':DataHTB_2018, 'DataHTC_2018':DataHTC_2018, 'DataHTD_2018':DataHTD_2018,
