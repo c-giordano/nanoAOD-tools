@@ -23,6 +23,10 @@ public:
   float getWeight(float x1, float x2, int id1, int id2,float scalePDF,string newPDF="NNPDF30_lo_as_0118", bool verbose=false);
   
   float getUncertainty (float x1, float x2, int id1, int id2,float scalePDF, string newPDF="NNPDF_lo_as_118", bool verbose=false);
+
+  size_t getNReplicas();
+
+  vector<float> getReplicasWeights (float x1, float x2, int id1, int id2,float scalePDF, string newPDF="NNPDF_lo_as_118", bool verbose=false);
   //  vector<float> getUncertainties (float x1, float x2, int id1, int id2,float scalePDF, bool verbose=false);
 
 private:
