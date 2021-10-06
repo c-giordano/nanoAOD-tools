@@ -21,6 +21,8 @@ parser.add_option('-L', '--lep', dest='lep', type='string', default = 'muon', he
 parser.add_option('-S', '--syst', dest='syst', type='string', default = 'all', help='Default all systematics added')
 parser.add_option('-C', '--cut', dest='cut', type='string', default = 'lepton_eta>-10.', help='Default no cut')
 parser.add_option('-y', '--year', dest='year', type='string', default = 'all', help='Default 2016, 2017 and 2018 are included')
+parser.add_option('-i', '--inputpath', dest='inputpath', type='string', default = '', help='Default path taken from user name')
+parser.add_option('-o', '--outputpath', dest='outputpath', type='string', default = '', help='Default path taken from user name')
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v6', help='Default folder is v0')
 #parser.add_option('-T', '--topol', dest='topol', type='string', default = 'all', help='Default all njmt')
 parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', help="")
@@ -32,6 +34,13 @@ folder = opt.folder
 filerepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'
 plotrepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'#_topjet/'#/only_Wpjetbtag_ev1btag/'
 
+if(opt.inputpath!=''):
+     filerepo='/eos/user/a/adeiorio/Wprime/nosynch/'+folder+'/'
+     filerepo=opt.inputpath+'/'+folder+'/'
+if(opt.outputpath!=''):
+     plotrepo='/eos/user/o/oiorio/Wprime/nosynch/'+folder+'/'
+     plotrepo=opt.outputpath+'/'+folder+'/'
+     
 ROOT.gROOT.SetBatch() # don't pop up canvases
 if not os.path.exists(plotrepo + 'plot/muon'):
      os.makedirs(plotrepo + 'plot/muon')
@@ -394,7 +403,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
           maximum = max(stack.GetMaximum(),hdata.GetMaximum())
      else:
           maximum = stack.GetMaximum()
-     logscale = False # True #
+     logscale = True #
      if(logscale):
           pad1.SetLogy()
           stack.SetMaximum(maximum*1000)
@@ -684,6 +693,8 @@ for year in years:
           #variables.append(variabile('w_nominal', 'w_nominal',  wzero+'*('+cut+')', 350, 0, 3.5)) 
           #variables.append(variabile('abs(muon_pt_tuneP_pull)', 'muon p_{T}(1-tuneP)/p_{T}',  wzero+'*('+cut+')', 40, 0, 0.4)) 
           variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 600., 800., 1000.])))
+          variables.append(variabile('lepMET_deltaphi', '#Delta#phi(l, MET)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
+          variables.append(variabile('best_topjet_dRLepJet', '#DeltaR(lep, top jet)',  wzero+'*('+cut+')', 10, 0, 5))
           #variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_phi', 'Missing transverse momentum #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
@@ -696,7 +707,11 @@ for year in years:
           variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
           '''
           variables.append(variabile('best_top_m', 'top mass [GeV]',  wzero+'*(best_top_m>100&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 220, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+          variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', 100, 0, 500))
 
+          variables.append(variabile('deltaR_bestWAK4_closestAK8', '#DeltaR (best)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
+
+          variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
           #variables.append(variabile('lepton_eta', 'lepton #eta', wzero+'*('+cut+')', 44, -2.2, 2.2))
           #variables.append(variabile('lepton_phi', 'lepton #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
           '''
