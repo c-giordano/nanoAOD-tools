@@ -1097,40 +1097,39 @@ def reco(scenario, isMC, addPDF, MCReco):
                         #print("lhapdfweight is ",LHAPdfWeight)
                         #print("weights are",LHAPdfWeight.LHAWeights)
                         pdfwacc0=LHAPdfWeight_0[0]/lhapdf_xsweight
+                        #pdfwacc0=LHAPdfWeight_0[0]
                         lhapdf_xsweights
                         for pdfw, i in zip(LHAPdfWeight, xrange(0, len(LHAPdfWeight)) ):
                             pdfwacc=pdfw/lhapdf_xsweights[i]
-#                            pdfwacc=pdfw
+                            #pdfwacc=pdfw
                             if(i<maxpdfs+1): systTree.setWeightName("pdf"+str(i+1), copy.deepcopy(pdfwacc))
                             #mean_pdf += pdfw/lhapdf_xsweights[i]
                             mean_pdf += pdfwacc#/lhapdf_xsweights[i]
 #                            print ("check pdf #",i," val ", pdfw," xsweight ",lhapdf_xsweights[i])
 #                            print(" acceptance ", pdfw/lhapdf_xsweights[i], " , partial sum ",  mean_pdf, " partial mean ", mean_pdf/(i+1))
                             # print(" v2 acceptance ", pdfw/lhapdf_xsweights[i], " , partial sum ",  mean_pdf, " partial mean ", mean_pdf/(i+1))
-                            
+                            print("check rms before ", rms)
                             if(LHAPDFDefault=="LHAPDF4LHC15"):
                                 if(i%2==0): rmsup += ((pdfwacc/pdfwacc0)-1)**2
                                 if(i%2==1): rmsdown += ((pdfwacc/pdfwacc0)-1)**2
-                                #print("check pdf acc ", pdfwacc, " pdfwacc0 ",pdfwacc0," comp ", )
+                                rms= rms + ((pdfwacc/pdfwacc0)-1)**2
+                                print("check pdf acc ", pdfwacc, " pdfwacc0 ",pdfwacc0," diffq ", ((pdfwacc/pdfwacc0)-1)**2," rms ",rms )
                         mean_pdf=mean_pdf/nlhapdfs
-                        for pdfw, i in zip(LHAPdfWeight, xrange(0, len(LHAPdfWeight)) ):
-                            #rms += (pdfw/lhapdf_xsweights[i]-mean_pdf)**2
-                            rms += (pdfwacc-mean_pdf)**2
-                            #print("pdf #",i," difference from mean ", pdfw/lhapdf_xsweights[i]-mean_pdf , " partial sum ",  rms, " partial rms ", math.sqrt(rms/(i+1)))
-                            #print(" pdf #",i," difference from mean ", pdfw-mean_pdf , " partial sum ",  rms, " partial rms ", math.sqrt(rms/(i+1)))
-                            #print("=== LHA mean is ", lhamean, " std ",lhastd)
 
                         pdf_xsweight=lhapdf_xsweight  
                         pdf_xsweight=1.
-                    rms= math.sqrt(rms/(nlhapdfs-1))
+#                         Rms= math.sqrt(rms/(nlhapdfs-1))
                         
                         
                     #print(rms)
-                    pdf_totalUp = (1+rms)*pdf_xsweight
-                    pdf_totalDown = (1-rms)*pdf_xsweight
+                    #pdf_totalUp = (1+rms)*pdf_xsweigth
+                    #pdf_totalDown = (1-rms)*pdf_xsweight
                     if(LHAPDFDefault=="LHAPDF4LHC15"):
-                        pdf_totalUp = 1+math.sqrt(rmsup)/nlhapdfs
-                        pdf_totalDown = 1-math.sqrt(rmsdown)/nlhapdfs
+                        print("final rms", math.sqrt(rms)/nlhapdfs)
+                        
+                        pdf_totalUp = 1+math.sqrt(rms)/nlhapdfs
+                        pdf_totalDown = 1-math.sqrt(rms)/nlhapdfs
+                        print("pdfTotalUp ",pdf_totalUp)
                     #print(pdf_totalUp, pdf_totalDown)
                     
                     systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
