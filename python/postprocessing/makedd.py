@@ -54,7 +54,8 @@ lepcut=""
 
 namemap={}
 namemap["SR2B"]="h_jets_best_Wprime_m_SR2B"
-namemap["SR2B_I"]="h_jets_best_Wprime_m_SR2B_I"
+#namemap["SR2B_I"]="h_jets_best_Wprime_m_SR2B_I"
+namemap["SR2B_I"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30"
 
 namemap["SRW"]="h_jets_best_Wprime_m_SRW"
 namemap["SRW_I"]="h_jets_best_Wprime_m_SRW_I"
@@ -70,6 +71,7 @@ namemap["CR0B_I_mu"]="h_jets_best_Wprime_m_CR0B_I"
 
 wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I","CR1B":"CR1B_I"}
 wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I"}
+wjets_veto_map = {"CR0B":"CR0B_I"}
 
 sfregions = opt.sfregions
 
@@ -89,6 +91,7 @@ if "vs" in sfregions:
         wjets_veto_map[tsrs[t]]=tcrs[t]
 print "map is ",wjets_veto_map
 #wjets_veto_map={}
+#wjets_veto_map = {"CR0B":"CR0B_I"}
 
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
@@ -123,22 +126,23 @@ fexplin=TF1("fexplin","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 fexplinw=TF1("fexplinw","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 
 fexplintele=TF1("fexplintele","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
-fexplint=TF1("fexplint","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+fexplint=TF1("fexplint","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
 
 fexplin0=TF1("fexplin0","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 
 if(opt.category=="electron"):
-    fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
+    fexplin.SetParameters(1,801,0.01,0.003)
     fexplinw.SetParameters(10,1001,11.5,0.1,1,0.0000002)
     fexplintele.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
 #    fexplint.FixParameter(3,0)
     fexplin0.SetParameters(10,1001,211,0.01,1,0.0000002)
 
 if(opt.category=="muon"):
-    fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
+    fexplin.SetParameters(10,1001,0.1,0.001)
     fexplinw.SetParameters(110,1001,5.5,0.1,1,0.0000002)
-    fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
-    fexplin0.SetParameters(10,1001,51,0.1,1,0.0000002)
+    fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
+#    fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
+    fexplin0.SetParameters(10,501,15,0.01)
 
 #fexplin=TF1("fexplin","[0]*exp(-x*[1]+[4])+[2]+x*[3]",1000,6000)
 #fexplin.SetParameters(310,0.001,210,0.01,1,0.0000002)
@@ -246,8 +250,9 @@ def resetParameters():
     if(opt.category=="muon"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
         fexplinw.SetParameters(110,1001,5.5,0.1,1,0.0000002)
-        fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
-        fexplin0.SetParameters(10,1001,51,0.1,1,0.0000002)
+        fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
+#        fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
+        fexplin0.SetParameters(10,1001,51,0.01,1)
 
 #fexp2data=TF1("fexp2data","[0]+x*[1]+x*x*[2]+x*x*x*[3]+[4]*exp(-([5]+x*[6]+x*x*[7]))",1000,6000)
 #fexp2data.SetParameters(1000,10,1,0.1,1000,0.1,0.01,0.0000002)
@@ -300,8 +305,8 @@ data_fitrange = None
 alt1_fitrange = [1250,6000]
 alt2_fitrange = [1500,6000]
 
-alt1_fitrange = None
-alt2_fitrange = None
+#alt1_fitrange = None
+#alt2_fitrange = None
 class namecollection(object):
     def __init__(self,namemap):
         self.__namemap=namemap
@@ -502,7 +507,7 @@ class single_process(namecollection):
                         print "sr ",sr," mapfitoption is ",mapfitoption
                         hs_ret_up = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alt1_fitrange, fitoption=mapfitoption,postfix="alttfup")
                         hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alt2_fitrange, fitoption=mapfitoption,postfix="alttfdown")
-                        if 'CR0B' in sr and category == 'muon':
+                        if 'CR0B' in sr and category == 'muona':
                             hs_ret_up = fittedHisto(historatio,mapFitFunction[sr+'_alt'],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,postfix="alttfup")
                             hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,postfix="alttfdown")
                         hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption)
