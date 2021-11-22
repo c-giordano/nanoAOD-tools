@@ -1122,20 +1122,25 @@ class systWeights(object):
             trees[s] = ROOT.TTree(str("events_"+self.selectionsNames[s]), "")
             isEventBasedSelection = self.isEventBasedSelection(s)
             #print trees[s], isEventBasedSelection
-            self.initTreesSysts2S(trees[s], isEventBasedSelection)
+            self.initTreesSysts2S(trees[s], isEventBasedSelection,s)
             
-    def initTreesSysts2S(self, tree, isEventBasedSyst):
+    def initTreesSysts2S(self, tree, isEventBasedSyst, s):
         isEventBasedSyst = False
         Max = self.maxSysts
-        if self.shortPDFFiles:
+        scenario = self.selectionsNames[s]
+        print "short pdf files?" , self.shortPDFFiles, " max systs ", Max
+        if self.shortPDFFiles or not ( "nominal" in scenario):
             Max = self.maxSystsNonPDF
+        print("scenario is ", scenario," nominal in scenario?", ("nominal" in scenario)," Max ", Max, " MaxSyst", self.maxSysts, " maxsysts nonpdf ", self.maxSystsNonPDF)
         for sy in range(Max):
             if isEventBasedSyst and sy > 0:
                 continue
             ns = str(self.weightedNames[sy])
             if sy == 0:
                 ns = "w_nominal"
+          
             #print "Branch: ", ns
+            #print "syst ", sy, " name ", ns
             tystring = str(ns + pytocpptypes(self.weightedSysts[int(sy)]))
             tree.Branch(ns, self.weightedSysts[int(sy)], tystring)
         for c in range(self.nCategories):         
@@ -1285,7 +1290,7 @@ class systWeights(object):
             self.wCats[1] = array.array('f', [1.0])
             self.wCats[2] = array.array('f', [1.0])
             self.wCats[3] = array.array('f', [1.0])
-
+        print "addPDF",addPDF
         if addPDF:
             self.weightedNames[self.maxSysts] = "pdf_totalUp"
             self.weightedNames[self.maxSysts+1] = "pdf_totalDown"
@@ -1296,11 +1301,14 @@ class systWeights(object):
             self.setMax(self.maxSysts+6)
             self.setMaxNonPDF(self.maxSystsNonPDF+6)
             nPDF = self.nPDF
+            print "npdf ", self.nPDF
             for i in range(nPDF):
-                ss = str(i+1)
-                self.weightedNames[i+self.maxSysts] = "pdf" + str(ss)
-
-            self.setMax(maxSysts+nPDF)
+              print " initializing pdf # ",i
+              ss = str(i+1)
+              self.weightedNames[i+self.maxSysts] = "pdf" + str(ss)
+            
+            self.setMax(self.maxSysts+nPDF)
+            print "max systs now is ",self.maxSysts
             self.weightedNames[self.maxSysts] = ""
 
     def addSyst(self, name):

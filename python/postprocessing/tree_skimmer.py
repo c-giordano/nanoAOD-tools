@@ -76,7 +76,7 @@ LHAPDFDefault = "LHANNPDF"
 LHAPDFDefault = "LHAPDF4LHC15"
 
 systTree = systWeights()
-systTree.prepareDefault(True, addQ2, addPDF, addTopPt, addVHF, addTTSplit)
+systTree.prepareDefault(True, addQ2=False, addPDF=True, addTopPt=False, addVHF=False, addTTSplit=False,numPDF=100)
 
 for scenario in scenarios:
     systTree.addSelection(scenario)
@@ -126,6 +126,7 @@ systTree.setWeightName("btagUp",1.)
 systTree.setWeightName("btagDown",1.)
 systTree.setWeightName("mistagUp",1.)
 systTree.setWeightName("mistagDown",1.)
+
 systTree.setWeightName("pdf_totalUp", 1.)
 systTree.setWeightName("pdf_totalDown", 1.)
 
@@ -820,6 +821,7 @@ def reco(scenario, isMC, addPDF, MCReco):
             tree.SetBranchAddress(LHAPDFDefault+"_LHAWeights",LHAPdfWeight_a)
             lhamean = npmean(lhapdf_xsweights)
             lhastd = npstd(lhapdf_xsweights)
+
     #++++++++++++++++++++++++++++++++++
     #++      Efficiency studies      ++
     #++++++++++++++++++++++++++++++++++
@@ -846,7 +848,6 @@ def reco(scenario, isMC, addPDF, MCReco):
                 
         if i%5000 == 1:
             print("Event #", i, " out of ", int(tree.GetEntries()))
-
         event = Event(tree,i)
         muons = Collection(event, "Muon")
         electrons = Collection(event, "Electron")
