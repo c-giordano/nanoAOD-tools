@@ -7,6 +7,10 @@ import math
 import datetime
 import copy
 from array import array
+from numpy import mean as npmean
+from numpy import std as npstd
+
+
 from skimtree_utils import *
 
 Debug = False
@@ -55,6 +59,10 @@ for i in range(10):
 # defining the operations to be done with the systWeights class
 maxSysts = 0
 addPDF = True
+addLHAPDF = False
+if("WP" in sample.label):
+    addPDF = True
+    addLHAPDF = True
 addQ2 = False
 addTopPt = False
 addVHF = False
@@ -63,6 +71,9 @@ addTopTagging = False
 addWTagging = False
 addTrigSF = False
 nPDF = 0
+
+LHAPDFDefault = "LHANNPDF"
+LHAPDFDefault = "LHAPDF4LHC15"
 
 systTree = systWeights()
 systTree.prepareDefault(True, addQ2, addPDF, addTopPt, addVHF, addTTSplit)
@@ -118,11 +129,17 @@ systTree.setWeightName("mistagDown",1.)
 systTree.setWeightName("pdf_totalUp", 1.)
 systTree.setWeightName("pdf_totalDown", 1.)
 
+if(LHAPDFDefault=="LHAPDF4LHC15"):
+    maxpdfs= 30
 
+if(addLHAPDF):
+    for i in range(1,maxpdfs+1):
+        systTree.setWeightName("pdf"+str(i), 1.)
+        
+        
 #++++++++++++++++++++++++++++++++++
 #++     variables to branch      ++
 #++++++++++++++++++++++++++++++++++
-
 def reco(scenario, isMC, addPDF, MCReco):
     isNominal = False
     if scenario == 'nominal':
@@ -730,12 +747,21 @@ def reco(scenario, isMC, addPDF, MCReco):
     #++++++++++++++++++++++++++++++++++
     print("isMC: ", isMC)
     pdf_xsweight = 1.
+    pdf_xsweights = []
     pdf_weight_sum = 0.
+
+    lhapdf_xsweight = 1.
+    lhapdf_xsweights = []
+    lhapdf_weight_sum = 0.
+
     if(isMC):
         h_genweight = ROOT.TH1F()
         h_genweight.SetNameTitle('h_genweight', 'h_genweight')
         h_PDFweight = ROOT.TH1F()
         h_PDFweight.SetNameTitle("h_PDFweight","h_PDFweight")
+        h_LHAPDFweight = ROOT.TH1F()
+        h_LHAPDFweight.SetNameTitle("h_LHAPDFweight","h_LHAPDFweight")
+
         for infile in file_list: 
             newfile = ROOT.TFile.Open(infile)
             dirc = ROOT.TDirectory()
@@ -756,11 +782,44 @@ def reco(scenario, isMC, addPDF, MCReco):
             if(ROOT.TH1F(h_genweight).Integral() < 1.):
                 h_genweight.SetBins(h_genw_tmp.GetXaxis().GetNbins(), h_genw_tmp.GetXaxis().GetXmin(), h_genw_tmp.GetXaxis().GetXmax())
             h_genweight.Add(h_genw_tmp)
+            if(addLHAPDF):
+                if(dirc.GetListOfKeys().Contains("h_"+LHAPDFDefault+"weight")):
+                    h_lhapdfw_tmp = ROOT.TH1F(dirc.Get("h_"+LHAPDFDefault+"weight"))
+
+                    if(LHAPDFDefault=="LHANNPDF"):
+                        for i in range(1, h_lhapdfw_tmp.GetXaxis().GetNbins()+1):
+                            lhapdf_weight_sum += h_lhapdfw_tmp.GetBinContent(i)
+                        lhapdf_weight_sum /= h_lhapdfw_tmp.GetXaxis().GetNbins()
+
+                    if(LHAPDFDefault=="LHAPDF4LHC15"):
+                        lhapdf_weight_sum += h_lhapdfw_tmp.GetBinContent(0)
+                    print(lhapdf_weight_sum)
+                    h_LHAPDFweight.SetBins(h_lhapdfw_tmp.GetXaxis().GetNbins(), h_lhapdfw_tmp.GetXaxis().GetXmin(), h_lhapdfw_tmp.GetXaxis().GetXmax())
+                    h_LHAPDFweight.Add(h_lhapdfw_tmp)
+                    npdfs = h_lhapdfw_tmp.GetXaxis().GetNbins()
+                    
         print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genweight.GetBinContent(1), h_PDFweight.GetNbinsX()))
         lheweight = h_genweight.GetBinContent(2)/h_genweight.GetBinContent(1)
         pdf_xsweight = pdf_weight_sum/h_genweight.GetBinContent(1)
-        #print(pdf_xsweight)
-
+        pdf_xsweights = [h_PDFweight.GetBinContent(i) for i in range(1,h_PDFweight.GetXaxis().GetNbins()+1)]        
+        
+        if(addLHAPDF):
+            lhapdf_xsweight = lhapdf_weight_sum/h_genweight.GetBinContent(1)
+            lhapdf_xsweights = [h_LHAPDFweight.GetBinContent(i) for i in range(1,h_LHAPDFweight.GetXaxis().GetNbins()+1)]        
+            nlhapdfs = h_LHAPDFweight.GetXaxis().GetNbins() 
+            #print ("pdfweights",pdf_xsweights, " lhapdfweights ", lhapdf_xsweights)
+            neventspre = h_genweight.GetBinContent(1)
+            lhapdf_xsweights = [x/neventspre for x in lhapdf_xsweights]
+            #print(" nevents= ", neventspre ," xsweights ",lhapdf_xsweights)
+            #print(pdf_xsweight)
+            nLHAPDF = array.array('i',[0])
+            LHAPdfWeight_0 = array.array('f',[0])
+            tree.SetBranchAddress(LHAPDFDefault+"",LHAPdfWeight_0)
+            LHAPdfWeight_a = array.array('f',[0]*nlhapdfs)
+            tree.SetBranchAddress("n"+LHAPDFDefault+"_LHAWeights",nLHAPDF)
+            tree.SetBranchAddress(LHAPDFDefault+"_LHAWeights",LHAPdfWeight_a)
+            lhamean = npmean(lhapdf_xsweights)
+            lhastd = npstd(lhapdf_xsweights)
     #++++++++++++++++++++++++++++++++++
     #++      Efficiency studies      ++
     #++++++++++++++++++++++++++++++++++
@@ -776,7 +835,6 @@ def reco(scenario, isMC, addPDF, MCReco):
     #++   looping over the events    ++
     #++++++++++++++++++++++++++++++++++
     for i in range(tree.GetEntries()):
-    #for i in range(10000):
         w_nominal_nominal[0] = 1.
         #++++++++++++++++++++++++++++++++++
         #++        taking objects        ++
@@ -788,9 +846,10 @@ def reco(scenario, isMC, addPDF, MCReco):
                 
         if i%5000 == 1:
             print("Event #", i, " out of ", int(tree.GetEntries()))
+
         event = Event(tree,i)
-        electrons = Collection(event, "Electron")
         muons = Collection(event, "Muon")
+        electrons = Collection(event, "Electron")
         jets = Collection(event, "Jet")
         njets = len(jets)
         fatjets = Collection(event, "FatJet")
@@ -799,6 +858,8 @@ def reco(scenario, isMC, addPDF, MCReco):
         HLT = Object(event, "HLT")
         Flag = Object(event, 'Flag')
         met = Object(event, "MET")        
+        if(addLHAPDF):
+            LHAPDF = Object(event, LHAPDFDefault)        
         MET = {'metPx': met.pt*ROOT.TMath.Cos(met.phi), 'metPy': met.pt*ROOT.TMath.Sin(met.phi)}
         genpart = None
         
@@ -1003,8 +1064,8 @@ def reco(scenario, isMC, addPDF, MCReco):
                     systTree.setWeightName("LHESF", copy.deepcopy(lheSF))
                     systTree.setWeightName("LHEUp", copy.deepcopy(lheUp))
                     systTree.setWeightName("LHEDown", copy.deepcopy(lheDown))
-                    print(lheUp, lheDown)
-
+                    #print(lheUp, lheDown)
+                #print("addPDF?" , addPDF)
                 if addPDF:
                     LHEPdfWeight = Collection(event, 'LHEPdfWeight')
                     mean_pdf = 0.
@@ -1016,12 +1077,59 @@ def reco(scenario, isMC, addPDF, MCReco):
                     for pdfw, i in zip(LHEPdfWeight, range(1, len(LHEPdfWeight)+1)):
                         rms += (pdfw.__getattr__("")-mean_pdf)**2
                     rms = math.sqrt(rms/len(LHEPdfWeight))
-                    #print(rms)
+                    #print("is sample ok?" , ("WP_" in sample.label)," lha? ", addLHA)
                     pdf_totalUp = (1+rms)*pdf_xsweight
                     pdf_totalDown = (1-rms)*pdf_xsweight
-                    print(pdf_totalUp, pdf_totalDown)
-                    systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
-                    systTree.setWeightName("pdf_totalDown", copy.deepcopy(pdf_totalDown))
+                    #print('pdf_totalUp ', pdf_totalUp, ' and pdf_totalDown ', pdf_totalDown )
+                if(addLHAPDF):
+                    LHAPDFWeights=LHAPDFDefault
+#                    print(" adding LHAPDF  ")
+                    if hasattr(event,LHAPDFWeights):
+                        mean_pdf = 0.
+                        rms = 0.
+                        rmsup = 0.
+                        rmsdown = 0.
+                        #LHAPdfWeight = event.__getattr__(LHAPDFWeights)
+                        #LHAPdfWeight = event.arrayReader("LHANNPDF_LHAWeights")
+                        LHAPdfWeight = LHAPdfWeight_a
+                        #print("lhapdfweight is ",LHAPdfWeight)
+                        #print("weights are",LHAPdfWeight.LHAWeights)
+                        pdfwacc0 = LHAPdfWeight_0[0]/lhapdf_xsweight
+                        #pdfwacc0=LHAPdfWeight_0[0]
+                        lhapdf_xsweights
+                        for pdfw, i in zip(LHAPdfWeight, range(0, len(LHAPdfWeight)) ):
+                            pdfwacc = pdfw/lhapdf_xsweights[i]
+                            #pdfwacc=pdfw
+                            if(i<maxpdfs+1): systTree.setWeightName("pdf"+str(i+1), copy.deepcopy(pdfwacc))
+                            #mean_pdf += pdfw/lhapdf_xsweights[i]
+                            mean_pdf += pdfwacc#/lhapdf_xsweights[i]
+                            #                            print ("check pdf #",i," val ", pdfw," xsweight ",lhapdf_xsweights[i])
+                            #                            print(" acceptance ", pdfw/lhapdf_xsweights[i], " , partial sum ",  mean_pdf, " partial mean ", mean_pdf/(i+1))
+                            # print(" v2 acceptance ", pdfw/lhapdf_xsweights[i], " , partial sum ",  mean_pdf, " partial mean ", mean_pdf/(i+1))
+                            #print("check rms before ", rms)
+                            if(LHAPDFDefault == "LHAPDF4LHC15"):
+                                if(i%2==0): rmsup += ((pdfwacc/pdfwacc0)-1)**2
+                                if(i%2==1): rmsdown += ((pdfwacc/pdfwacc0)-1)**2
+                                rms = rms + ((pdfwacc/pdfwacc0)-1)**2
+                                #print("check pdf acc ", pdfwacc, " pdfwacc0 ",pdfwacc0," diffq ", ((pdfwacc/pdfwacc0)-1)**2," rms ",rms )
+                        mean_pdf = mean_pdf/nlhapdfs
+
+                        pdf_xsweight = lhapdf_xsweight  
+                        pdf_xsweight = 1.
+#                         Rms= math.sqrt(rms/(nlhapdfs-1))
+                        
+                        
+                    #print(rms)
+                    if(LHAPDFDefault=="LHAPDF4LHC15"):
+                        print("final rms", math.sqrt(rms)/nlhapdfs)
+                        
+                        pdf_totalUp = 1+math.sqrt(rms)/nlhapdfs
+                        pdf_totalDown = 1-math.sqrt(rms)/nlhapdfs
+                        print("pdfTotalUp ",pdf_totalUp)
+                    #print(pdf_totalUp, pdf_totalDown)
+                    
+                systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
+                systTree.setWeightName("pdf_totalDown", copy.deepcopy(pdf_totalDown))
 
         if(isMuon):
             isEle_nominal[0] = 0

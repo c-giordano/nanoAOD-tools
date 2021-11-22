@@ -5,8 +5,12 @@ from PhysicsTools.NanoAODTools.postprocessing.framework.datamodel import Collect
 from PhysicsTools.NanoAODTools.postprocessing.framework.eventloop import Module
 
 class MCweight_writer(Module):
-    def __init__(self):
+    def __init__(self,LHAPDFs=None):
         self.writeHistFile=True
+        self.addLHA=False
+        if not(LHAPDFs is None):
+            self.addLHA=True
+            self.LHAPDFs=LHAPDFs
 
     def beginJob(self,histFile=None,histDirName=None):
         Module.beginJob(self,histFile,histDirName)
@@ -14,17 +18,46 @@ class MCweight_writer(Module):
         self.h_q2weight = ROOT.TH1F('h_q2weight', 'h_q2weight', 8, 0, 7)
         self.h_psweight = ROOT.TH1F('h_psweight', 'h_psweight', 4, 0, 3)
         self.h_PDFweight = ROOT.TH1F()
+
         self.addObject(self.h_genweight)
         self.addObject(self.h_q2weight)
         self.addObject(self.h_psweight)
         self.addObject(self.h_PDFweight)
 
+
+        if(self.addLHA):
+            self.h_LHAPDFweight = [ROOT.TH1F() for l in self.LHAPDFs]
+            [self.addObject(self.h_LHAPDFweight[l]) for l in range(0,len(self.LHAPDFs))]
+        
     def analyze(self, event):
         """process event, return True (go to next module) or False (fail, go to next event)"""
         Generator = Object(event, "Generator")
         LHEPdfWeight = Collection(event, 'LHEPdfWeight')
         LHEScaleWeight = Collection(event, 'LHEScaleWeight')
         PSWeight = Collection(event, 'PSWeight')
+        if(self.addLHA):
+            if len(self.LHAPDFs)>0:#For now only single-pdf implemented//
+                for l in range(0,len(self.LHAPDFs)):
+                    LHAPDF=self.LHAPDFs[l]
+                    #print "writing lhapdf",LHAPDF
+                    LHAPDFWeights=LHAPDF+"_LHAWeights"
+                    if hasattr(event,LHAPDF) and hasattr(event,LHAPDFWeights):
+                        #print("LHANNPDF weight is", event.LHANNPDF)
+                        LHAPdfWeight = event.__getattr__(LHAPDFWeights)
+                        #print "collection is ", LHAPdfWeight
+                        #print ("len is ", len(LHAPdfWeight)," size is ",LHAPdfWeight.size())
+                        self.h_LHAPDFweight[l].SetNameTitle('h_'+LHAPDF+'weight', 'h_'+LHAPDF+'weight')
+                        self.h_LHAPDFweight[l].SetBins((LHAPdfWeight.size()), 0, (LHAPdfWeight.size()))
+                        #print(self.h_LHAPDFweight.GetNbinsX())
+                        self.h_LHAPDFweight[l].AddBinContent(0, event.__getattr__(LHAPDF))          
+                        for pdfw, i in zip(LHAPdfWeight, xrange(1, (LHAPdfWeight.size())+1)):
+                            #print(" i ",i , " pdfw ",pdfw)
+                            self.h_LHAPDFweight[l].GetXaxis().SetBinLabel(i, 'pdf['+str(i)+']')
+                            self.h_LHAPDFweight[l].AddBinContent(i, pdfw)          
+
+
+
+        
         if not len(LHEPdfWeight) == 0:
             self.h_PDFweight.SetNameTitle('h_PDFweight', 'h_PDFweight')
             self.h_PDFweight.SetBins(len(LHEPdfWeight), 0, len(LHEPdfWeight))
