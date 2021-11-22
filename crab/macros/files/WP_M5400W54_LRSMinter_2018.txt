@@ -1,0 +1,2 @@
+Error: crab_WP_M5400W54_LRSMinter_2018 is not a valid CRAB project directory.
+Log file is /afs/cern.ch/work/a/adeiorio/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/crab.log

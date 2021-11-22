@@ -1,0 +1,1 @@
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M5000W50_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M5000W50_LHSMinter_2018/211105_114538/0000/tree_hadd_1.root
