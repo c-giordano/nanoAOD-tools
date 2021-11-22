@@ -1,19 +1,19 @@
 import os
 
-version = 'v17'
+version = 'v18'
 pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot'
-pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_2017fix'
+pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged'
 
-systs_corr = ["jes", "jer", "btag", "mistag", "pdf_total", "q2", "pu", "PF", "lep", "trig"]
+systs_corr = ["jes", "btag", "mistag", "pdf_total", "q2", "pu", "PF", "lep", "trig"]
 #systs_corr = ["PF", "lep", "trig"]
-systs_uncorr = []
+systs_uncorr = ["jer"]
 #systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST", "TF", "DD"]
-samples = ["Data", "WJets", "TT_Mtt", "ST", "QCD", "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
+samples = ["WJets", "TT_Mtt", "ST", "QCD", "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
 #systs2 = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total"]
 
 versus = ['Up', 'Down']
 leps = ['muon', 'electron']
-leps = ['electron']
+#leps = ['muon']
 years = ['2016', '2017', '2018']
 if os.path.exists(pathout):
     os.popen('rm -r '+ pathout + '/*')
