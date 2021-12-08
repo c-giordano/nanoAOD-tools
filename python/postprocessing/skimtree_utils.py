@@ -1128,7 +1128,7 @@ class systWeights(object):
         isEventBasedSyst = False
         Max = self.maxSysts
         scenario = self.selectionsNames[s]
-        print "short pdf files?" , self.shortPDFFiles, " max systs ", Max
+        print ("short pdf files?" , self.shortPDFFiles, " max systs ", Max)
         if self.shortPDFFiles or not ( "nominal" in scenario):
             Max = self.maxSystsNonPDF
         print("scenario is ", scenario," nominal in scenario?", ("nominal" in scenario)," Max ", Max, " MaxSyst", self.maxSysts, " maxsysts nonpdf ", self.maxSystsNonPDF)
@@ -1290,7 +1290,7 @@ class systWeights(object):
             self.wCats[1] = array.array('f', [1.0])
             self.wCats[2] = array.array('f', [1.0])
             self.wCats[3] = array.array('f', [1.0])
-        print "addPDF",addPDF
+        print ("addPDF",addPDF)
         if addPDF:
             self.weightedNames[self.maxSysts] = "pdf_totalUp"
             self.weightedNames[self.maxSysts+1] = "pdf_totalDown"
@@ -1301,14 +1301,14 @@ class systWeights(object):
             self.setMax(self.maxSysts+6)
             self.setMaxNonPDF(self.maxSystsNonPDF+6)
             nPDF = self.nPDF
-            print "npdf ", self.nPDF
+            print ("npdf ", self.nPDF)
             for i in range(nPDF):
-              print " initializing pdf # ",i
+              print (" initializing pdf # ",i)
               ss = str(i+1)
               self.weightedNames[i+self.maxSysts] = "pdf" + str(ss)
             
             self.setMax(self.maxSysts+nPDF)
-            print "max systs now is ",self.maxSysts
+            print ("max systs now is ",self.maxSysts)
             self.weightedNames[self.maxSysts] = ""
 
     def addSyst(self, name):

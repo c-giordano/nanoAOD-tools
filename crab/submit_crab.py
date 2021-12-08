@@ -175,7 +175,7 @@ for sample in samples:
             else:
                 modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
             if("WP" in sample.label):
-                modules=modules.replace("MCweight_writer()","LHAPDFWeight_NNPDF(),LHAPDFWeight_PDF4LHC15(),MCweight_writer(LHAPDFs=['LHANNPDF','LHAPDF4LHC15'])")
+                modules=modules.replace("MCweight_writer()","LHAPDFWeight_NNPDF(),LHAPDFWeight_NNPDFLO(),LHAPDFWeight_PDF4LHC15(),MCweight_writer(LHAPDFs=['LHANNPDF','LHAPDF4LHC15','LHANNPDFLO'])")
         else:
             modules = "HLT(), preselection(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
             

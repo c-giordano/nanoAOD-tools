@@ -38,6 +38,12 @@ categories =[""]
 systs=[""]
 #systs = ["","_btagUp","_btagDown","_mistagUp","_mistagDown","_pdf_totalUp","_pdf_totalDown","_puUp","_puDown","_q2TTUp","_q2QCDUp","_q2ZJetsUp","_q2WJetsUp","_q2TprimeUp","_q2TTDown","_q2QCDDown","_q2ZJetsDown","_q2WJetsDown","_q2TprimeDown","_jesUp","_jesDown","_jerUp","_jerDown","_topTagUp", "_topTagDown","_wTagUp", "_wTagDown","_topPtWeightDown","_topPtWeightUp"]
 
+#if os.path.exists(opt.pathout):
+#    os.popen('rm -r '+ opt.pathout + '/*')
+#    print "ciao"
+#else:
+#    if(not opt.dryrun):os.makedirs(pathout)
+
 plotpath=opt.plotpath
 if not os.path.exists(plotpath):
     os.system("mkdir -p "+plotpath)
@@ -54,8 +60,8 @@ lepcut=""
 
 namemap={}
 namemap["SR2B"]="h_jets_best_Wprime_m_SR2B"
-#namemap["SR2B_I"]="h_jets_best_Wprime_m_SR2B_I"
-namemap["SR2B_I"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30"
+namemap["SR2B_I"]="h_jets_best_Wprime_m_SR2B_I"
+#namemap["SR2B_I"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30"
 
 namemap["SRW"]="h_jets_best_Wprime_m_SRW"
 namemap["SRW_I"]="h_jets_best_Wprime_m_SRW_I"
@@ -91,7 +97,7 @@ if "vs" in sfregions:
         wjets_veto_map[tsrs[t]]=tcrs[t]
 print "map is ",wjets_veto_map
 #wjets_veto_map={}
-#wjets_veto_map = {"CR0B":"CR0B_I"}
+#wjets_veto_map = {"CR0B":"CR0B_I","SRW":"SRW_I"}
 
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
@@ -132,17 +138,17 @@ fexplin0=TF1("fexplin0","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 
 if(opt.category=="electron"):
     fexplin.SetParameters(1,801,0.01,0.003)
-    fexplinw.SetParameters(10,1001,11.5,0.1,1,0.0000002)
+    fexplinw.SetParameters(50,101,11.5,0.1,1,0.000002)
     fexplintele.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
 #    fexplint.FixParameter(3,0)
     fexplin0.SetParameters(10,1001,211,0.01,1,0.0000002)
 
 if(opt.category=="muon"):
     fexplin.SetParameters(10,1001,0.1,0.001)
-    fexplinw.SetParameters(110,1001,5.5,0.1,1,0.0000002)
-    fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
+    fexplinw.SetParameters(110,101,5.5,0.3,10,0.000002)
+    fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.00002)
 #    fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
-    fexplin0.SetParameters(10,501,15,0.01)
+    fexplin0.SetParameters(1200,1001,0.5,0.0001)
 
 #fexplin=TF1("fexplin","[0]*exp(-x*[1]+[4])+[2]+x*[3]",1000,6000)
 #fexplin.SetParameters(310,0.001,210,0.01,1,0.0000002)
@@ -242,17 +248,17 @@ def resetParameters():
     fexp2data.SetParameters(310,0.1,0.01,0.0000002)
     if(opt.category=="electron"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
-        fexplinw.SetParameters(10,1001,11.5,0.1,1,0.0000002)
-        fexplintele.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
+        fexplinw.SetParameters(1,101,11.5,0.1,1,0.00002)
+        fexplintele.SetParameters(5,1/4400.,-2,0.0001,.01,0.0000002)
         #    fexplint.FixParameter(3,0)
-        fexplin0.SetParameters(10,1001,211,0.01,1,0.0000002)
+        fexplin0.SetParameters(50,101,211,0.01,1,0.00002)
 
     if(opt.category=="muon"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
-        fexplinw.SetParameters(110,1001,5.5,0.1,1,0.0000002)
+        fexplinw.SetParameters(110,501,5.5,0.1,1,0.0000002)
         fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
-#        fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
-        fexplin0.SetParameters(10,1001,51,0.01,1)
+        # fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
+        fexplin0.SetParameters(1050,1501,0.5,0.00001,)
 
 #fexp2data=TF1("fexp2data","[0]+x*[1]+x*x*[2]+x*x*x*[3]+[4]*exp(-([5]+x*[6]+x*x*[7]))",1000,6000)
 #fexp2data.SetParameters(1000,10,1,0.1,1000,0.1,0.01,0.0000002)
@@ -282,8 +288,9 @@ expo2ele_fit_map={"SR2B":fexplin,"SRW":fexplinw,"SRT":fexplintele,"CR1B":fexplin
 
 poly2_fit_map_option={"SR2B":"SIE","SRW":"SI","SRT":"SIE","CR1B":"SI","CR0B":"SEMI"}
 poly2ele_fit_map_option={"SR2B":"SIE","SRW":"SIEM","SRT":"SIE","CR1B":"SI","CR0B":"SIEM"}
-expo2_fit_map_option={"SR2B":"SEMI","SRW":"SEI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
-expo2ele_fit_map_option={"SR2B":"SEMI","SRW":"SEI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
+
+expo2_fit_map_option={"SR2B":"SEMI","SRW":"SEMI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
+expo2ele_fit_map_option={"SR2B":"SEMI","SRW":"SEM","SRT":"SEMI","CR1B":"SEM","CR0B":"SMI"}
 
 #fexp1=TF1("fexp1","[0]*exp(-(x*[1]))",1000,6000)
 #fexp1.SetParameters(310,0.001)
@@ -1437,7 +1444,7 @@ if opt.year_sf!="None":
 if plotonly:
     testnominal=True
 #testnominal=True
-
+resetParameters()
 if testnominal:
     dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None) #this takes CR as from nominal always
     
