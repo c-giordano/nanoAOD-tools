@@ -44,8 +44,8 @@ namemap["CR1B_I"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AN
 namemap["CR1B_II"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_1_AND_best_top_m_L_"+str(wjets_veto_threshold)+"_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_60"
 
 namemap["SR2B"]="h_jets_best_Wprime_m_SR2B"
-namemap["SR2B_I_old"]="h_jets_best_Wprime_m_SR2B_I"
-namemap["SR2B_I"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30"
+namemap["SR2B_I"]="h_jets_best_Wprime_m_SR2B_I"
+#namemap["SR2B_I"]="h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30"
 
 namemap["SRW"]="h_jets_best_Wprime_m_SRW"
 namemap["SRW_I"]="h_jets_best_Wprime_m_SRW_I"
@@ -63,6 +63,8 @@ namemap["CR0B_I_mu"]="h_jets_best_Wprime_m_CR0B_I"
 #
 wjets_veto_map = {"CR0B":"CR0B_I"}
 wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I"}
+wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}
+#wjets_veto_map = {"SR2B":"SR2B_I"}
 
 
 histosr=[]
@@ -70,7 +72,7 @@ histocr=[]
 for sr,cr in wjets_veto_map.iteritems():
     histosr.append(namemap[sr])
     histocr.append(namemap[cr])
-histocr.append(namemap["SR2B_I_old"])
+#histocr.append(namemap["SR2B_I_old"])
 #wjets_veto_map = {"SRT":"SRT_I"}
 
 #wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}

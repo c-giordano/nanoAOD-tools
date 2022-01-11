@@ -26,6 +26,7 @@ parser.add_option('-o', '--outputpath', dest='outputpath', type='string', defaul
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v6', help='Default folder is v0')
 #parser.add_option('-T', '--topol', dest='topol', type='string', default = 'all', help='Default all njmt')
 parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', help="")
+parser.add_option('-t', '--tag', dest='tag', type='string', default = '', help="version of the signal region naming convention")
 (opt, args) = parser.parse_args()
 
 folder = opt.folder
@@ -49,37 +50,57 @@ if not os.path.exists(plotrepo + 'plot/electron'):
 if not os.path.exists(plotrepo + 'stack'):
      os.makedirs(plotrepo + 'stack')
 
-def mergepart(dataset):
+def mergepart(dataset,filenameMissing="missingSamples.txt",missingSamples=[]):
      samples = []
+     newMissingSamples=[]
      if hasattr(dataset, 'components'): # How to check whether this exists or not
           samples = [sample for sample in dataset.components]# Method exists and was used.
      else:
           samples.append(dataset)
      for sample in samples:
+          if sample in missingSamples:
+               continue
           add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
-          print add
-          os.system(str(add))
-          check = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root ")
-          #print "Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_nominal")).GetEntries())
-          print "Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_all")).GetEntries())
+          try:
+               os.system(str(add))
+               check = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root ")
+               print "Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_nominal")).GetEntries())
+          except:
+               print("File missing for: "+ filerepo + sample.label + "/"  + sample.label + "_merged.root , skipping")
+               newMissingSamples.append(sample.label)
+               f = file(filenameMissing,"a")
+               f.write(sample.label+" ")
+               f.close()
+               
 
-def mergetree(sample):
+     return newMissingSamples
+     
+          #print "Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_all")).GetEntries())
+
+def mergetree(sample,missingSamples):
      if not os.path.exists(filerepo + sample.label):
           os.makedirs(filerepo + sample.label)
      if hasattr(sample, 'components'): # How to check whether this exists or not
           add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
           for comp in sample.components:
+               if comp.label in missingSamples:
+                    print ("careful, sample "+comp.label+" is missing, will be skipped! ")
+                    continue
                add += " " + filerepo + comp.label + "/"  + comp.label + ".root" 
           print add
+          
           os.system(str(add))
 
-def lumi_writer(dataset, lumi):
+def lumi_writer(dataset, lumi, missingSamples):
      samples = []
      if hasattr(dataset, 'components'): # How to check whether this exists or not
           samples = [sample for sample in dataset.components]# Method exists and was used.
      else:
           samples.append(dataset)
      for sample in samples:
+          if sample.label in missingSamples:
+               print ("careful, sample "+sample.label+" is missing, will be skipped! ")
+               continue
           if not ('Data' in sample.label or 'TT_dilep' in sample.label):
                infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root")
                tree = infile.Get('events_nominal')
@@ -130,6 +151,7 @@ def lumi_writer(dataset, lumi):
                          #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
                          sys.stdout.write("\rProcessing event {}     complete {} percent".format(event, 100*event/tree.GetEntries()))
                     w_nom[0] = tree.w_nominal * sample.sigma * lumi * 1000./float(h_genw_tmp.GetBinContent(1))
+                    #print("wnominal ",w_nom[0]," sigma ",sample.sigma," lumi ",lumi," nentries ",float(h_genw_tmp.GetBinContent(1)))
                     for i in xrange(1, nbins):
                          w_PDF[i] = h_pdfw_tmp.GetBinContent(i+1)/h_genw_tmp.GetBinContent(2) 
                     tree_new.Fill()
@@ -184,8 +206,18 @@ def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
     return newstring
 
-def plot(lep, reg, variable, sample, cut_tag, syst):
+def plot(lep, reg, variable, sample, cut_tag, syst, missingSamplesFile="missingSamples.txt"):
      print "plotting ", variable._name, " for sample ", sample.label, " with cut ", cut_tag, " ", syst,
+
+     if(missingSamplesFile!=""):
+          fmiss=file(missingSamplesFile)
+          missingSamplesList=(fmiss.read()).split()
+          if sample.label in missingSamplesList:
+               print ("sample: "+sample.label+" in missing samples list-skipping! List is:\n ")
+               print (missingSamplesList)
+               return
+
+               
      ROOT.TH1.SetDefaultSumw2()
      f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
      treename = "events_nominal"
@@ -245,6 +277,11 @@ def plot(lep, reg, variable, sample, cut_tag, syst):
                     cut += '/btagSF*'+syst
                else:
                     cut += '*'+syst
+     if 'Data' in sample.label: 
+          if(syst == ""):
+               foutput = plotrepo + "plot/" + lep + "/" + sample.label + "_" + lep + ".root"
+          else:
+               foutput = plotrepo + "plot/" + lep + "/" + sample.label + "_" + lep + "_" + syst + ".root"
      print str(cut)
      #print treename
      f1.Get(treename).Project(histoname,variable._name,cut)
@@ -663,16 +700,27 @@ elif opt.syst!="all" and opt.syst=="noSyst":
 else:
      systematics = ["", "jesUp",  "jesDown",  "jerUp",  "jerDown", "PFUp", "PFDown", "puUp", "puDown", "btagUp", "btagDown", "mistagUp", "mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown", "q2Up", "q2Down"]
 
+
+f=file("missingSamples.txt","a")
+f.close()
+missingSamples=[]
 for year in years:
      for sample in dataset_dict[year]:
           if(opt.merpart):
-               mergepart(sample)
+               missingSamples.extend(mergepart(sample,"missingSamples.txt",missingSamples))
           if(opt.lumi):
-               lumi_writer(sample, lumi[year])
+               lumi_writer(sample, lumi[year], missingSamples)
           if(opt.mertree):
                if not('WP' in sample.label):
-                    mergetree(sample)
+                    mergetree(sample,missingSamples)
 
+validationvars=True
+validationvars=False
+plotAN=True
+plotAN=False
+
+if opt.tag!="":
+     cut_tag = opt.tag
 for year in years:
      for lep in leptons:
           dataset_new = dataset_dict[year]
@@ -686,34 +734,36 @@ for year in years:
           #variables.append(variabile('closest_topjet_dRLepJet', '#DeltaR lep jet (closest crit)',  wzero+'*('+cut+')', 10, 0, 5))
           variables.append(variabile('best_Wprime_m', 'W\' mass [GeV]',  wzero+'*(best_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [1000., 1250., 1500., 1750., 2000., 2250., 2500., 2750., 3000., 3500., 4500., 6000.])))
 
-          variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+          if validationvars:
+               variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+               variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 600., 800., 1000.])))
+               variables.append(variabile('lepMET_deltaphi', '#Delta#phi(l, MET)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
+               variables.append(variabile('best_topjet_dRLepJet', '#DeltaR(lep, top jet)',  wzero+'*('+cut+')', 10, 0, 5))
+
+               variables.append(variabile('best_top_m', 'top mass [GeV]',  wzero+'*(best_top_m>100&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 220, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+               variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', 100, 0, 500))
+
+               variables.append(variabile('deltaR_bestWAK4_closestAK8', '#DeltaR (best)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
+               
+               variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
+
           #variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 500.])))
 
           #variables.append(variabile('abs(muon_pt_tuneP-lepton_pt)/lepton_pt', 'muon p_{T}(1-tuneP)/p_{T}',  wzero+'*('+cut+')', 40, 0, 0.4)) 
           #variables.append(variabile('w_nominal', 'w_nominal',  wzero+'*('+cut+')', 350, 0, 3.5)) 
           #variables.append(variabile('abs(muon_pt_tuneP_pull)', 'muon p_{T}(1-tuneP)/p_{T}',  wzero+'*('+cut+')', 40, 0, 0.4)) 
-          variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 600., 800., 1000.])))
-          variables.append(variabile('lepMET_deltaphi', '#Delta#phi(l, MET)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
-          variables.append(variabile('best_topjet_dRLepJet', '#DeltaR(lep, top jet)',  wzero+'*('+cut+')', 10, 0, 5))
+
           #variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_phi', 'Missing transverse momentum #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
-          '''
-          #------->   plot nota
-          variables.append(variabile('njet_pt100', 'no. of jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 8, 1.5, 9.5))
-          variables.append(variabile('nbjet_pt100', 'no. of b jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 7, -0.5, 6.5))
-          variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300.])))
-          variables.append(variabile('subleadingjet_pt', 'subleading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800.])))
-          variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
-          '''
-          variables.append(variabile('best_top_m', 'top mass [GeV]',  wzero+'*(best_top_m>100&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 220, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
-          variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', 100, 0, 500))
+          if plotAN:
+               #------->   plot nota
+               variables.append(variabile('njet_pt100', 'no. of jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 8, 1.5, 9.5))
+               variables.append(variabile('nbjet_pt100', 'no. of b jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 7, -0.5, 6.5))
+               variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300.])))
+               variables.append(variabile('subleadingjet_pt', 'subleading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800.])))
+               variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
 
-          variables.append(variabile('deltaR_bestWAK4_closestAK8', '#DeltaR (best)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
-
-          variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
-          #variables.append(variabile('lepton_eta', 'lepton #eta', wzero+'*('+cut+')', 44, -2.2, 2.2))
-          #variables.append(variabile('lepton_phi', 'lepton #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
           '''
           #variables.append(variabile('nPV_good', 'n good PV', wzero+'*('+cut+')', 120, 0, 120))
           #variables.append(variabile('nPV_tot', 'total n PV', wzero+'*('+cut+')', 120, 0, 120))
