@@ -16,4 +16,11 @@ import os
 #os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger/SingleMuon/DataMuG_2016 &")
 #os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger/SingleMuon/DataMuH_2016 &")
 
-os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger_v2")
+#os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger")
+#os.popen("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/NewTrigger")
+os.system("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/NewTrigger &")
+os.system("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Trigger &")
+os.system("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/SingleTop &")
+os.system("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/OutDir &")
+os.system("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/samples &")
+os.system("eval `scram unsetenv -sh`; gfal-rm -r srm://stormfe1.pi.infn.it/cms/store/user/adeiorio/Wprime_final &")
