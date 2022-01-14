@@ -8,7 +8,7 @@ parser.add_option('-v', '--version', dest='version', default = 'v18', type='stri
 parser.add_option('-i', '--inputpath', dest='inputpath', default = '/eos/user/a/adeiorio/Wprime/nosynch/', type='string', help='file in , not working yet!')
 parser.add_option('-o', '--outputpath', dest='outputpath', default = '/eos/user/o/oiorio/Wprime/nosynch/', type='string', help='file in , not working yet!')
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
-parser.add_option('-d', '--samples', dest='samples', default = '', type='string', help='samples to run, default: all background, data and some signals')
+parser.add_option('-d', '--samples', dest='samples', default = 'base', type='string', help='samples to run, default: all background, data and some signals')
 parser.add_option('-M', '--missingSamplesFile', dest='missing', default = 'missingSamples.txt', type='string', help='missing samples file')
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
 (opt, args) = parser.parse_args()
@@ -48,7 +48,7 @@ import signalsampleslist
 
 samples=[]
 splitsamples = opt.samples.split(",")
-if opt.samples== "" or opt.samples=="base":
+if opt.samples=="base":
     samples.extend(["Data", "WJets", "TT_Mtt", "ST", "QCD", "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"])
 if "WP_RH" in splitsamples:
     samples.extend(signalsampleslist.RH_samples)
@@ -64,14 +64,16 @@ if "WP_LRSMinter" in splitsamples:
 samples.extend(splitsamples)
 #print (samples)
 
+
+print "samples are ",  samples
 missingSamplesFile=opt.missing
 fmiss=file(missingSamplesFile)
 missingSamplesList=(fmiss.read()).split()
 
 for sample in samples:
-    #    print "sample:", sample
+    print "sample:", sample
     for missingSample in missingSamplesList:
-        #        print "missing sample ", missingSample
+        print "missing sample ", missingSample
         if sample in missingSample:
             
             print ("\nsample: "+sample+" has one of the years in missing samples list-skipping! List is: ")
@@ -93,13 +95,16 @@ leps = ['muon']
 leps = ['electron','muon']
 years = ['2016', '2017', '2018']
 if os.path.exists(pathout):
-    os.popen('rm -r '+ pathout + '/*')
-    print "ciao"
+#    os.popen('rm -r '+ pathout + '/*')
+    print "path exists, not recreating it"
 else:
     if(not dryrun):os.makedirs(pathout)
 
 for lep in leps:
-    if(not dryrun):os.makedirs(pathout + '/' + lep)
+    if os.path.exists(pathout+"/"+lep):
+        print "path for "+lep+" exists, not recreating it"
+    else:
+        if(not dryrun):os.makedirs(pathout + '/' + lep)
     command = 'hadd -f ' + pathout + '/' + lep + '/Data_2020_' + lep + '.root '
     commandrm = 'rm ' + pathin + '/' + lep + '/Data*_201*_' + lep + '_*.root '
     for year in years:

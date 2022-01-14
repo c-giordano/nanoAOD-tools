@@ -43,12 +43,12 @@ sotot=so
 rebinfact=1
 rebinfact=3
 for lep in leps:
+    head=' Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{|c}{control region} \\\\ \n'
+    headbins=' Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{|c}{control region} \\\\ \n'
+    head+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events. $\pm$  Unc.& Abundance($\%$) & |N|/(Data-TotMC) \\\\ \n'
+    headbins+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events $\pm$  Unc. & Abundance($\%$) & |N|/(Data-TotMC) \\\\ \n'
     for sr,cr in srcr.iteritems():
         print sr,cr
-        head=' Lepton: '+str(lep)+'& \multicolumn{2}{c}{'+sr+'}  & \multicolumn{3}{|c}{'+sr+'\_I} \\\\ \n'
-        head+='Process  & Integral $\pm$  Uncertainty & Abundance (\%) & Integral $\pm$  Uncertainty & Abundance (\%) & |N|/(Data-TotMC) \\\\ \n'
-        headbins=' Lepton: '+str(lep)+'& \multicolumn{2}{c}{'+sr+'}  & \multicolumn{3}{|c}{'+sr+'\_I} \\\\ \n'
-        headbins+='Process  & Integral $\pm$  Uncertainty & Abundance (\%) & Integral $\pm$  Uncertainty & Abundance (\%) & |N|/(Data-TotMC) \\\\ \n'
         so+=head
         sobins+=head
         sotot+=head
@@ -195,15 +195,11 @@ for lep in leps:
                     
         #second loop: evaluating the partials
 
-sotot=sotot+'''\end{tabular}
+        sotot=sotot+'''\end{tabular}
 \end{table}
-
-
 '''
-sobins=sobins+'''\end{tabular}
+        sobins=sobins+'''\end{tabular}
 \end{table}
-
-
 '''
 
 
