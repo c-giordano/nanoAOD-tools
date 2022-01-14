@@ -1,4 +1,4 @@
-import os, commands
+B65;6003;1cimport os, commands
 import math
 import optparse
 from ROOT import *
@@ -37,6 +37,12 @@ runoptions=opt.runoptions
 categories =[""]
 systs=[""]
 #systs = ["","_btagUp","_btagDown","_mistagUp","_mistagDown","_pdf_totalUp","_pdf_totalDown","_puUp","_puDown","_q2TTUp","_q2QCDUp","_q2ZJetsUp","_q2WJetsUp","_q2TprimeUp","_q2TTDown","_q2QCDDown","_q2ZJetsDown","_q2WJetsDown","_q2TprimeDown","_jesUp","_jesDown","_jerUp","_jerDown","_topTagUp", "_topTagDown","_wTagUp", "_wTagDown","_topPtWeightDown","_topPtWeightUp"]
+
+#if os.path.exists(opt.pathout):
+#    os.popen('rm -r '+ opt.pathout + '/*')
+#    print "ciao"
+#else:
+#    if(not opt.dryrun):os.makedirs(pathout)
 
 plotpath=opt.plotpath
 if not os.path.exists(plotpath):
@@ -91,7 +97,13 @@ if "vs" in sfregions:
         wjets_veto_map[tsrs[t]]=tcrs[t]
 print "map is ",wjets_veto_map
 #wjets_veto_map={}
-#wjets_veto_map = {"CR0B":"CR0B_I"}
+#wjets_veto_map = {"CR0B":"CR0B_I","SRW":"SRW_I"}
+extended=False
+#extended=True
+if extended:
+    wjets_veto_map["CR0B_II":"CR0B_III"]
+    wjets_veto_map["SRW_II":"SRW_III"]
+    wjets_veto_map["SRT_II":"SRT_III"]
 
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
@@ -122,27 +134,31 @@ fexp1m.SetParameters(310,0.001)
 flin=TF1("flin","[0]+x*[1]",1000,6000)
 
 fexplin=TF1("fexplin","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
-
 fexplinw=TF1("fexplinw","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
-
 fexplintele=TF1("fexplintele","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
 fexplint=TF1("fexplint","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
-
 fexplin0=TF1("fexplin0","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+
+#for extended version with SR_II
+fexplin2=TF1("fexplin2","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+fexplinw2=TF1("fexplinw2","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+fexplintele2=TF1("fexplintele2","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
+fexplint2=TF1("fexplint2","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
+fexplin02=TF1("fexplin02","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+
 
 if(opt.category=="electron"):
     fexplin.SetParameters(1,801,0.01,0.003)
-    fexplinw.SetParameters(10,1001,11.5,0.1,1,0.0000002)
+    fexplinw.SetParameters(50,101,11.5,0.1,1,0.000002)
     fexplintele.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
-#    fexplint.FixParameter(3,0)
     fexplin0.SetParameters(10,1001,211,0.01,1,0.0000002)
 
 if(opt.category=="muon"):
     fexplin.SetParameters(10,1001,0.1,0.001)
-    fexplinw.SetParameters(110,1001,5.5,0.1,1,0.0000002)
-    fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
+    fexplinw.SetParameters(110,101,5.5,0.3,10,0.000002)
+    fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.00002)
 #    fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
-    fexplin0.SetParameters(10,501,15,0.01)
+    fexplin0.SetParameters(1200,1001,0.5,0.0001)
 
 #fexplin=TF1("fexplin","[0]*exp(-x*[1]+[4])+[2]+x*[3]",1000,6000)
 #fexplin.SetParameters(310,0.001,210,0.01,1,0.0000002)
@@ -181,6 +197,12 @@ fexp1plus2data=TF1("fexp1plus2data","landau",1000,6000)
 fexp1plus2data.SetParameters(1000,1100,1002)
 fexp1plus2data_v2=TF1("fexp1plus2data_v2","landau",1000,6000)
 fexp1plus2data_v2.SetParameters(5000,1000,152)
+
+fexp1plus2data2=TF1("fexp1plus2data2","landau",1000,6000)
+fexp1plus2data2.SetParameters(1000,1100,1002)
+fexp1plus2data_v22=TF1("fexp1plus2data_v22","landau",1000,6000)
+fexp1plus2data_v22.SetParameters(5000,1000,152)
+
 #fexp1plus2data=TF1("fexp1plus2","[3]*TMath::GammaDist(x,[0],[1],[2])",1000,6000)
 #fexp1plus2data.SetParameters(1000,0,2,1000)
 
@@ -225,7 +247,7 @@ fexp1plus2elet.SetParameters(310,0.001,0.1,0.1,0.001,0.0000002)
 fexp1ele=TF1("fexp1ele","[0]*exp(-(x*[2])+[1])",1000,6000)
 fexp1ele.SetParameters(310,0.010,0.001)
 
-def resetParameters():
+def resetParameters(reg=""):
     fexp1plus2elet.SetParameters(310,0.001,0.1,0.1,0.001,0.0000002)
     fexp1plus2elew.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
     fexp1plus2ele.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
@@ -233,6 +255,9 @@ def resetParameters():
 
     fexp1plus2data.SetParameters(1000,1100,1002)
     fexp1plus2data_v2.SetParameters(5000,1000,152)
+
+    fexp1plus2data2.SetParameters(1000,1100,1002)
+    fexp1plus2data_v22.SetParameters(5000,1000,152)
 
     fexp1plus2.SetParameters(310,0.001,210,0.01,0.001,0.0000002)
     fexp1plus20b.SetParameters(10,0.001,10,1.,0.001,0.000002)
@@ -242,17 +267,39 @@ def resetParameters():
     fexp2data.SetParameters(310,0.1,0.01,0.0000002)
     if(opt.category=="electron"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
-        fexplinw.SetParameters(10,1001,11.5,0.1,1,0.0000002)
-        fexplintele.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
-        #    fexplint.FixParameter(3,0)
-        fexplin0.SetParameters(10,1001,211,0.01,1,0.0000002)
+        fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
+        if(reg=="TTMttvar"):
+            fexplinw.SetParameters(300,1,1,1,0.1,0.0)
+
+        fexplintele.SetParameters(5,1/4400.,-2,0.0001,.01,0.0000002)
+        fexplin0.SetParameters(50,101,211,0.01,1,0.00002)
+
+        fexplin2.SetParameters(10,1001,0.5,0.01,1,0.0000002)
+        fexplinw2.SetParameters(1,101,11.5,0.1,1,0.0002)
+        if(reg=="TTMttvar"):
+            fexplinw2.SetParameters(300,1,1,1,0.1,0.0)
+
+        fexplintele2.SetParameters(5,1/4400.,-2,0.0001,.01,0.0000002)
+        fexplin02.SetParameters(50,101,211,0.01,1,0.00002)
 
     if(opt.category=="muon"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
-        fexplinw.SetParameters(110,1001,5.5,0.1,1,0.0000002)
+        fexplinw.SetParameters(110,501,5.5,0.1,1,0.0000002)
+        if(reg=="TTMttvar"):
+            fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
+
         fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
-#        fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
-        fexplin0.SetParameters(10,1001,51,0.01,1)
+        # fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
+        fexplin0.SetParameters(1050,1501,0.5,0.00001,)
+
+        fexplin2.SetParameters(10,1001,0.5,0.01,1,0.0000002)
+        fexplinw2.SetParameters(110,501,5.5,0.1,1,0.0000002)
+        if(reg=="TTMttvar"):
+            fexplinw2.SetParameters(1,101,11.5,0.1,1,0.0002)
+
+        fexplint2.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
+        # fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
+        fexplin02.SetParameters(1050,1501,0.5,0.00001,)
 
 #fexp2data=TF1("fexp2data","[0]+x*[1]+x*x*[2]+x*x*x*[3]+[4]*exp(-([5]+x*[6]+x*x*[7]))",1000,6000)
 #fexp2data.SetParameters(1000,10,1,0.1,1000,0.1,0.01,0.0000002)
@@ -261,7 +308,8 @@ def resetParameters():
 #poly3_fit_map={"SR2B":fpoly3,"SRW":fpoly3,"SRT":fpoly3,"CR1B":fpoly3,"CR0B":fpoly3,"CR1B":fpoly3}
 
 #expo2ele_fit_map={"SR2B":fexp1plus2ele,"SRW":fexp1plus2elew,"SRT":fexp1plus2elet,"CR1B":fexp1plus2ele,"CR0B":fexp1plus2ele0b}
-#Mappe usate nei fit
+
+#Transfer fit functions
 expo2_fit_map={"SR2B":fexp1,"SRW":fexp1,"SRT":fexp1,"CR1B":fexp1,"CR0B":fexp1plus20b}
 expo2ele_fit_map={"SR2B":fexp1,"SRW":fexp1,"SRT":fexp1,"CR1B":fexp1,"CR0B":fexp1plus2ele0b}
 
@@ -282,16 +330,53 @@ expo2ele_fit_map={"SR2B":fexplin,"SRW":fexplinw,"SRT":fexplintele,"CR1B":fexplin
 
 poly2_fit_map_option={"SR2B":"SIE","SRW":"SI","SRT":"SIE","CR1B":"SI","CR0B":"SEMI"}
 poly2ele_fit_map_option={"SR2B":"SIE","SRW":"SIEM","SRT":"SIE","CR1B":"SI","CR0B":"SIEM"}
-expo2_fit_map_option={"SR2B":"SEMI","SRW":"SEI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
-expo2ele_fit_map_option={"SR2B":"SEMI","SRW":"SEI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
 
-#fexp1=TF1("fexp1","[0]*exp(-(x*[1]))",1000,6000)
-#fexp1.SetParameters(310,0.001)
+expo2_fit_map_option={"SR2B":"SEMI","SRW":"SEMI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
+expo2ele_fit_map_option={"SR2B":"SEMI","SRW":"SEM","SRT":"SEMI","CR1B":"SEM","CR0B":"SMI"}
 
-expo2_cr_fit_map={"SR2B_I":fpoly3,"SRW_I":fpoly3,"SRT_I":fpoly3,"CR1B_I":fpoly3,"CR0B_I":fexp2}
-expo2_cr_fit_map={"SR2B_I":fexp2data,"SRW_I":fexp2data,"SRT_I":fexp2data,"CR1B_I":fexp2data,"CR0B_I":fexp2data}
-expo2_cr_fit_map={"SR2B_I":fexp1plus2data_v2,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2}
-expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2}
+ #setup for fit including SR_II /SR_III
+poly2_fit_map["SR2B_II"]=fexp1
+poly2_fit_map["SRW_II"]=fexp1
+poly2_fit_map["SRT_II"]=fexp1
+poly2_fit_map["CR0B_II"]=fpoly2
+
+poly2ele_fit_map["SR2B_II"]=fexp1
+poly2ele_fit_map["SRW_II"]=fexp1
+poly2ele_fit_map["SRT_II"]=fexp1
+poly2ele_fit_map["CR0B_II"]=fpoly2
+
+expo2_fit_map["SRW_II"]=fexplinw
+expo2_fit_map["SRT_II"]=fexplint
+expo2_fit_map["CR0B_II"]=fexplin0
+    
+expo2ele_fit_map["SRW_II"]=fexplinw
+expo2ele_fit_map["SRT_II"]=fexplint
+expo2ele_fit_map["CR0B_II"]=fexplin0
+
+poly2_fit_map_option["SR2B_II"]="SIE"
+poly2_fit_map_option["SRW_II"]="SI"
+poly2_fit_map_option["SRT_II"]="SIE"
+poly2_fit_map_option["CR0B_II"]="SEMI"
+
+poly2ele_fit_map_option["SR2B_II"]="SIE"
+poly2ele_fit_map_option["SRW_II"]="SI"
+poly2ele_fit_map_option["SRT_II"]="SIE"
+poly2ele_fit_map_option["CR0B_II"]="SEMI"
+
+expo2_fit_map_option["SR2B_II"]="SEMI"
+expo2_fit_map_option["SRW_II"]="SEMI"
+expo2_fit_map_option["SRT_II"]="SEMI"
+expo2_fit_map_option["CR0B_II"]="SEMI"
+    
+expo2ele_fit_map_option["SR2B_II"]="SEMI"
+expo2ele_fit_map_option["SRW_II"]="SEM"
+expo2ele_fit_map_option["SRT_II"]="SEMI"
+expo2ele_fit_map_option["CR0B_II"]="SMI"
+
+#CR fit functions
+expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2,
+                  "SR2B_III":fexp1plus2data2,"SRW_III":fexp1plus2data2,"SRT_III":fexp1plus2data2,"CR1B_III":fexp1plus2data2,"CR0B_III":fexp1plus2data_v22}
+
 
 def_fitrange = [1250,6000]
 data_fitrange = [1500,6000]
@@ -1355,6 +1440,24 @@ sampleweights_ttcrdown={"WJets":1.0,"TT_Mtt":-0.75,"ST":1}
 sampleweights_stup={"WJets":1.0,"TT_Mtt":1.,"ST":1.50}
 sampleweights_stdown={"WJets":1.0,"TT_Mtt":1.,"ST":0.667}
 
+#######v2
+'''
+sampleweights_wup={"WJets":2.0,"TT_Mtt":1.,"ST":1}
+sampleweights_wdown={"WJets":0.25,"TT_Mtt":1,"ST":1}
+
+sampleweights_wcrup={"WJets":-2.0,"TT_Mtt":1.,"ST":1}#negative sign means only applied in control region
+sampleweights_wcrdown={"WJets":-0.25,"TT_Mtt":1,"ST":1}
+
+sampleweights_ttup={"WJets":1.0,"TT_Mtt":1.7,"ST":1.}
+sampleweights_ttdown={"WJets":1.0,"TT_Mtt":0.35,"ST":1}
+
+sampleweights_ttcrup={"WJets":1.0,"TT_Mtt":-1.70,"ST":1.}#negative sign means only applied in control region
+sampleweights_ttcrdown={"WJets":1.0,"TT_Mtt":-0.35,"ST":1}
+
+sampleweights_stup={"WJets":1.0,"TT_Mtt":1.,"ST":1.70}
+sampleweights_stdown={"WJets":1.0,"TT_Mtt":1.,"ST":0.35}
+'''
+
 signalsamples=[ "WP_M"+str(x)+"000W"+str(x)+"0_RH" for x in xrange(2,7)]
 allsamples= signalsamples
 allsamples.extend(["TT_Mtt","WJets","QCD","ST","Data"])
@@ -1437,10 +1540,10 @@ if opt.year_sf!="None":
 if plotonly:
     testnominal=True
 #testnominal=True
-
+resetParameters()
 if testnominal:
     dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None) #this takes CR as from nominal always
-    
+
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=plotonly)
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False)
     resetParameters()
@@ -1460,6 +1563,8 @@ if(altwjetstt):
     #dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_stdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="STDown",plot=False)
     #resetParameters()
 
+    resetParameters()
+#    resetParameters(reg="TTMttvar")
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttup,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttUp",plot=False)
     resetParameters()
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_ttdown,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag="TT_MttDown",plot=False)
