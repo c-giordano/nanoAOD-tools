@@ -19,6 +19,7 @@ if sys.argv[4] == 'remote':
 else:
     from samples.samples import *
     Debug = True
+Debug=False
 sample = sample_dict[sys.argv[1]]
 part_idx = sys.argv[2]
 file_list = list(map(str, sys.argv[3].strip('[]').split(',')))
@@ -43,6 +44,7 @@ print("Number of events in tree from chain " + str((chain.GetTree()).GetEntries(
 tree = InputTree(chain)
 isMC = True
 scenarios = ["nominal", "jesUp", "jesDown", "jerUp", "jerDown"]
+#scenarios = ["nominal"]
 if ('Data' in sample.label):
     isMC = False
     scenarios = ["nominal"]
@@ -839,6 +841,7 @@ def reco(scenario, isMC, addPDF, MCReco):
     #++   looping over the events    ++
     #++++++++++++++++++++++++++++++++++
     for i in range(tree.GetEntries()):
+    #for i in range(1000):
         w_nominal_nominal[0] = 1.
         #++++++++++++++++++++++++++++++++++
         #++        taking objects        ++
@@ -2128,7 +2131,7 @@ def reco(scenario, isMC, addPDF, MCReco):
         trees[4].Write()
 
     print("Number of events in output tree nominal " + str(trees[0].GetEntries()))
-    if isMC:
+    if isMC and len(scenarios)>1:
         print("Number of events in output tree jesUp " + str(trees[1].GetEntries()))
         print("Number of events in output tree jesDown " + str(trees[2].GetEntries()))
         print("Number of events in output tree jerUp " + str(trees[3].GetEntries()))

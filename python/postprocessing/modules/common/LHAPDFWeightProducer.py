@@ -124,5 +124,6 @@ class LHAPDFWeightProducer(Module):
 
 #def __init__(self,targetfile,pdfnominal="NNPDF30_lo_as_0118",pdfreweights={"NNPDF30_lo_as_0118":"RMS"},names={"NNPDF30_lo_as_0118":"LHANNPDF"},getUnc=True,envelopePDFUncertainty=False,verbose=False):
 LHAPDFWeight_NNPDF = lambda : LHAPDFWeightProducer(pdfnominal="NNPDF30_lo_as_0118",pdfreweights={"NNPDF30_lo_as_0118":"RMS"},names={"NNPDF30_lo_as_0118":"LHANNPDF"},getUnc=True,envelopePDFUncertainty=False,addReplicas=True,verbose=False)
+#LHAPDFWeight_NNPDFLO = lambda : LHAPDFWeightProducer(pdfnominal="NNPDF30_lo_as_0118",pdfreweights={"NNPDF30_lo_as_0118":"RMS"},names={"NNPDF30_lo_as_0118":"LHANNPDFLO"},getUnc=True,envelopePDFUncertainty=False,addReplicas=True,verbose=False)
 LHAPDFWeight_PDF4LHC15 = lambda : LHAPDFWeightProducer(pdfnominal="NNPDF30_lo_as_0118",pdfreweights={"PDF4LHC15_nnlo_30_pdfas":"RMS"},names={"PDF4LHC15_nnlo_30_pdfas":"LHAPDF4LHC15"},getUnc=False,envelopePDFUncertainty=False,addReplicas=True,verbose=False)
 
