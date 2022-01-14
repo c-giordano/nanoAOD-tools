@@ -55,9 +55,9 @@ else:
 regionCuts={}#Cuts for the main regions
 
 ctrlCuts={}#Cuts for the background extraction sub-regions
-centralCut="&&best_top_m>120&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
-regionIcut="&&best_top_m>220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
-regionIIcut="&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD>60"
+centralCut= "&&best_top_m>120&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
+regionIIcut="&&best_top_m>120&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD>60"
+regionIcut=  "&&best_top_m>220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
 regionIIIcut="&&best_top_m>220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD>60"
 tagRegions={}
 
@@ -134,7 +134,7 @@ print "samples are ", opt.samples
 
 print "to run",samplestorun
 
-
+print samplescommand
 
 tagcommand=""
 #only merging part
@@ -155,10 +155,13 @@ nplot=0
 extrastring=''
 #only plotting part
 for r,rc in regionCuts.iteritems():
+    print "in regions"
     cc =ctrlCuts[r]
     for ccc in cc:
+        print "in cuts"
         bigcut=rc+ccc
         for y in years:
+            print "in years"
             if not (y in samplescommand or samplescommand==""):continue#            if not y in samplescommand:continue
             for l in leptons:
                 for s in systs:

@@ -3,7 +3,7 @@ import shutil
 import optparse
 import copy
 from symmetry import symmetry,nnpdfeval
-from repos import histosr,histocr
+from repos import histosr,histocr,extrasr,extracr
 from fit_utils import shift,smoothing,scale
 
 pi = '/afs/cern.ch/work/o/oiorio/Wprimean/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/python/postprocessing/newtest5/v17_explin/'
@@ -21,6 +21,7 @@ parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , defaul
 parser.add_option('-m', '--mode', dest='mode',default = 'sum symmetrize smooth' , type='string', help='"sum" splits systs per years, "symmetrize" symmetrizes DD uncertainties, "smooth" smooths QCD histograms')
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
 parser.add_option('-r', '--refresh', dest='refresh', action= 'store_true' , default = False, help='if called empty the output folders first')
+parser.add_option('-e','--extraregions', dest='extraregions', action="store_true", default = False, help='use extra regions for later recorrection')
 #parser.add_option('--cut','-c', dest='cuts', default = '', type='string', help='years to run')
 (opt, args) = parser.parse_args()
 
@@ -28,6 +29,10 @@ version = 'v17'
 pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_explin_v3/'
 #pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_bis/'
 pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_fit_ddsummed_explin_v3'
+
+extended=opt.extraregions
+#extended=True
+
 
 
 version = opt.version
@@ -68,6 +73,8 @@ years=opt.years.split(',')
 mode= opt.mode
 
 allhistos=histosr+histocr
+if(extended):
+    allistos=allhistos+extrasr+extracr
 
 if opt.refresh:
     os.system(" rm -rf "+pathout+"/*")
@@ -134,6 +141,7 @@ for lep in leps:
     else:
         systs = ["jes", "jer", "btag", "mistag", "pdf_total", "pu", "PF"]#, "q2"]
         systs_DD = ["TF_2020", "DD_2020", "Alt_2020", "TT_Mtt", "WJets", "ST","AltTF_2020"]
+        if extended: systs_DD.extend(["CR_2020"])
         systs_perlep = ["lep", "trig"]
 
         filename = 'Data_2020_' + lep + '.root'
@@ -209,9 +217,10 @@ for lep in leps:
                         fileout = pathout+'/'+lep+'/'+filename
                         print("smoothing file ", fileout)
                         smoothing(fileout,h)
-
+    
     if(symmetrize):
         print "symmetrizing"
+        if extended: systs_symmetrize.extend(["CR_2020"])
         for sample in samples_symmetrize:
             #print "sample to smooth ",sample, " histograms:"
             filename = sample + '_2020_' + lep + '.root'

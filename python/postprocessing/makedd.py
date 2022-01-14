@@ -1,4 +1,4 @@
-B65;6003;1cimport os, commands
+import os, commands
 import math
 import optparse
 from ROOT import *
@@ -13,8 +13,10 @@ parser.add_option('--pathin', dest='pathin', type='string', default='./localhist
 parser.add_option('-o','--pathout', dest='pathout', type='string', default='./localhisto/v14_rebin', help='the folder where the output root files should be stored')
 parser.add_option('-c','--category', dest='category', type='string', default='muon', help='muon or electron, in case different thresholds need to be set')
 parser.add_option('-y','--year', dest='year', type='string', default='2016', help='year of data taking')
+parser.add_option('-e','--extraregions', dest='extraregions', action="store_true", default = False, help='use extra regions for later recorrection')
 parser.add_option('--date', dest='date', type='string', default='', help='the date of the folder folder where the root file is stored')
-#parser.add_option('-o','--outpath', dest='outpath', type='string', default='alphaRatioPlots', help='the folder whre the plot will be stored')
+
+#old
 parser.add_option('', '--skipJesJer', dest='skipJesJer', action="store_true", default = False, help='skip jes/jer systematics')
 parser.add_option('', '--test', dest='test', action="store_true", default = False, help='do test version')
 parser.add_option('', '--scenario', dest='scenario', type='string', default='', help='scenario for checks')
@@ -72,6 +74,18 @@ namemap["SRT_I"]="h_jets_best_Wprime_m_SRT_I"
 namemap["CR0B"]="h_jets_best_Wprime_m_CR0B"
 namemap["CR0B_I"]="h_jets_best_Wprime_m_CR0B_I"
 
+namemap["SR2B_IV"]="h_jets_best_Wprime_m_SR2B_IV"
+
+namemap["SRW_II"]="h_jets_best_Wprime_m_SRW_II"
+namemap["SRW_III"]="h_jets_best_Wprime_m_SRW_III"
+
+namemap["SRT_II"]="h_jets_best_Wprime_m_SRT_II"
+namemap["SRT_III"]="h_jets_best_Wprime_m_SRT_III"
+
+namemap["CR0B_II"]="h_jets_best_Wprime_m_CR0B_II"
+namemap["CR0B_III"]="h_jets_best_Wprime_m_CR0B_III"
+
+
 namemap["CR0B_mu"]="h_jets_best_Wprime_m_CR0B"
 namemap["CR0B_I_mu"]="h_jets_best_Wprime_m_CR0B_I"
 
@@ -99,11 +113,13 @@ print "map is ",wjets_veto_map
 #wjets_veto_map={}
 #wjets_veto_map = {"CR0B":"CR0B_I","SRW":"SRW_I"}
 extended=False
+extended=opt.extraregions
 #extended=True
+wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I","CR0B":"CR0B_I"}
 if extended:
-    wjets_veto_map["CR0B_II":"CR0B_III"]
-    wjets_veto_map["SRW_II":"SRW_III"]
-    wjets_veto_map["SRT_II":"SRT_III"]
+    wjets_veto_map["CR0B_II"]="CR0B_III"
+    wjets_veto_map["SRW_II"]="SRW_III"
+    wjets_veto_map["SRT_II"]="SRT_III"
 
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
@@ -346,36 +362,49 @@ poly2ele_fit_map["SRT_II"]=fexp1
 poly2ele_fit_map["CR0B_II"]=fpoly2
 
 expo2_fit_map["SRW_II"]=fexplinw
-expo2_fit_map["SRT_II"]=fexplint
+expo2_fit_map["SRT_II"]=fexplint2
 expo2_fit_map["CR0B_II"]=fexplin0
+expo2_fit_map["SRT_I"]=fexplint2#for alternative srt
     
 expo2ele_fit_map["SRW_II"]=fexplinw
-expo2ele_fit_map["SRT_II"]=fexplint
+expo2ele_fit_map["SRT_II"]=fexplint2
 expo2ele_fit_map["CR0B_II"]=fexplin0
+expo2ele_fit_map["SRT_I"]=fexplint2#for alternative srt
+
 
 poly2_fit_map_option["SR2B_II"]="SIE"
 poly2_fit_map_option["SRW_II"]="SI"
 poly2_fit_map_option["SRT_II"]="SIE"
 poly2_fit_map_option["CR0B_II"]="SEMI"
+poly2_fit_map_option["SRT_I"]="SIE"#for alternative srt
+
 
 poly2ele_fit_map_option["SR2B_II"]="SIE"
 poly2ele_fit_map_option["SRW_II"]="SI"
 poly2ele_fit_map_option["SRT_II"]="SIE"
 poly2ele_fit_map_option["CR0B_II"]="SEMI"
 
+poly2ele_fit_map_option["SRT_I"]="SIE"#for alternative srt
+
 expo2_fit_map_option["SR2B_II"]="SEMI"
 expo2_fit_map_option["SRW_II"]="SEMI"
 expo2_fit_map_option["SRT_II"]="SEMI"
 expo2_fit_map_option["CR0B_II"]="SEMI"
+
+expo2_fit_map_option["SRT_I"]="SEMI"
     
 expo2ele_fit_map_option["SR2B_II"]="SEMI"
 expo2ele_fit_map_option["SRW_II"]="SEM"
 expo2ele_fit_map_option["SRT_II"]="SEMI"
 expo2ele_fit_map_option["CR0B_II"]="SMI"
 
+expo2ele_fit_map_option["SRT_I"]="SEMI"#for alternative srt
+
+
 #CR fit functions
 expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2,
-                  "SR2B_III":fexp1plus2data2,"SRW_III":fexp1plus2data2,"SRT_III":fexp1plus2data2,"CR1B_III":fexp1plus2data2,"CR0B_III":fexp1plus2data_v22}
+                  "SR2B_III":fexp1plus2data2,"SRW_III":fexp1plus2data2,"SRT_III":fexp1plus2data2,"CR1B_III":fexp1plus2data2,"CR0B_III":fexp1plus2data_v22,
+                  "SRT_II":fexp1plus2data}
 
 
 def_fitrange = [1250,6000]
