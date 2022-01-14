@@ -88,5 +88,5 @@ for h in histos:
             #htot_up.Draw("SAMEHIST")
             #htot_down.Draw("SAMEHIST")
             #c1.SetLogy()
-            c1.Print(canvasname + '.png')
+            c1.Print('syst/' + canvasname + '.png')
 

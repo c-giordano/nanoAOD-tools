@@ -612,13 +612,16 @@ if(opt.dat!= 'all'):
      [dataset_dict[str(sample.year)].append(sample) for sample in samples]
 else:
      dataset_dict = {
-          '2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
+          'stack2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
+          '2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, ST2_2016, ST_sch_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
           #'2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJetsHT70to100_2016, WJetsHT100to200_2016, WJetsHT200to400_2016,  WJetsHT400to600_2016, WJetsHT600to800_2016, WJetsHT800to1200_2016, WJetsHT1200to2500_2016, WJetsHT2500toInf_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
           #'2016':[DataHTG_2016, DataMuG_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M4000W400_RH_2016],
           #'2017':[DataMu_2017, DataEle_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M4000W400_RH_2017],
-          '2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
+          'stack2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
+          '2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, ST2_2017, ST_sch_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
           #'2017':[DataMu_2017, DataEle_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJetsHT400to600_2017, WJetsHT600to800_2017, WJetsHT800to1200_2017, WJetsHT1200to2500_2017, WJetsHT2500toInf_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
-          '2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
+          'stack2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
+          '2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018,  ST2_2018, ST_sch_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
           #'2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018,  WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
      }
 #print(dataset_dict.keys())
@@ -723,7 +726,8 @@ if opt.tag!="":
      cut_tag = opt.tag
 for year in years:
      for lep in leptons:
-          dataset_new = dataset_dict[year]
+          dataset_plot = dataset_dict[year]
+          dataset_stack = dataset_dict['stack'+year]
           #if lep == 'muon' and sample_dict['DataEle_'+str(year)] in dataset_new:
                #dataset_new.remove(sample_dict['DataEle_'+str(year)])
           #elif lep == 'electron' and sample_dict['DataMu_'+str(year)] in dataset_new:
@@ -942,7 +946,7 @@ for year in years:
           variables.append(variabile('WprAK8_phi', 'WprAK8 #phi', wzero+'*('+cut+')', 20, -3.14, 3.14))
           variables.append(variabile('WprAK8_pt', 'WprAK8 p_{T} [GeV]', wzero+'*('+cut+')', 200, 0, 2000))
           '''
-          for sample in dataset_new:
+          for sample in dataset_plot:
                if(opt.plot):
                     for syst in systematics:
                          for var in variables:
@@ -953,7 +957,7 @@ for year in years:
                #for syst in systematics:
                for var in variables:
                     os.system('set LD_PRELOAD=libtcmalloc.so')
-                    makestack(lep, 'jets', var, dataset_new, cut_tag, "", lumi[str(year)])
+                    makestack(lep, 'jets', var, dataset_stack, cut_tag, "", lumi[str(year)])
                     os.system('set LD_PRELOAD=libtcmalloc.so')
           #if lep == 'muon':
                #dataset_new.append(sample_dict['DataEle_'+str(year)])
