@@ -33,6 +33,7 @@ folder = opt.folder
 
 #filerepo = '/eos/user/a/apiccine/Wprime/nosynch/v13/'
 filerepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'
+filerepo = '/eos/user/o/oiorio/Wprime/nosynch/' + folder + '/'
 plotrepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'#_topjet/'#/only_Wpjetbtag_ev1btag/'
 
 if(opt.inputpath!=''):
@@ -88,7 +89,6 @@ def mergetree(sample,missingSamples):
                     continue
                add += " " + filerepo + comp.label + "/"  + comp.label + ".root" 
           print add
-          
           os.system(str(add))
 
 def lumi_writer(dataset, lumi, missingSamples):
@@ -610,6 +610,9 @@ if(opt.dat!= 'all'):
      samples = []
      [samples.append(sample_dict[dataset_name]) for dataset_name in dataset_names]
      [dataset_dict[str(sample.year)].append(sample) for sample in samples]
+     dataset_dict['stack2016'] = []
+     dataset_dict['stack2017'] = []
+     dataset_dict['stack2018'] = []
 else:
      dataset_dict = {
           'stack2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],

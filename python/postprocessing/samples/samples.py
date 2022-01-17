@@ -156,7 +156,7 @@ ST_2016 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST_2016")
 ST_2016.year = 2016
 ST_2016.components = [ST_tch_t_2016, ST_tch_tbar_2016, ST_tW_t_2016, ST_tW_tbar_2016, ST_sch_2016]
 
-ST2_2016 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST_2016")
+ST2_2016 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST2_2016")
 ST2_2016.year = 2016
 ST2_2016.components = [ST_tch_t_2016, ST_tch_tbar_2016, ST_tW_t_2016, ST_tW_tbar_2016]
 
@@ -1148,7 +1148,7 @@ ST_2017 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST_2017")
 ST_2017.year = 2017
 ST_2017.components = [ST_tch_t_2017, ST_tch_tbar_2017, ST_tW_t_2017, ST_tW_tbar_2017, ST_sch_2017]
 
-ST2_2017 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST_2017")
+ST2_2017 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST2_2017")
 ST2_2017.year = 2017
 ST2_2017.components = [ST_tch_t_2017, ST_tch_tbar_2017, ST_tW_t_2017, ST_tW_tbar_2017]
 
@@ -2025,7 +2025,6 @@ WP_M6000W1800_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", 
 WP_M6000W1800_LRSMinter_2017.sigma = .2198
 WP_M6000W1800_LRSMinter_2017.year = 2017
 WP_M6000W1800_LRSMinter_2017.dataset = "/Wprimetotb_M6000W1800_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2017+"-v1/NANOAODSIM"
->>>>>>> 45faa833a21dd58cc30959a8d710a40251e094cb
 
 ################################ Signal Sample LRSWP_Minter ################################
 WP_M2000W20_LRSMinter_2017 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LRSMinter_2017")
@@ -2253,7 +2252,7 @@ ST_2018 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST_2018")
 ST_2018.year = 2018
 ST_2018.components = [ST_tch_t_2018, ST_tch_tbar_2018, ST_tW_t_2018, ST_tW_tbar_2018, ST_sch_2018]
 
-ST2_2018 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST_2018")
+ST2_2018 = sample(ROOT.kYellow, 1, 1001, "Single top", "ST2_2018")
 ST2_2018.year = 2018
 ST2_2018.components = [ST_tch_t_2018, ST_tch_tbar_2018, ST_tW_t_2018, ST_tW_tbar_2018]
 
@@ -3182,7 +3181,6 @@ WP_M6000W1800_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 6.0TeV(30%) RH", 
 WP_M6000W1800_LRSMinter_2018.sigma = .2198
 WP_M6000W1800_LRSMinter_2018.year = 2018
 WP_M6000W1800_LRSMinter_2018.dataset = "/Wprimetotb_M6000W1800_LRSMinter_TuneCP5_13TeV-madgraph-pythia8/"+tag_2018+"-v1/NANOAODSIM"
->>>>>>> 45faa833a21dd58cc30959a8d710a40251e094cb
 
 ################################ Signal Sample LRSWP_Minter ################################
 WP_M2000W20_LRSMinter_2018 = sample(ROOT.kBlue, 1, 1001, "W' 2.0TeV(1%) RH", "WP_M2000W20_LRSMinter_2018")

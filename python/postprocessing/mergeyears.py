@@ -1,8 +1,8 @@
 import os,optparse
+from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 
-usage = 'python doplot.py'
+usage = 'python mergeyears.py -i inputpath -o outpath -v version'
 parser = optparse.OptionParser(usage)
-
 parser.add_option('-l', '--lep', dest='leptons', default = 'muon,electron', type='string', help='lepton to run')
 parser.add_option('-v', '--version', dest='version', default = 'v18', type='string', help='analysis version')
 parser.add_option('-i', '--inputpath', dest='inputpath', default = '/eos/user/a/adeiorio/Wprime/nosynch/', type='string', help='file in , not working yet!')
@@ -13,8 +13,6 @@ parser.add_option('-M', '--missingSamplesFile', dest='missing', default = 'missi
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
 (opt, args) = parser.parse_args()
 
-
-
 pathin = opt.inputpath 
 pathout = opt.outputpath 
 
@@ -24,37 +22,28 @@ pathin = opt.inputpath +"/"+version+"/plot"
 pathout = opt.outputpath+"/"+version+"/plot_merged"
 dryrun = opt.dryrun
 
-#pathin= "/eos/user/o/oiorio/Wprime/nosynch/"+version+'/plot'
-#pathout = './newtest5/' + version + '/plot_merged_fix_v2'
-
 systs_corr = ["jes", "jer", "btag", "mistag", "pdf_total", "pu", "PF", "lep", "trig"]
-#systs_corr = ["PF", "lep", "trig"]
 systs_uncorr = []
-#systs_corr = []
-#systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST", "TF", "DD"]
 
-import signalsampleslist
-
-samples=[]
+samples = []
 splitsamples = opt.samples.split(",")
 if opt.samples=="base":
-    samples.extend(["Data", "WJets", "TT_Mtt", "ST", "QCD", "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"])
+    samples.extend(["Data", "WJets", "TT_Mtt", "ST", "QCD"])
 if "WP_RH" in splitsamples:
-    samples.extend(signalsampleslist.RH_samples)
+    samples.extend(sample.label.replace('_2016', '') for sample in sample_dict['WP_RH_2016'].components)
     splitsamples.remove("WP_RH")
 if "WP_LHSMinter" in splitsamples:
-    samples.extend(signalsampleslist.LHSMinter_samples)
+    samples.extend(sample.label.replace('_2016', '') for sample in sample_dict['WP_LHSMinter_2016'].components)
     splitsamples.remove("WP_LHSMinter")
 if "WP_LRSMinter" in splitsamples:
-    samples.extend(signalsampleslist.LRSMinter_samples)
+    samples.extend(sample.label.replace('_2016', '') for sample in sample_dict['WP_LRSMinter_2016'].components)
     splitsamples.remove("WP_LRSMinter")
-
 #print (splitsamples)
 samples.extend(splitsamples)
 #print (samples)
 
-
 print "samples are ",  samples
+
 missingSamplesFile=opt.missing
 fmiss=file(missingSamplesFile)
 missingSamplesList=(fmiss.read()).split()
@@ -70,13 +59,6 @@ for sample in samples:
             samples.remove(sample)
     
 print ("\n\nsamples to run:\n\n",samples)
-#exit()
-#systs2 = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total"]
-
-
-
-#systs_corr =["pdf_total"]
-#samples=["WP_M6000W60_RH"]
 
 versus = ['Up', 'Down']
 leps = ['muon', 'electron']
@@ -103,9 +85,9 @@ for lep in leps:
 
 #sommare tutti gli anni
 nparallel = opt.parallel
-parallelize= (nparallel>1)
-nplot=0
-extrastring=''
+parallelize = (nparallel>1)
+nplot = 0
+extrastring = ''
 for lep in leps:
     for sample in samples:
         if 'Data' in sample:

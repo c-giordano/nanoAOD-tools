@@ -9,13 +9,8 @@ parser.add_option('-v', '--version', dest='version', default = 'v18', type='stri
 parser.add_option('-i', '--inputpath', dest='inputpath', default = '/eos/user/o/oiorio/Wprime/nosynch/', type='string', help='file in , not working yet!')
 parser.add_option('-o', '--outputpath', dest='outputpath', default = '/eos/user/o/oiorio/Wprime/nosynch/', type='string', help='file in , not working yet!')
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
-
-
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
-
 parser.add_option('-d', '--samples', dest='samples', default = '', type='string', help='samples to run, default all')
-
-
 parser.add_option('-m', '--mode', dest='mode',default = '' , type='string', help='options: lpmdecf. Determines the type of operations to do: l:lumimerge (merge and evaluate lumi), p:plot (plot fit variables), m:mergeyears (merge years into one plot), d:datadriven (evaluate background from data driven methods), f:fit (prepare fit with prefit routines)  ')
 (opt, args) = parser.parse_args()
 
@@ -23,7 +18,6 @@ runs_dataset="" #this option by default runs the base samples, but not the exten
 merge_dataset="" #this option by default merges the base samples, but not the extended signals
 
 years=opt.years.split(",") 
-
 
 if opt.samples!="":
     runs_dataset = "-d "

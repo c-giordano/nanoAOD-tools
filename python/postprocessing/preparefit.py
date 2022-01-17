@@ -5,6 +5,7 @@ import copy
 from symmetry import symmetry,nnpdfeval
 from repos import histosr,histocr,extrasr,extracr
 from fit_utils import shift,smoothing,scale
+from PhysicsTools.NanoAODTools.postprocessing.samples.samples import *
 
 pi = '/afs/cern.ch/work/o/oiorio/Wprimean/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/python/postprocessing/newtest5/v17_explin/'
 po = '/afs/cern.ch/work/o/oiorio/Wprimean/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/python/postprocessing/newtest5/v17_explin_fit/'
@@ -12,9 +13,8 @@ po = '/afs/cern.ch/work/o/oiorio/Wprimean/CMSSW_10_5_0/src/PhysicsTools/NanoAODT
 usage = "python preparefit.py -l muon,electron -i pathinput -o pathoutput -v v17 -y 2016,2017,2018"
 parser = optparse.OptionParser(usage)
 parser.add_option('--years','-y', dest='years', default = '2016,2017,2018', type='string', help='years to run')
-parser.add_option('-S', '--syst', dest='syst', default = 'all', type='string', help='syst to run, options are: all,noSyst, or a specific systeamtic')
 parser.add_option('-l', '--lep', dest='leptons', default = 'muon,electron', type='string', help='lepton to run')
-parser.add_option('-v', '--version', dest='version', default = 'v17', type='string', help='analysis version')
+parser.add_option('-v', '--version', dest='version', default = 'v18', type='string', help='analysis version')
 parser.add_option('-i', '--inputpath', dest='inputpath', default = pi, type='string', help='file in , not working yet!')
 parser.add_option('-o', '--outputpath', dest='outputpath', default = po, type='string', help='file in , not working yet!')
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
@@ -25,56 +25,57 @@ parser.add_option('-e','--extraregions', dest='extraregions', action="store_true
 #parser.add_option('--cut','-c', dest='cuts', default = '', type='string', help='years to run')
 (opt, args) = parser.parse_args()
 
-version = 'v17'
-pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_explin_v3/'
-#pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_bis/'
-pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_fit_ddsummed_explin_v3'
-
-extended=opt.extraregions
+extended = opt.extraregions
 #extended=True
-
-
 
 version = opt.version
 pathin = opt.inputpath 
 pathout = opt.outputpath
 dryrun = opt.dryrun
 
+signals = {}
+
+signals['RH2016'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_RH_2016'].components]
+signals['RH2017'] = [sample.label.replace('_2017', '') for sample in sample_dict['WP_RH_2017'].components]
+signals['RH2018'] = [sample.label.replace('_2018', '') for sample in sample_dict['WP_RH_2018'].components]
+signals['LHSMinter2016'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_LHSMinter_2016'].components]
+signals['LHSMinter2017'] = [sample.label.replace('_2017', '') for sample in sample_dict['WP_LHSMinter_2017'].components]
+signals['LHSMinter2018'] = [sample.label.replace('_2018', '') for sample in sample_dict['WP_LHSMinter_2018'].components]
+#print(signals)
+
 samples = ["DDFitWJetsTT_MttST"]
-systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST"]
+#systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST"]
 systs = ["TT_Mtt", "WJets", "ST"]
 systs_peryear = ["TF", "DD", "Alt"]
 #systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST", "TF", "DD"]
-samples2 = ["QCD", "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
+samples2 = ["QCD"] #, "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
 #samples2 = []
 systs2 = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total"]
 
 samples_smooth = {"QCD":["h_jets_best_Wprime_m_SR2B"]}
 samples_smooth["QCD"].append("h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30")
 samples_smooth["QCD"].append("h_jets_best_Wprime_m_SR2B_I")
-systs_smooth=systs2
+systs_smooth = systs2
 
 samples_symmetrize = copy.deepcopy(samples)
-samples_pdfeval = copy.deepcopy(samples2)
-samples_pdfeval = ["WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
+samples_pdfeval = []
 
 #samples_symmetrize.append("QCD")
-systs_symmetrize=systs
+systs_symmetrize = systs
 systs_symmetrize = ["TF_2020", "DD_2020", "Alt_2020", "AltTF_2020"]+["TT_Mtt", "WJets", "ST"]
-
 
 versus = ['Up', 'Down']
 leps = ['muon', 'electron']
 #leps = ['muon']
 years = ['2016', '2017', '2018']
 
-leps=opt.leptons.split(',')
-years=opt.years.split(',')
-mode= opt.mode
+leps = opt.leptons.split(',')
+years = opt.years.split(',')
+mode = opt.mode
 
-allhistos=histosr+histocr
+allhistos = histosr+histocr
 if(extended):
-    allistos=allhistos+extrasr+extracr
+    allistos = allhistos+extrasr+extracr
 
 if opt.refresh:
     os.system(" rm -rf "+pathout+"/*")
@@ -85,18 +86,17 @@ if os.path.exists(pathout):
 else:
     os.makedirs(pathout)
 
-   
-summedyears=False
-splityears=False
-smooth=False
-symmetrize=False
-pdfeval=False
+summedyears = False
+splityears = False
+smooth = False
+symmetrize = False
+pdfeval = False
 if 'sum' in mode: 
     summedyears = True
 if 'splityears' in mode: 
     splityears = True
 if 'smooth' in mode:
-    smooth=True
+    smooth = True
 if 'symmetrize' in mode:
     symmetrize = True
 if 'pdfeval' in mode:
@@ -104,9 +104,10 @@ if 'pdfeval' in mode:
 
 for lep in leps:
     if not os.path.exists(pathout+"/"+lep):os.makedirs(pathout + '/' + lep)
-    if not summedyears :
+    if not summedyears:
         if splityears:
             for year in years:
+                samples += signals['RH'+year] + signals['LHSMinter'+year]
                 filename = 'Data_' + year + '_' + lep + '.root'
                 print('copying ', filename)
                 #shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + filename)
@@ -129,6 +130,7 @@ for lep in leps:
                             print('copying ', filename)
                             shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + fileout)
 
+                samples2 += signals['RH'+year] + signals['LHSMinter'+year]
                 for sample in samples2:
                     filename = sample + '_' + year + '_' + lep + '.root'
                     print('copying ', filename)
@@ -162,15 +164,18 @@ for lep in leps:
                     print('copying ', filename)
                     shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + fileout)
 
+        samples2 += signals['RH2016'] + signals['LHSMinter2016']
         for sample in samples2:
             filename = sample + '_2020_' + lep + '.root'
             print('copying ', filename)
             shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + filename)
+            print(systs)
             for syst in systs:
                 for vs in versus:
                     filename = sample + '_2020_' + lep + '_' + syst + vs + '.root'
-                    print('copying ', filename)
+                    print('copying ', pathin + '/' + lep + '/' + filename, " in ", pathout +  '/' + lep + '/' + filename)
                     shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + filename)
+            print(systs_perlep)
             for syst in systs_perlep:
                 for vs in versus:
                     filename = sample + '_2020_' + lep + '_' + syst + vs + '.root'
@@ -178,7 +183,8 @@ for lep in leps:
                         fileout = sample + '_2020_' + lep + '_' + syst + '_mu' + vs + '.root'
                     else:
                         fileout = sample + '_2020_' + lep + '_' + syst + '_ele' + vs + '.root'
-                    print('copying ', filename)
+                    #print('copying ', filename)
+                    print('copying ', pathin + '/' + lep + '/' + filename, " in ", pathout +  '/' + lep + '/' + fileout)
                     shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + fileout)
 
     if(smooth):
@@ -278,3 +284,4 @@ for lep in leps:
             os.system("cp "+fileoutUp+" "+fileoutRMS)
 
             nnpdfeval(histosr,fUp=fileoutUp,fDown=fileoutDown,fNom=fileout,fRMS=fileoutRMS)
+
