@@ -1,9 +1,9 @@
 #!/bin/env python
 import optparse
 from plots.plotUtils import *
-usage = 'python plotPrePostFit.py -o fitfolder' #fit folder is the folder containing the FitDiagnostic.root file
+usage = 'python plotPrePostFit.py -o fitfolder' #fit folder is the folder containing the fitDiagnostic.root file
 
-signal = "WP_M4000W40_RH"
+signal = "WP_M6000W60_RH"
 samples_CR0B = ["QCD", "DDFitWJetsTT_MttST", signal]
 samples_SRT = ["QCD", "DDFitWJetsTT_MttST", signal]
 samples_SRW = ["QCD", "DDFitWJetsTT_MttST", signal]
@@ -26,10 +26,11 @@ lep = ""
 fitPhase = "prefit"
 #fitPhase = "fit_b"
 fitfolder = "/afs/cern.ch/work/a/adeiorio/CMSSW_10_2_5/src/Stat/Limits/test/26Jul21_dd_summedyears_CR_explin_v6"
-histfolder = "/eos/user/a/adeiorio/Wprime/nosynch/v17/plot_fit_ddsummed_explin_v6/"
+fitfolder = "/eos/home-o/oiorio/Wprime/fitsetups/corrected_cr_2022"
+histfolder = "/eos/home-o/oiorio/Wprime/nosynch/v18/plot_final_fit"
 
 print('hello! Starting now')
-lep = "muon"
+#lep = "muon"
 if lep == "muon":
     plot(histfolder, fitfolder, fitPhase, regions_mu["CR0B"], samples_CR0B)
 
@@ -37,7 +38,7 @@ if lep == "muon":
 if lep == "electron":
     plot(histfolder, fitfolder, fitPhase, regions_ele["CR0B"], samples_CR0B)
 
-#lep = "muele"
+lep = "muele"
 if lep == "muele":    
     plot(histfolder, fitfolder, fitPhase, regions_mu["CR0B"], samples_CR0B)
     plot(histfolder, fitfolder, fitPhase, regions_ele["CR0B"], samples_CR0B)

@@ -2,24 +2,27 @@ import ROOT
 import copy
 import os
 from array import array
-folder = 'v17'
-plotpath = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/plot_merged_2017fix/'
+folder = 'v18'
+plotpath = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/plot_fit/'
 
 ROOT.gROOT.SetBatch() # don't pop up canvases
 ROOT.gStyle.SetOptStat(0)
 
 histos = ['h_jets_best_Wprime_m_SR2B', 'h_jets_best_Wprime_m_SRT', 'h_jets_best_Wprime_m_SRW']
-systematics = {"jes":ROOT.kRed, "jer":ROOT.kBlue, "PF":ROOT.kOrange, "pu":ROOT.kYellow+4, "btag":ROOT.kCyan, "mistag":ROOT.kPink, "lep":ROOT.kAzure, "trig":ROOT.kMagenta}#, "pdf_total":ROOT.kGreen+2}#, "q2":ROOT.kBlue}
+systematics = {"jes":ROOT.kRed, "jer":ROOT.kBlue, "PF":ROOT.kOrange, "pu":ROOT.kYellow+4, "btag":ROOT.kCyan, "mistag":ROOT.kPink, "lep_ele":ROOT.kAzure, "trig_ele":ROOT.kMagenta, "pdf_total":ROOT.kGreen+2}#, "q2":ROOT.kBlue}
+systematics = {"jes":ROOT.kRed, "jer":ROOT.kBlue, "PF":ROOT.kOrange, "pu":ROOT.kYellow+4, "btag":ROOT.kCyan, "mistag":ROOT.kPink, "lep_mu":ROOT.kAzure, "trig_mu":ROOT.kMagenta, "pdf_total":ROOT.kGreen+2}#, "q2":ROOT.kBlue}
 #systematics = {"jes":ROOT.kRed, "jer":ROOT.kBlue, "PF":ROOT.kOrange, "pu":ROOT.kYellow+4, "btag":ROOT.kCyan, "mistag":ROOT.kPink, "lep":ROOT.kAzure, "trig":ROOT.kMagenta, "pdf_total":ROOT.kGreen+2}#, "q2":ROOT.kBlue}
-#systematics = {"TF_2020":ROOT.kRed, "DD_2020":ROOT.kGreen+2, "Alt_2020":ROOT.kOrange, "AltTF_2020":ROOT.kPink, "ST":ROOT.kBlue, "TT_Mtt":ROOT.kMagenta, "WJets":ROOT.kCyan}
+systematics = {"TF_2020_mu":ROOT.kRed, "DD_2020_mu":ROOT.kGreen+2, "Alt_2020_mu":ROOT.kOrange, "AltTF_2020_mu":ROOT.kPink, "ST_mu":ROOT.kBlue, "TT_Mtt_mu":ROOT.kMagenta, "WJets_mu":ROOT.kCyan}
+systematics = {"TF_2020_ele":ROOT.kRed, "DD_2020_ele":ROOT.kGreen+2, "Alt_2020_ele":ROOT.kOrange, "AltTF_2020_ele":ROOT.kPink, "ST_ele":ROOT.kBlue, "TT_Mtt_ele":ROOT.kMagenta, "WJets_ele":ROOT.kCyan}
 versus = ["Up", "Down"]
 years = ['2016', '2017', '2018']
 years = ['2020']
-sample = 'WP_M5000W50_RH'
+#sample = 'WP_M5000W50_RH'
 #sample = 'QCD'
-#sample = 'DDFitWJetsTT_MttST'
+sample = 'DDFitWJetsTT_MttST'
 #sample = 'TT_Mtt'
 leps = ['electron']
+#leps = ['muon']
 
 for h in histos:
     for year in years:

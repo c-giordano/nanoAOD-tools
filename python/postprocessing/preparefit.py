@@ -18,7 +18,7 @@ parser.add_option('-v', '--version', dest='version', default = 'v18', type='stri
 parser.add_option('-i', '--inputpath', dest='inputpath', default = pi, type='string', help='file in , not working yet!')
 parser.add_option('-o', '--outputpath', dest='outputpath', default = po, type='string', help='file in , not working yet!')
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
-parser.add_option('-m', '--mode', dest='mode',default = 'sum symmetrize smooth' , type='string', help='"sum" splits systs per years, "symmetrize" symmetrizes DD uncertainties, "smooth" smooths QCD histograms')
+parser.add_option('-m', '--mode', dest='mode',default = 'sum symmetrize smooth pdfeval' , type='string', help='"sum" splits systs per years, "symmetrize" symmetrizes DD uncertainties, "smooth" smooths QCD histograms')
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
 parser.add_option('-r', '--refresh', dest='refresh', action= 'store_true' , default = False, help='if called empty the output folders first')
 parser.add_option('-e','--extraregions', dest='extraregions', action="store_true", default = False, help='use extra regions for later recorrection')
@@ -34,7 +34,6 @@ pathout = opt.outputpath
 dryrun = opt.dryrun
 
 signals = {}
-
 signals['RH2016'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_RH_2016'].components]
 signals['RH2017'] = [sample.label.replace('_2017', '') for sample in sample_dict['WP_RH_2017'].components]
 signals['RH2018'] = [sample.label.replace('_2018', '') for sample in sample_dict['WP_RH_2018'].components]
@@ -58,7 +57,7 @@ samples_smooth["QCD"].append("h_jets_best_Wprime_m_SR2B_I")
 systs_smooth = systs2
 
 samples_symmetrize = copy.deepcopy(samples)
-samples_pdfeval = []
+samples_pdfeval = signals['LHSMinter2016']
 
 #samples_symmetrize.append("QCD")
 systs_symmetrize = systs

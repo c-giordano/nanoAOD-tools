@@ -10,17 +10,14 @@ parser.add_option('--pathout', dest='pathout', type='string', default='syst/', h
 (opt, args) = parser.parse_args()
 
 histos = []
-histos.append('h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60')
+#histos.append('h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_EQ_0_AND_best_Wpjet_isbtag_EQ_0_AND_nbjet_pt100_EQ_0_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60')
+histos.append('h_jets_best_Wprime_m_CR0B')
+histos.append('h_jets_best_Wprime_m_SR2B')
 #h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_120_AND_best_top_m_L_220_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_L_60')
 
 
 pathin = opt.pathin
-if opt.pathin != "Plot/fit/":
-     pathin == opt.pathin
-
 pathout = opt.pathout
-if opt.pathout != "syst/":
-     pathout == opt.pathout
 
 gStyle.SetPalette(1)
 gStyle.SetOptStat(0)
@@ -37,19 +34,21 @@ samples = [
 #"TT_Mtt",
 #"WJets",
 #"WP_M2000W20_RH",
+#"WP_M6000W60_RH",
 "DDFitWJetsTT_MttST"
 ]
 
+logscale = True
 scale = False
 rebin = False
-normalize = False # True
+normalize = False # True #
 systematics = {
      #"TT_Mtt":["jes", "jer", "pu" , "lep", "pdf_total", "q2", "btag", "mistag", "trig"],
      #"ST":["jes", "jer", "pu" , "lep", "pdf_total", "q2", "btag", "mistag", "trig"],
      #"WJets":["jes", "jer", "pu" , "lep", "pdf_total", "q2", "btag", "mistag", "trig"],
-     "WP_M2000W20_RH":["jes", "jer", "pu" , "lep", "pdf_total", "btag", "mistag", "trig"],# "q2",
+     "WP_M6000W60_RH":["jes", "jer", "pu" , "lep", "pdf_total", "btag", "mistag", "trig"],# "q2",
      #"QCD":["jes", "jer", "pu" , "lep", "pdf_total", "btag", "mistag", "trig"], # "q2",
-     "DDFitWJetsTT_MttST":["TT_Mtt", "WJets", "ST", "TF_2020", "DD_2020", "Alt_2020"] #"jes", "jer", "pu" , "lep", "pdf_total", "q2", "btag", "mistag", "trig", 
+     "DDFitWJetsTT_MttST":["TT_Mtt", "WJets", "ST", "TF_2020", "DD_2020", "Alt_2020", "AltTF_2020", "CR_2020"] #"jes", "jer", "pu" , "lep", "pdf_total", "q2", "btag", "mistag", "trig", 
  }
 #systematics = {
      #"TT_Mtt":["jes", "jer", "pu" , "lep", "pdf_total", "q2", "btag", "mistag", "trig"],
@@ -70,11 +69,11 @@ for lep in leptons:
                infile = []
                infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+".root"))
                if lep == 'muon' and (syst == 'lep' or syst == 'trig'):
-                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_mu_Up.root"))
-                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_mu_Down.root"))
+                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_muUp.root"))
+                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_muDown.root"))
                elif lep == 'electron' and (syst == 'lep' or syst == 'trig'):
-                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_ele_Up.root"))
-                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_ele_Down.root"))
+                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_eleUp.root"))
+                    infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_eleDown.root"))
                elif lep == 'muon' and s == 'DDFitWJetsTT_MttST':
                     infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_muUp.root"))
                     infile.append(TFile.Open(pathin+'/'+lep+'/'+s+"_" + year + "_"+lep+"_"+syst+"_muDown.root"))
@@ -122,15 +121,18 @@ for lep in leptons:
                     minimum = min(h1.GetMinimum(),h2.GetMinimum(),h3.GetMinimum())
                     h1.SetMaximum(maximum*1.5)
                     h1.SetMinimum(0.0)
+                    if(logscale):
+                         h1.SetMaximum(maximum*150)
+                         h1.SetMinimum(minimum/10)
                     h1.SetLineColor(kRed)
-                    h1.GetXaxis().SetTitle(syst)
+                    h1.GetXaxis().SetTitle("W' mass [GeV]")
                     if(normalize):
                          h1.GetYaxis().SetTitle("Fraction of Events/bin")
                          h1.DrawNormalized("E")
                     else:
                          h1.GetYaxis().SetTitle("Events/bin")
                          h1.Draw("E")
-                    h1.SetTitle("")
+                    h1.SetTitle(syst)
                     print "int h1 up",h1.Integral()
                     h2.SetLineColor(kGreen)
                     if(normalize):
@@ -149,6 +151,8 @@ for lep in leptons:
                     leg.AddEntry(h2, "down", "l")
                     leg.Draw("SAME")
                     c1.cd()
+                    if(logscale):
+                         c1.SetLogy()
                     TGaxis.SetMaxDigits(3)
                     c1.RedrawAxis()
                     c1.Update()

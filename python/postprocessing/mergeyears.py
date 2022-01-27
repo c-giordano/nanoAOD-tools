@@ -68,7 +68,7 @@ if os.path.exists(pathout):
     print "path exists, not recreating it"
 else:
     if(not dryrun):os.makedirs(pathout)
-
+'''
 for lep in leps:
     if os.path.exists(pathout+"/"+lep):
         print "path for "+lep+" exists, not recreating it"
@@ -82,7 +82,7 @@ for lep in leps:
         #os.system(commandrm)
     #print(command)
     if(not dryrun):os.system(command)
-
+'''
 #sommare tutti gli anni
 nparallel = opt.parallel
 parallelize = (nparallel>1)
