@@ -29,13 +29,13 @@ TT_incl_2016.year = 2016
 TT_incl_2016.dataset = "/TT_TuneCUETP8M2T4_13TeV-powheg-pythia8/"+tag_2016+"-v1/NANOAODSIM"
 
 TT_Mtt700to1000_2016 = sample(ROOT.kRed, 1, 1001, "t#bar{t}", "TT_Mtt700to1000_2016")
-TT_Mtt700to1000_2016.sigma = 80.5 #pb
+TT_Mtt700to1000_2016.sigma = 831.76*0.0921 #pb
 TT_Mtt700to1000_2016.year = 2016
 TT_Mtt700to1000_2016.dataset = "/TT_Mtt-700to1000_TuneCUETP8M2T4_13TeV-powheg-pythia8/"+tag_2016+"-v1/NANOAODSIM"
 #TT_Mtt700to1000_2016.files = jr.json_reader(path+"/TT_Mtt700to1000_2016.json")
 
 TT_Mtt1000toInf_2016 = sample(ROOT.kRed, 1, 1001, "t#bar{t}", "TT_Mtt1000toInf_2016")
-TT_Mtt1000toInf_2016.sigma = 21.3 #pb
+TT_Mtt1000toInf_2016.sigma = 831.76*0.02474 #pb
 TT_Mtt1000toInf_2016.year = 2016
 TT_Mtt1000toInf_2016.dataset = "/TT_Mtt-1000toInf_TuneCUETP8M2T4_13TeV-powheg-pythia8/"+tag_2016+"-v1/NANOAODSIM"
 #TT_Mtt1000toInf_2016.files = jr.json_reader(path+"/TT_Mtt1000toInf_2016.json")
@@ -1051,13 +1051,13 @@ WP_RH_COMP_2016.components = [WP_M1900_RH_COMP_2016, WP_M3000_RH_COMP_2016, WP_M
 
 ################################ TTbar ################################
 TT_Mtt700to1000_2017 = sample(ROOT.kRed, 1, 1001, "t#bar{t}", "TT_Mtt700to1000_2017")
-TT_Mtt700to1000_2017.sigma = 80.5 #pb
+TT_Mtt700to1000_2017.sigma = 831.76*0.0921 #pb
 TT_Mtt700to1000_2017.year = 2017
 TT_Mtt700to1000_2017.dataset = "/TT_Mtt-700to1000_TuneCP5_PSweights_13TeV-powheg-pythia8/"+tag_2017+"_ext1-v1/NANOAODSIM"
 #TT_Mtt700to1000_2017.files = jr.json_reader(path+"/TT_Mtt700to1000_2017.json")
 
 TT_Mtt1000toInf_2017 = sample(ROOT.kRed, 1, 1001, "t#bar{t}", "TT_Mtt1000toInf_2017")
-TT_Mtt1000toInf_2017.sigma = 21.3 #pb
+TT_Mtt1000toInf_2017.sigma = 831.76*0.02474 #pb
 TT_Mtt1000toInf_2017.year = 2017
 TT_Mtt1000toInf_2017.dataset = "/TT_Mtt-1000toInf_TuneCP5_PSweights_13TeV-powheg-pythia8/"+tag_2017+"_ext1-v1/NANOAODSIM"
 #TT_Mtt1000toInf_2017.files = jr.json_reader(path+"/TT_Mtt1000toInf_2017.json")
@@ -2144,13 +2144,13 @@ WP_LRSMinter_2017.components = [WP_M2000W20_LRSMinter_2017, WP_M2200W22_LRSMinte
 
 ################################ TTbar ################################
 TT_Mtt700to1000_2018 = sample(ROOT.kRed, 1, 1001, "t#bar{t}", "TT_Mtt700to1000_2018")
-TT_Mtt700to1000_2018.sigma = 80.5 #pb
+TT_Mtt700to1000_2018.sigma = 831.76*0.0921 #pb
 TT_Mtt700to1000_2018.year = 2018
 TT_Mtt700to1000_2018.dataset = "/TT_Mtt-700to1000_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
 #TT_Mtt700to1000_2018.files = jr.json_reader(path+"/TT_Mtt700to1000_2018.json")
 
 TT_Mtt1000toInf_2018 = sample(ROOT.kRed, 1, 1001, "t#bar{t}", "TT_Mtt1000toInf_2018")
-TT_Mtt1000toInf_2018.sigma = 21.3 #pb
+TT_Mtt1000toInf_2018.sigma = 831.76*0.02474 #pb
 TT_Mtt1000toInf_2018.year = 2018
 TT_Mtt1000toInf_2018.dataset = "/TT_Mtt-1000toInf_TuneCP5_13TeV-powheg-pythia8/"+tag_2018+"-v1/NANOAODSIM"
 #TT_Mtt1000toInf_2018.files = jr.json_reader(path+"/TT_Mtt1000toInf_2018.json")
