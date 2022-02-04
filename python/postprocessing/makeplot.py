@@ -694,7 +694,7 @@ else:
           cut_tag = cutToTag(cut)
           print cut, cut_tag
 
-lumi = {'2016': 35.9, "2017": 41.53, "2018": 59.7}
+lumi = {'2016': 36.3, "2017": 41.5, "2018": 59.8}
 
 #
 systematics = []
