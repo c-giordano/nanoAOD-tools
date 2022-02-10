@@ -834,7 +834,7 @@ def reco(scenario, isMC, addPDF, MCReco):
     nrecoclosest = 0
     nrecosublead = 0
     nrecobest = 0
-    nbinseff = 10
+    nbinseff = 14
     h_eff_mu = ROOT.TH1D("h_eff_mu", "h_eff_mu", nbinseff, 0, nbinseff)
     h_eff_ele = ROOT.TH1D("h_eff_ele", "h_eff_ele", nbinseff, 0, nbinseff)
     #++++++++++++++++++++++++++++++++++
@@ -1041,13 +1041,23 @@ def reco(scenario, isMC, addPDF, MCReco):
         if(isMuon):
             if(goodMu[0].pt<55.):
                 continue
+            h_eff_mu.Fill('Muon pt > 55', 1)
         if(isElectron):
             if(goodEle[0].pt<50.):
                 continue 
+            h_eff_ele.Fill('Electron pt > 55', 1)
         if(goodJets[0].pt<300. or goodJets[1].pt<150.):
             continue
+            if isMuon:
+                h_eff_mu.Fill('lead-sublead jet pt', 1)
+            elif isElectron:
+                h_eff_ele.Fill('lead-sublead jet pt', 1)
         if(met.pt<120.):
             continue
+            if isMuon:
+                h_eff_mu.Fill('MET pt > 120', 1)
+            elif isElectron:
+                h_eff_ele.Fill('MET pt > 120', 1)
         #++++++++++++++++++++++++++++++++++
         #++      applying selection      ++
         #++++++++++++++++++++++++++++++++++

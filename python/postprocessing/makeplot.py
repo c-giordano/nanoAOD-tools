@@ -616,15 +616,18 @@ if(opt.dat!= 'all'):
 else:
      dataset_dict = {
           'stack2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
-          '2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, ST2_2016, ST_sch_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
+          #'2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, ST2_2016, ST_sch_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
+          '2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
           #'2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJetsHT70to100_2016, WJetsHT100to200_2016, WJetsHT200to400_2016,  WJetsHT400to600_2016, WJetsHT600to800_2016, WJetsHT800to1200_2016, WJetsHT1200to2500_2016, WJetsHT2500toInf_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
           #'2016':[DataHTG_2016, DataMuG_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M4000W400_RH_2016],
           #'2017':[DataMu_2017, DataEle_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M4000W400_RH_2017],
           'stack2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
-          '2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, ST2_2017, ST_sch_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
+          #'2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, ST2_2017, ST_sch_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
+          '2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
           #'2017':[DataMu_2017, DataEle_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJetsHT400to600_2017, WJetsHT600to800_2017, WJetsHT800to1200_2017, WJetsHT1200to2500_2017, WJetsHT2500toInf_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
           'stack2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
-          '2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018,  ST2_2018, ST_sch_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
+          #'2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, ST2_2018, ST_sch_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
+          '2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
           #'2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018,  WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
      }
 #print(dataset_dict.keys())
@@ -720,10 +723,8 @@ for year in years:
                if not('WP' in sample.label):
                     mergetree(sample,missingSamples)
 
-validationvars=True
-validationvars=False
-plotAN=True
-plotAN=False
+validationvars = False # True #
+plotAN = False # True #
 
 if opt.tag!="":
      cut_tag = opt.tag
@@ -740,6 +741,7 @@ for year in years:
           cut = cut_dict[lep]
           #variables.append(variabile('closest_topjet_dRLepJet', '#DeltaR lep jet (closest crit)',  wzero+'*('+cut+')', 10, 0, 5))
           variables.append(variabile('best_Wprime_m', 'W\' mass [GeV]',  wzero+'*(best_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [1000., 1250., 1500., 1750., 2000., 2250., 2500., 2750., 3000., 3500., 4500., 6000.])))
+          #variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
 
           if validationvars:
                variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
@@ -763,6 +765,7 @@ for year in years:
           #variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_phi', 'Missing transverse momentum #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
+          #variables.append(variabile('best_topW_jets_deltaPhi', '#Delta #phi jets (t+W\') (best)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
           if plotAN:
                #------->   plot nota
                variables.append(variabile('njet_pt100', 'no. of jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 8, 1.5, 9.5))
@@ -929,7 +932,6 @@ for year in years:
           variables.append(variabile('ptrel_bestWAK4_closestAK8', 'pt rel (best)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
           variables.append(variabile('best_topW_jets_pt', 'jets (t+W\') p_{T} [GeV] (best)',  wzero+'*('+cut+')', 150, 0, 1500))
           variables.append(variabile('best_topW_jets_deltaR', '#DeltaR jets (t+W\') (best)',  wzero+'*('+cut+')', 50, 0, 5))
-          variables.append(variabile('best_topW_jets_deltaPhi', '#Delta #phi jets (t+W\') (best)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
           variables.append(variabile('ptrel_chitopAK4_closestAK8', 'pt rel (chi)top AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
           variables.append(variabile('deltaR_chitopAK4_closestAK8', '#DeltaR (chi)top AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
           variables.append(variabile('ptrel_chiWAK4_closestAK8', 'pt rel (chi)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))

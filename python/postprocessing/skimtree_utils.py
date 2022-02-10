@@ -784,6 +784,59 @@ class TopUtilities():
 
         return besttop, IsNeg, dR_lepjet_top
 
+
+    def topnu_4Momentum(self, lepton, jet, metPx, metPy):
+        #topMt = self.topMtw(lepton, jet, metPx, metPy)
+        '''
+        if topMt == None:
+        self.reco_topqv = None
+        self.neutrino = None
+        return None
+        '''
+        dR_lepjet = None
+        dR_lepjet = deltaR(jet.Eta(), jet.Phi(), lepton.Eta(), lepton.Phi())
+        #print "lepton inside top4momentum(begin) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
+        neutrino, IsNeg = self.NuMomentum(lepton.Px(), lepton.Py(), lepton.Pz(), lepton.Pt(), lepton.E(), metPx, metPy)
+        besttop = None
+        #recochi = []
+        rtop = ROOT.TLorentzVector()
+        rnu = ROOT.TLorentzVector()
+
+        if isinstance(neutrino, list):
+          chi2 = 100000000.**2.
+          for i in range(len(neutrino)):
+            if dR_lepjet > 0.4:
+              rtop = lepton + jet + neutrino[i]
+              rnu = copy.deepcopy(neutrino[i])
+            else:
+              rtop = jet + neutrino[i]
+              rnu = copy.deepcopy(neutrino[i])
+            
+            rchi = Chi_TopMass(rtop.M())
+            if rchi < chi2:
+              besttop = copy.deepcopy(rtop)
+              chi2 = copy.deepcopy(rchi)
+              dR_lepjet_top = copy.deepcopy(dR_lepjet)
+
+        elif isinstance(neutrino, ROOT.TLorentzVector):
+          if dR_lepjet > 0.4:
+            rtop = lepton + jet + neutrino
+            rnu = copy.deepcopy(neutrino)
+            #print " lepton outside the jet!!!! its mass is %f" %rtop.M()
+          else:
+            rtop = jet + neutrino
+            rnu = copy.deepcopy(neutrino)
+            #print " lepton inside the jet!!!! its mass is %f" %rtop.M()
+          rchi = Chi_TopMass(rtop.M())
+          besttop = copy.deepcopy(rtop)
+          dR_lepjet_top = copy.deepcopy(dR_lepjet)
+
+        elif neutrino is None:
+          besttop = None
+          dR_lepjet_top = None
+        #print "lepton inside top4momentum(end) is (%f,%f,%f,%f) " %(lepton.Pt(),lepton.Eta(),lepton.Phi(),lepton.Energy())
+        return besttop, IsNeg, dR_lepjet_top, rnu
+
     def topMtw(self, lepton, jet, metPx, metPy):
         lb = lepton + jet
         mlb2 = lb.M2()
