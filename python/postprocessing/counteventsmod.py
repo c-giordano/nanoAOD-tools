@@ -27,16 +27,28 @@ names.append(["SRT_II","SRT_III","SRW_II","SRW_III","CR0B_II","CR0B_III"])
 
 srcr={"SR2B":"SR2B_I","SRT":"SRT_I","SRW":"SRW_I","CR0B":"CR0B_I"}
 #srcr={"SRT_II":"SRT_III","SRW_II":"SRW_III","CR0B_II":"CR0B_III"}
-
-#srcr={"SR2B":"SR2B_I"}
+srcr={"SR2B":"SR2B_I","SRT":"SRT_I","SRW":"SRW_I","CR0B":"CR0B_I"}
+srcr={"SR2B":"SR2B_I"}
 
 from repos import namemap 
 
 excludesr_tot=[]
 excludesr_bins=["CR0B"]
 
+rebinfact=1
+lastbinv=3500.
+
+standard=True
+standard=False
+if(standard):
+    rebinfact=3
+    lastbinv=0
+extrastring=""
+if(rebinfact!=3):extrastring=extrastring+"_rebin"+str(rebinfact)
+if(lastbinv!=0):extrastring=extrastring+"_lastbin"+str(lastbinv)
+
 fout=file("table_events_II.tex","w") 
-fout=file("table_events.tex","w") 
+fout=file("table_events"+extrastring+".tex","w") 
 
 so="\\newpage \n"
 so+="\\begin{table} \n"
@@ -44,18 +56,16 @@ so+="\\centering \n"
 sobins=""
 sotot=""
 
-rebinfact=1
-rebinfact=1
 for lep in leps:
     head="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I.}\\label{tab:background_prefit_rate_"+lep+"} \n"
 #    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the region II and in the region III.}\\label{tab:background_II_prefit_rate_"+lep+"} \n"
-    head+="\\begin{tabular}{l| c c | c c c} "
+    head+="\\resizebox{0.8\\textwidth}{!}{\\begin{tabular}{l| c c | c c c} "
     head+='Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
     head+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events. $\pm$  Unc.& Abundance($\%$) & $\\frac{N}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
 
     headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I divided in bins.}\\label{tab:background_bins_prefit_rate_"+lep+"} \n"
 #    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the region III and in the region III divided in bins.}\\label{tab:background_II_bins_prefit_rate_"+lep+"} \n"
-    headbins+="\\begin{tabular}{l| c c | c c c} "
+    headbins+="\\resizebox{0.8\\textwidth}{!}{\\begin{tabular}{l| c c | c c c} "
     headbins+='Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
     headbins+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events $\pm$  Unc. & Abundance($\%$) & $\\frac{|N|}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
 
@@ -99,6 +109,7 @@ for lep in leps:
             print (filer)
             histosr = filer.Get(histonamesr)
             histocr = filer.Get(histonamecr)
+            lastbin=histosr.GetNbinsX()
             if rebinfact>1:
                 histosr.Rebin(rebinfact)
                 histocr.Rebin(rebinfact)
@@ -128,6 +139,40 @@ for lep in leps:
                 histocr.SetBinContent(histocr.GetNbinsX(),blast_I)
                 histocr.SetBinError(histocr.GetNbinsX(),elast_I)
 
+                print("histo last bin bef ", lastbin," low edge",histocr.GetBinLowEdge(lastbin), " cr last bin value",histocr.GetBinContent(lastbin))
+                
+            if lastbinv!=0:
+                lastbincontent=0
+                lastbinerror=0
+                lastbin=0
+                lastbincontent_I=0
+                lastbinerror_I=0
+                for b in range(1,histosr.GetNbinsX()+1):
+                    print "check bin loop, bin ",b, " low edge",histosr.GetBinLowEdge(b), " lastbinv ", lastbinv, " should enter loop? ",histosr.GetBinLowEdge(b)>=lastbinv
+                    if(histosr.GetBinLowEdge(b)>=lastbinv):
+                        print("actually enters loop")
+                        if (lastbin==0):
+                            lastbin=b
+                        bi=histosr.GetBinContent(b)
+                        bi_I=histocr.GetBinContent(b)
+                        ebi=histosr.GetBinError(b)
+                        ebi_I=histocr.GetBinError(b)
+                        lastbincontent=lastbincontent+bi
+                        lastbincontent_I=lastbincontent_I+bi_I
+                        lastbinerror=lastbinerror+ebi*ebi
+                        lastbinerror_I=lastbinerror_I+ebi_I*ebi_I
+                        histosr.SetBinContent(b,0)
+                        histocr.SetBinContent(b,0)
+                        histosr.SetBinError(b,0)
+                        histocr.SetBinError(b,0)
+                    histosr.SetBinContent(lastbin,lastbincontent)
+                    histocr.SetBinContent(lastbin,lastbincontent_I)
+                    histosr.SetBinError(lastbin,math.sqrt(lastbinerror))
+                    histocr.SetBinError(lastbin,math.sqrt(lastbinerror_I))
+            else:
+                lastbin=histosr.GetNbinsX()
+            print("histo last bin after ", lastbin," low edge",histocr.GetBinLowEdge(lastbin), " cr last bin value",histocr.GetBinContent(lastbin))
+
             stot=histosr.Integral()
             stot_I=histocr.Integral()
             if sample=="Data":
@@ -143,10 +188,9 @@ for lep in leps:
 
             stoterr=0
             stoterr_I=0
-            binrange=range(1,histosr.GetNbinsX()+1)
-            for b in range(1,histosr.GetNbinsX()+1):
-
-                
+            binrange=range(1,lastbin+1)
+            for b in range(1,lastbin+1):
+               
                 bi=histosr.GetBinContent(b)
                 ebi=histosr.GetBinError(b)
                 bi_I=histocr.GetBinContent(b)
@@ -160,7 +204,7 @@ for lep in leps:
                 totregbins_I[b]+=bi_I
                 totregerrbins_I[b]+=ebi_I*ebi_I
                 totregerr_I+=ebi_I*ebi_I
-                if b!=histosr.GetNbinsX():
+                if b!=lastbin:
                     binranges[b]="["+"{:.0f}".format(histosr.GetBinLowEdge(b))+","+"{:.0f}".format(histosr.GetBinLowEdge(b+1))+"]"
                 else:
                     binranges[b]="["+"{:.0f}".format(histosr.GetBinLowEdge(b))+","+"{:.0f}".format(6000)+"]"
@@ -231,8 +275,37 @@ for lep in leps:
                 histocr.SetBinContent(histocr.GetNbinsX(),blast_I)
                 histocr.SetBinError(histocr.GetNbinsX(),elast_I)
 
+            if lastbinv!=0:
+                lastbincontent=0
+                lastbinerror=0
+                lastbin=0
+                lastbincontent_I=0
+                lastbinerror_I=0
+                for b in range(1,histosr.GetNbinsX()+1):
+                    if(histosr.GetBinLowEdge(b)>=lastbinv):
+                        if (lastbin==0):
+                            lastbin=b
+                        bi=histosr.GetBinContent(b)
+                        bi_I=histocr.GetBinContent(b)
+                        ebi=histosr.GetBinError(b)
+                        ebi_I=histocr.GetBinError(b)
+                        lastbincontent=lastbincontent+bi
+                        lastbincontent_I=lastbincontent_I+bi_I
+                        lastbinerror=lastbinerror+ebi*ebi
+                        lastbinerror_I=lastbinerror_I+ebi_I*ebi_I
+                        histosr.SetBinContent(b,0)
+                        histocr.SetBinContent(b,0)
+                        histosr.SetBinError(b,0)
+                        histocr.SetBinError(b,0)
+                    histosr.SetBinContent(lastbin,lastbincontent)
+                    histocr.SetBinContent(lastbin,lastbincontent_I)
+                    histosr.SetBinError(lastbin,math.sqrt(lastbinerror))
+                    histocr.SetBinError(lastbin,math.sqrt(lastbinerror_I))
+            else:
+                lastbin=histosr.GetNbinsX()
 
-            for b in range(1,histosr.GetNbinsX()+1):
+
+            for b in range(1,lastbin+1):
                 bi=histosr.GetBinContent(b)
                 print ("sample " ,sample, " bin ",b," content ",bi," tot ",totregbins[b]," second loop!")
                 ebi=histosr.GetBinError(b)
@@ -262,22 +335,47 @@ for lep in leps:
                     ratio1="-"
                     ratio2="-"
                     ratio3="-"
+                    ratio2err=""
+                    ratio3err=""
                     if(totregbins[b]>0):
                         ratio1="{:.0f}".format(stotbins[b]/totregbins[b] *100)
+                        r1=stotbins[b]/totregbins[b] 
                     if(totregbins_I[b]>0):
                         ratio2="{:.0f}".format(stotbins_I[b]/totregbins_I[b] *100)
                     if(stotbins_I[b]>0):
-                        ratio3="{:.2f}".format(abs((dataregionbins_I[b]-totregbins_I[b])/stotbins_I[b]))
+                        de2=dataregionbins_I[b]
+                        te2=totregerrbins_I[b]*totregerrbins_I[b]
+
+                        se2=stoterrbins_I[b]*stoterrbins_I[b]
+                        oe2=te2-se2               
+                        print("de2 ",de2," te2 ",te2, " oe2 ",oe2 , " se2 ",se2," s ",stotbins_I[b])
+                        r2=stotbins_I[b]/totregbins_I[b] 
+                        r3=abs((dataregionbins_I[b]-totregbins_I[b])/stotbins_I[b])
+                        ratio3="{:.2f}".format(r3)
+                        
+                        if(sample != "Data"):
+                            serel2=stoterrbins_I[b]*stoterrbins_I[b]/(stotbins_I[b]*stotbins_I[b])
+                            ratio3err="$ \\pm$ {:.2f}".format(math.sqrt((de2+oe2)/(stotbins_I[b]*stotbins_I[b])+r3*r3*serel2))
+                            #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(oe2/(stotbins_I[b]*stotbins_I[b])+r2*r2*serel2))
+                        else:
+                            if(de2!=0 and totregbins_I[b]!=0):
+                                te2rel=(te2/(totregbins_I[b]*totregbins_I[b]))
+                                de2rel=1/(de2)
+                                ratio3err="$ \\pm$ {:.2f}".format(math.sqrt(te2rel+de2rel)*r3)
+                                #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(te2rel+de2rel)*r2)
 
                     if(not(sr in excludesr_bins)):
+                        if(sample=="Data" and b):
+                            sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"blinded & & "                 
+                        else:
                             sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"{:.0f}".format(stotbins[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins[b])+ " & " + ratio1 + " & "                 
-                            sobins +=" {:.0f}".format(stotbins_I[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins_I[b])+ " & " +ratio2+ " & " + ratio3 +" \\\\ \n "  
+                        sobins +=" {:.0f}".format(stotbins_I[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins_I[b])+ " & " +ratio2+ratio2err+ " & " + ratio3 + ratio3err+" \\\\ \n "  
 
-    sotot=sotot+'''\end{tabular}
+    sotot=sotot+'''\end{tabular}}
 \end{table}
 
 '''
-    sobins=sobins+'''\end{tabular}
+    sobins=sobins+'''\end{tabular}}
 \end{table}
 
 '''

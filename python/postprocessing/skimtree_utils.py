@@ -248,6 +248,13 @@ def get_LooseEle(electrons): #returns a collection of electrons that pass the se
 def get_Jet(jets, pt): #returns a collection of jets that pass the selection performed by the filter function
     return list(filter(lambda x : x.jetId >= 2 and abs(x.eta) < 2.4 and x.pt > pt, jets))
 
+def get_Jet_Lep(jets, leptons): #returns a collection of jets that pass the selection performed by the filter function
+    return list(filter(lambda x : closest(x,leptons)[1]>0.05, jets))
+
+def get_Jet_Lep_ptrel(jets, leptons): #returns a collection of jets that pass the selection performed by the filter function
+  if(len(leptons)):
+    return list(filter(lambda x : abs(x.pt-leptons[0].pt)/leptons[0].pt > 0.15, jets))
+  return jets
 def bjet_filter(jets, tagger, WP): #returns collections of b jets and no b jets (discriminated with btaggers)
     # b-tag working points: mistagging efficiency tight = 0.1%, medium 1% and loose = 10% 
     WPbtagger = {'DeepFlv_T': 0.7264, 'DeepFlv_M': 0.2770, 'DeepFlv_L': 0.0494, 'DeepCSV_T': 0.7527, 'DeepCSV_M': 0.4184, 'DeepCSV_L': 0.1241}

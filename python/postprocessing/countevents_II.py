@@ -26,7 +26,7 @@ names=["SR2B","SR2B_I","SRT","SRT_I","SRW","SRW_I","CR0B","CR0B_I"]
 names.append(["SRT_II","SRT_III","SRW_II","SRW_III","CR0B_II","CR0B_III"])
 
 srcr={"SR2B":"SR2B_I","SRT":"SRT_I","SRW":"SRW_I","CR0B":"CR0B_I"}
-#srcr={"SRT_II":"SRT_III","SRW_II":"SRW_III","CR0B_II":"CR0B_III"}
+srcr={"SRT_II":"SRT_III","SRW_II":"SRW_III","CR0B_II":"CR0B_III"}
 
 #srcr={"SR2B":"SR2B_I"}
 
@@ -36,7 +36,6 @@ excludesr_tot=[]
 excludesr_bins=["CR0B"]
 
 fout=file("table_events_II.tex","w") 
-fout=file("table_events.tex","w") 
 
 so="\\newpage \n"
 so+="\\begin{table} \n"
@@ -45,19 +44,18 @@ sobins=""
 sotot=""
 
 rebinfact=1
-rebinfact=1
+rebinfact=3
 for lep in leps:
-    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I.}\\label{tab:background_prefit_rate_"+lep+"} \n"
-#    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the region II and in the region III.}\\label{tab:background_II_prefit_rate_"+lep+"} \n"
-    head+="\\begin{tabular}{l| c c | c c c} "
-    head+='Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
-    head+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events. $\pm$  Unc.& Abundance($\%$) & $\\frac{N}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
+#    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I.}\\label{tab:background_prefit_rate_"+lep+"} \n"
+    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the region II and in the region III.}\\label{tab:background_II_prefit_rate_"+lep+"} \n"
+    head+="\\begin{tabular}{l| c c c | c c c} "
+    head+='Lepton: '+str(lep)+'& \multicolumn{3}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
+    head+='Process  & Events $\pm$  Unc. & Abund.($\%$) & $\\frac{|N|}{|Data-Tot MC|}$ & Evts. $\pm$  Unc.& Abund.($\%$) & $\\frac{N}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
 
-    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I divided in bins.}\\label{tab:background_bins_prefit_rate_"+lep+"} \n"
-#    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the region III and in the region III divided in bins.}\\label{tab:background_II_bins_prefit_rate_"+lep+"} \n"
-    headbins+="\\begin{tabular}{l| c c | c c c} "
-    headbins+='Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
-    headbins+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events $\pm$  Unc. & Abundance($\%$) & $\\frac{|N|}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
+    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the region III and in the region III divided in bins.}\\label{tab:background_II_bins_prefit_rate_"+lep+"} \n"
+    headbins+="\\begin{tabular}{l| c c c | c c c} "
+    headbins+='Lepton: '+str(lep)+'& \multicolumn{3}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
+    headbins+='Process  & Evts.$\pm$Unc.&Abund.($\%$)&$\\frac{|N|}{|Data-Tot MC|}$&Evts.$\pm$Unc.&Abund.($\%$)&$\\frac{|N|}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
 
     sotot+=so
     sobins+=so
@@ -66,9 +64,9 @@ for lep in leps:
     sobins+=headbins
 
     for sr,cr in srcr.iteritems():
-        sotot+='\\hline \n & \multicolumn{2}{c}{'+sr.replace("_","\_")+'}  & \multicolumn{3}{c}{'+cr.replace("_","\_")+'} \\\\ \n '
+        sotot+='\\hline \n & \multicolumn{3}{c}{'+sr.replace("_","\_")+'}  & \multicolumn{3}{c}{'+cr.replace("_","\_")+'} \\\\ \n '
         if(not(sr in excludesr_bins)):
-            sobins+='\\hline \n & \multicolumn{2}{c}{'+sr.replace("_","\_")+'}  & \multicolumn{3}{c}{'+cr.replace("_","\_")+'} \\\\ \n '
+            sobins+='\\hline \n & \multicolumn{3}{c}{'+sr.replace("_","\_")+'}  & \multicolumn{3}{c}{'+cr.replace("_","\_")+'} \\\\ \n '
         print sr,cr
 
         totreg=0
@@ -145,14 +143,11 @@ for lep in leps:
             stoterr_I=0
             binrange=range(1,histosr.GetNbinsX()+1)
             for b in range(1,histosr.GetNbinsX()+1):
-
-                
                 bi=histosr.GetBinContent(b)
                 ebi=histosr.GetBinError(b)
                 bi_I=histocr.GetBinContent(b)
                 ebi_I=histocr.GetBinError(b)
                 
-                print ("sample " ,sample, " bin ",b," content ",bi," first loop! ")
                 totregbins[b]+=bi
                 totregerrbins[b]+=ebi*ebi
                 totregerr+=ebi*ebi
@@ -170,7 +165,7 @@ for lep in leps:
         totregerr_I=math.sqrt(totregerr_I)
 
 
-        sotot+="\\hline \n Tot MC"+" & "+"{:.0f}".format(totreg)+" $\\pm$ "+ "{:.0f}".format(totregerr)+ " & " + "{:.0f}".format(totreg/totreg *100) + " & " 
+        sotot+="\\hline \n Tot MC"+" & "+"{:.0f}".format(totreg)+" $\\pm$ "+ "{:.0f}".format(totregerr)+ " & " + "{:.0f}".format(totreg/totreg *100) + " & &" 
         sotot +=" {:.0f}".format(totreg_I)+" $\\pm$ "+ "{:.0f}".format(totregerr_I)+ " & " + "{:.0f}".format(totreg_I/totreg_I *100) + " & \\\\ \n "  
 
         if(not(sr in excludesr_bins)):
@@ -180,7 +175,7 @@ for lep in leps:
             totregerrbins_I[b]=math.sqrt(totregerrbins_I[b])
             
             if(not(sr in excludesr_bins)):
-                sobins+="Tot MC, bin "+binranges[b]+" & "+"{:.0f}".format(totregbins[b])+" $\\pm$ "+ "{:.0f}".format(totregerrbins[b])+ " & " + "{:.0f}".format(totregbins[b]/totregbins[b] *100) + " & " 
+                sobins+="Tot MC, bin "+binranges[b]+" & "+"{:.0f}".format(totregbins[b])+" $\\pm$ "+ "{:.0f}".format(totregerrbins[b])+ " & " + "{:.0f}".format(totregbins[b]/totregbins[b] *100) + " & &" 
                 sobins +=" {:.0f}".format(totregbins_I[b])+" $\\pm$ "+ "{:.0f}".format(totregerrbins_I[b])+ " & " + "{:.0f}".format(totregbins_I[b]/totregbins_I[b] *100) + " & \\\\  \n "  
 #        sobins+="\n \\hline"
 
@@ -216,14 +211,14 @@ for lep in leps:
                 bof_I = histocr.GetBinContent(histosr.GetNbinsX()+11)
                 ebof_I = histocr.GetBinError(histosr.GetNbinsX()+11)
 
-                print("\n\n =====blast, bof \n \n ",blast,bof, " second loop!")
+                print("\n\n =====blast, bof \n \n ",blast,bof)
 
                 blast=blast+bof
                 blast_I=blast_I+bof_I
                 elast=math.sqrt(elast*elast+ebof*ebof)
                 elast_I=math.sqrt(elast_I*elast_I+ebof_I*ebof_I)
 
-                print("\n\n =====blast \n \n ",blast,elast, "second loop!")
+                print("\n\n =====blast \n \n ",blast,elast)
 
                 histosr.SetBinContent(histosr.GetNbinsX(),blast)
                 histosr.SetBinError(histosr.GetNbinsX(),elast)
@@ -231,10 +226,8 @@ for lep in leps:
                 histocr.SetBinContent(histocr.GetNbinsX(),blast_I)
                 histocr.SetBinError(histocr.GetNbinsX(),elast_I)
 
-
             for b in range(1,histosr.GetNbinsX()+1):
                 bi=histosr.GetBinContent(b)
-                print ("sample " ,sample, " bin ",b," content ",bi," tot ",totregbins[b]," second loop!")
                 ebi=histosr.GetBinError(b)
                 bi_I=histocr.GetBinContent(b)
                 ebi_I=histocr.GetBinError(b)
@@ -251,14 +244,14 @@ for lep in leps:
             stoterr=math.sqrt(stoterr)
             stoterr_I=math.sqrt(stoterr_I)
             if (sample!="Data"):
-                sotot+=slabels[sample]+" & "+"{:.0f}".format(stot)+" $\\pm$ "+ "{:.0f}".format(stoterr)+ " & " + "{:.0f}".format(stot/totreg *100) + " & " 
+                sotot+=slabels[sample]+" & "+"{:.0f}".format(stot)+" $\\pm$ "+ "{:.0f}".format(stoterr)+ " & " + "{:.0f}".format(stot/totreg *100) + " & " +"{:.2f}".format(abs((dataregion-totreg)/stot)) + " & "
                 sotot +=" {:.0f}".format(stot_I)+" $\\pm$ "+ "{:.0f}".format(stoterr_I)+ " & " + "{:.0f}".format(stot_I/totreg_I *100) + " & " +"{:.2f}".format(abs((dataregion_I-totreg_I)/stot_I)) +" \\\\ \n"  
             if (sample=="Data"):
-                sotot+=sample+" & blinded  &  & " 
+                sotot+=sample+" & {:.0f}".format(stot)+" $\\pm$ "+ "{:.0f}".format(stoterr)+ " & " + "{:.0f}".format(stot/totreg *100) + " & & "  
                 sotot +=" {:.0f}".format(stot_I)+" $\\pm$ "+ "{:.0f}".format(stoterr_I)+ " & " + "{:.0f}".format(stot_I/totreg_I *100) + " & \\\\ \n \\hline \n "  
             
             for b in binrange:
-                if (sample!="Datan"):
+                if (sample!="Data"):
                     ratio1="-"
                     ratio2="-"
                     ratio3="-"
@@ -266,12 +259,14 @@ for lep in leps:
                         ratio1="{:.0f}".format(stotbins[b]/totregbins[b] *100)
                     if(totregbins_I[b]>0):
                         ratio2="{:.0f}".format(stotbins_I[b]/totregbins_I[b] *100)
+                    if(stotbins[b]>0):
+                        ratio3="{:.2f}".format(abs((dataregionbins[b]-totregbins[b])/stotbins[b]))
                     if(stotbins_I[b]>0):
-                        ratio3="{:.2f}".format(abs((dataregionbins_I[b]-totregbins_I[b])/stotbins_I[b]))
+                        ratio4="{:.2f}".format(abs((dataregionbins_I[b]-totregbins_I[b])/stotbins_I[b]))
 
                     if(not(sr in excludesr_bins)):
-                            sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"{:.0f}".format(stotbins[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins[b])+ " & " + ratio1 + " & "                 
-                            sobins +=" {:.0f}".format(stotbins_I[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins_I[b])+ " & " +ratio2+ " & " + ratio3 +" \\\\ \n "  
+                            sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"{:.0f}".format(stotbins[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins[b])+ " & " + ratio1 + " & " +ratio3 + " & "                 
+                            sobins +=" {:.0f}".format(stotbins_I[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins_I[b])+ " & " +ratio2+ " & " + ratio4 +" \\\\ \n "  
 
     sotot=sotot+'''\end{tabular}
 \end{table}

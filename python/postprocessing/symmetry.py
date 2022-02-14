@@ -1,7 +1,7 @@
 import ROOT,math
 
 
-def symmetry(hists, fUp,fDown,fNom=None,version="shape"):
+def symmetry(hists, fUp,fDown,fNom=None,version="shape",option=""):
     if fNom is None:
         return
     filenom = ROOT.TFile()
@@ -35,11 +35,41 @@ def symmetry(hists, fUp,fDown,fNom=None,version="shape"):
                 bnom = hnom.GetBinContent(b)
                 bup= hup.GetBinContent(b)
                 bdown=hdown.GetBinContent(b)
+
+                signup=1.0
+                signdown=-1.0
                 
-                bupnew=bnom+abs(abs(bup-bnom)+ abs(bdown-bnom))/2.0  
-                bdownnew=bnom-abs(abs(bup-bnom)+ abs(bdown-bnom))/2.0  
+                
+                considerswitch=False
+                if("switch" in option):considerswitch=True                
+                #symmetrization in case of switching uncertainties
+                
+                if considerswitch:
+                    if(bup-bnom!=0):
+                        signup=(bup-bnom)/abs(bup-bnom)
+                    if(bdown-bnom!=0):
+                        signdown=(bdown-bnom)/abs(bdown-bnom)
+                    
+
+                    if (signup*signdown)>0 and (bup-bdown)!=0:
+                        avg = (bup+bdown)/2.0
+                        if bup>= avg:
+                            signup=1
+                            signdown=-1
+                        else:
+                            signup=-1
+                            signdown=1
+                        print " avg ",avg, " bup ", bup," bdown ",bdown
+                    if (signup*signdown)>0 and (bup-bdown)==0:
+                        signup=(bup-bnom)/abs(bup-bnom)
+                        signdown=-signup
+
+                bupnew=bnom+signup*abs(abs(bup-bnom)+ abs(bdown-bnom))/2.0  
+                bdownnew=bnom+signdown*abs(abs(bup-bnom)+ abs(bdown-bnom))/2.0  
                 
                 print "h name ", hnom.GetName()," bin ", b, " nom ",bnom, " up ", bup, " hdown ", bdown, " hupnew ", bupnew, " hdownnew ", bdownnew
+
+#                print " variation ", abs(abs(bup-bnom)+ abs(bdown-bnom))/2.0, " signup ",signup, " signdown ",signdown
 
                 hup.SetBinContent(b,bupnew)
                 hdown.SetBinContent(b,bdownnew)
@@ -104,3 +134,5 @@ def nnpdfeval(histos,fNom,fRMS,fUp,fDown):
     filenom.Close()
     fileup.Close()
     filedown.Close()
+
+#def behead(hists, f):

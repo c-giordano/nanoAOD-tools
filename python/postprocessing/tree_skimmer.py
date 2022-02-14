@@ -802,7 +802,7 @@ def reco(scenario, isMC, addPDF, MCReco):
                     h_LHAPDFweight.SetBins(h_lhapdfw_tmp.GetXaxis().GetNbins(), h_lhapdfw_tmp.GetXaxis().GetXmin(), h_lhapdfw_tmp.GetXaxis().GetXmax())
                     h_LHAPDFweight.Add(h_lhapdfw_tmp)
                     npdfs = h_lhapdfw_tmp.GetXaxis().GetNbins()
-                    
+
         print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genweight.GetBinContent(1), h_PDFweight.GetNbinsX()))
         lheweight = h_genweight.GetBinContent(2)/h_genweight.GetBinContent(1)
         pdf_xsweight = pdf_weight_sum/h_genweight.GetBinContent(1)
@@ -874,6 +874,44 @@ def reco(scenario, isMC, addPDF, MCReco):
 
         chain.GetEntry(i)
 
+
+
+        #++++++++++++++++++++++++++++++++++
+        #++      defining variables      ++
+        #++++++++++++++++++++++++++++++++++
+        tightlep = None
+        tightlep_p4 = None
+        tightlep_p4t = None
+        tightlep_SF = None
+        tightlep_SFUp = None
+        tightlep_SFDown = None
+        recomet_p4t = None
+        PF_SF = None
+        PF_SFUp = None
+        PF_SFDown = None
+        PU_SF = None
+        PU_SFUp = None
+        PU_SFDown = None
+        #++++++++++++++++++++++++++++++++++
+        #++    starting the analysis     ++
+        #++++++++++++++++++++++++++++++++++
+        VetoMu = get_LooseMu(muons)
+        goodMu = get_Mu(muons)
+        VetoEle = get_LooseEle(electrons)
+        goodEle = get_Ele(electrons)
+        year = sample.year
+        if(isMC):
+            runPeriod = None
+        else:
+            runPeriod = sample.runP
+        passMu, passEle, passHT, passPh, noTrigger = trig_map(HLT, year, runPeriod, chain.run)
+        passed_mu_nominal[0] = int(passMu)
+        passed_ele_nominal[0] = int(passEle)
+        passed_ht_nominal[0] = int(passHT)
+        isMuon = (len(goodMu) == 1) and (len(goodEle) == 0) and len(VetoMu) == 0 and len(VetoEle) == 0 and (passMu or passHT)
+        isElectron = (len(goodMu) == 0) and (len(goodEle) == 1) and len(VetoMu) == 0 and len(VetoEle) == 0 and (passEle or passHT)
+
+
         if scenario == 'jesUp':
             MET = {'metPx': met.pt_jesTotalUp*ROOT.TMath.Cos(met.phi_jesTotalUp), 'metPy': met.pt_jesTotalUp*ROOT.TMath.Sin(met.phi_jesTotalUp)}
             for jet in jets:
@@ -910,40 +948,7 @@ def reco(scenario, isMC, addPDF, MCReco):
                 fatjet.pt = fatjet.pt_jerDown
                 fatjet.mass = fatjet.mass_jerDown 
                 fatjet.msoftdrop = fatjet.msoftdrop_jerDown
-        #++++++++++++++++++++++++++++++++++
-        #++      defining variables      ++
-        #++++++++++++++++++++++++++++++++++
-        tightlep = None
-        tightlep_p4 = None
-        tightlep_p4t = None
-        tightlep_SF = None
-        tightlep_SFUp = None
-        tightlep_SFDown = None
-        recomet_p4t = None
-        PF_SF = None
-        PF_SFUp = None
-        PF_SFDown = None
-        PU_SF = None
-        PU_SFUp = None
-        PU_SFDown = None
-        #++++++++++++++++++++++++++++++++++
-        #++    starting the analysis     ++
-        #++++++++++++++++++++++++++++++++++
-        VetoMu = get_LooseMu(muons)
-        goodMu = get_Mu(muons)
-        VetoEle = get_LooseEle(electrons)
-        goodEle = get_Ele(electrons)
-        year = sample.year
-        if(isMC):
-            runPeriod = None
-        else:
-            runPeriod = sample.runP
-        passMu, passEle, passHT, passPh, noTrigger = trig_map(HLT, year, runPeriod, chain.run)
-        passed_mu_nominal[0] = int(passMu)
-        passed_ele_nominal[0] = int(passEle)
-        passed_ht_nominal[0] = int(passHT)
-        isMuon = (len(goodMu) == 1) and (len(goodEle) == 0) and len(VetoMu) == 0 and len(VetoEle) == 0 and (passMu or passHT)
-        isElectron = (len(goodMu) == 0) and (len(goodEle) == 1) and len(VetoMu) == 0 and len(VetoEle) == 0 and (passEle or passHT)
+
 
         if(isMC):
             doublecounting = False
@@ -998,6 +1003,8 @@ def reco(scenario, isMC, addPDF, MCReco):
         ######################################
         btagreco = False
         goodJets = get_Jet(jets, 100)
+        #goodJets = get_Jet_Lep(goodJets, goodMu+goodEle)       
+        #goodJets = get_Jet_Lep_ptrel(goodJets, goodMu+goodEle)       
         bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')
         if(len(bjets) > 1):
             btagreco = True
@@ -1080,8 +1087,8 @@ def reco(scenario, isMC, addPDF, MCReco):
                     systTree.setWeightName("LHESF", copy.deepcopy(lheSF))
                     systTree.setWeightName("LHEUp", copy.deepcopy(lheUp))
                     systTree.setWeightName("LHEDown", copy.deepcopy(lheDown))
-                    #print(lheUp, lheDown)
-                #print("addPDF?" , addPDF)
+                    #print(lheUpb, lheDown)
+                    #print("addPDF?" , addPDF)
                 if addPDF:
                     LHEPdfWeight = Collection(event, 'LHEPdfWeight')
                     mean_pdf = 0.
@@ -1093,13 +1100,11 @@ def reco(scenario, isMC, addPDF, MCReco):
                     for pdfw, i in zip(LHEPdfWeight, range(1, len(LHEPdfWeight)+1)):
                         rms += (pdfw.__getattr__("")-mean_pdf)**2
                     rms = math.sqrt(rms/len(LHEPdfWeight))
-                    #print("is sample ok?" , ("WP_" in sample.label)," lha? ", addLHA)
                     pdf_totalUp = (1+rms)*pdf_xsweight
                     pdf_totalDown = (1-rms)*pdf_xsweight
                     #print('pdf_totalUp ', pdf_totalUp, ' and pdf_totalDown ', pdf_totalDown )
                 if(addLHAPDF):
                     LHAPDFWeights=LHAPDFDefault
-#                    print(" adding LHAPDF  ")
                     if hasattr(event,LHAPDFWeights):
                         mean_pdf = 0.
                         rms = 0.
@@ -1112,38 +1117,35 @@ def reco(scenario, isMC, addPDF, MCReco):
                         #print("weights are",LHAPdfWeight.LHAWeights)
                         pdfwacc0 = LHAPdfWeight_0[0]/lhamean
                         pdfwacc0 = LHAPdfWeight_0[0]
-                        #pdfwacc0=LHAPdfWeight_0[0]
-
+                        lhapdf_xsweights
+                        verbose_pdf=False
                         for pdfw, i in zip(LHAPdfWeight, range(0, len(LHAPdfWeight)) ):
-                            pdfwacc = pdfw/lhapdf_xsweights[i]
-                            #pdfwacc=pdfw
-                            if(i<maxpdfs+1): systTree.setWeightName("pdf"+str(i+1), copy.deepcopy(pdfwacc))
-                            #mean_pdf += pdfw/lhapdf_xsweights[i]
+                            pdfwacc=pdfw/lhapdf_xsweights[i]
                             mean_pdf += pdfwacc#/lhapdf_xsweights[i]
-                            #                            print ("check pdf #",i," val ", pdfw," xsweight ",lhapdf_xsweights[i])
-                            #                            print(" acceptance ", pdfw/lhapdf_xsweights[i], " , partial sum ",  mean_pdf, " partial mean ", mean_pdf/(i+1))
-                            # print(" v2 acceptance ", pdfw/lhapdf_xsweights[i], " , partial sum ",  mean_pdf, " partial mean ", mean_pdf/(i+1))
-                            #print("check rms before ", rms)
-                            if(LHAPDFDefault == "LHAPDF4LHC15"):
+                        mean_pdf=mean_pdf/nlhapdfs
+                        for pdfw, i in zip(LHAPdfWeight, range(0, len(LHAPdfWeight)) ):
+                            pdfwacc=pdfw/lhapdf_xsweights[i]
+                            pdfwaccw=(pdfw)
+                            if(i<maxpdfs+1): systTree.setWeightName("pdf"+str(i+1), copy.deepcopy(pdfwaccw))
+                            if(verbose_pdf):
+                                print ("check pdf #",i," val ", pdfw," xsweight ",lhapdf_xsweights[i])," acc ",pdfwacc ," mean ",lhamean
+                            if(LHAPDFDefault=="LHAPDF4LHC15"):
                                 if(i%2==0): rmsup += ((pdfwacc/pdfwacc0)-1)**2
                                 if(i%2==1): rmsdown += ((pdfwacc/pdfwacc0)-1)**2
-                                rms = rms + ((pdfwacc/pdfwacc0)-1)**2
-                                #print("check pdf acc ", pdfwacc, " pdfwacc0 ",pdfwacc0," diffq ", ((pdfwacc/pdfwacc0)-1)**2," rms ",rms )
+                                rms= rms + ((pdfwacc/pdfwacc0-1))**2
+                                if(verbose_pdf):
+                                    print("check pdf acc ", pdfwacc, " pdfwacc0 ",pdfwacc0," diffq ", ((pdfwacc/pdfwacc0)-1)**2," rms ",math.sqrt(rms) )
                             if(LHAPDFDefault=="LHANNPDF"):
                                 rms=rms+(pdfwacc/mean_pdf-1)**2
 
+                        pdf_xsweight=lhapdf_xsweight  
+                        pdf_xsweight=1.
+                    if(LHAPDFDefault=="LHAPDF4LHC15"):
                         mean_pdf = mean_pdf/nlhapdfs
 
                         pdf_xsweight = lhapdf_xsweight  
                         pdf_xsweight = 1.
-#                         Rms= math.sqrt(rms/(nlhapdfs-1))
-                        
-                    #print(rms)
                     if(LHAPDFDefault=="LHAPDF4LHC15"):
-                        #print("final rms", math.sqrt(rms)/nlhapdfs)
-                        #pdf_totalUp = 1+math.sqrt(rms)/nlhapdfs
-                        #pdf_totalDown = 1-math.sqrt(rms)/nlhapdfs
-                        #print("pdfTotalUp ",pdf_totalUp)
                         pdf_totalUp = 1+math.sqrt(rms)
                         pdf_totalDown = 1-math.sqrt(rms)
                         pdf_totalDown = lhastd/lhamean*math.sqrt(nlhapdfs)
@@ -1155,13 +1157,12 @@ def reco(scenario, isMC, addPDF, MCReco):
                         pdf_totalUp = 1+math.sqrt(rms)
                         pdf_totalDown = 1-math.sqrt(rms)
                         pdf_totalDown = lhastd/lhamean*math.sqrt(nlhapdfs)
-                        meansigma = lhastd #/lhamean*math.sqrt(nlhapdfs)
-                        pdf_totalUp = math.sqrt(rms/nlhapdfs) #/lhamean
-                        pdf_totalUp = (rms/nlhapdfs) #/lhamean
-                        pdf_totalDown = LHAPdfWeight_0[0] # meansigma
-                        pdf_totalDown = meansigma
-                    #print(pdf_totalUp, pdf_totalDown)
-                    
+                        meansigma=lhastd#/lhamean*math.sqrt(nlhapdfs)
+                        pdf_totalUp = math.sqrt(rms/nlhapdfs)#/lhamean
+                        pdf_totalUp = (rms/nlhapdfs)#/lhamean
+                        pdf_totalDown = LHAPdfWeight_0[0]# meansigma
+                        pdf_totalDown=meansigma
+
                 systTree.setWeightName("pdf_totalUp", copy.deepcopy(pdf_totalUp))
                 systTree.setWeightName("pdf_totalDown", copy.deepcopy(pdf_totalDown))
 

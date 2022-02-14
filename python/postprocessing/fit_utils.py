@@ -59,3 +59,31 @@ def scale(f, shift):
             tmp.Reset("ICES")
         prev_str = k
     fin.Close()
+
+def behead(filename,h,prefix=""):
+    fin = ROOT.TFile(filename, "UPDATE")
+    fin.cd()
+    h0=fin.Get(h)
+    nbins=h0.GetNbinsX()
+    minbin=h0.GetBinLowEdge(2)
+    maxbin=h0.GetBinLowEdge(nbins+1)
+    tmp = copy.deepcopy(h0)
+    tmp.Reset("ICES")
+    tmp.SetBins(nbins-1,minbin,maxbin)
+    for b in range(2,nbins+1):
+        bi= h0.GetBinContent(b)
+        ebi= h0.GetBinError(b)
+        tmp.SetBinContent(b-1,bi)
+        tmp.SetBinError(b-1,ebi)
+    
+    if prefix!="": tmp.Write(prefix+tmp.GetName())
+    else: 
+        h0.Reset("ICES")
+        h0.SetBins(nbins-1,minbin,maxbin)
+        h0.Add(tmp)
+        h0.Write(h)
+    fin.Close()
+
+def behead_all(filename,histos,prefix=""):
+    for histo in histos:
+        behead(filename=filename,h=histo,prefix=prefix)
