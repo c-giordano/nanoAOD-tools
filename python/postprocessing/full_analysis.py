@@ -91,18 +91,18 @@ command_replot="nohup python doplot.py -m repsrcr -v "+opt.version+" -t "+opt.ve
 command_stack="nohup python doplot.py -m stacksrcr -v "+opt.version+" -t "+opt.version+" -i "+opt.inputpath+" -o "+opt.outputpath+" -y "+opt.years+ " -S "+opt.syst+ " --parallel "+nparallel+varsetcommand+" "+runs_dataset+"  >& "+opt.outputpath+"/"+opt.version+"/plotstack.log &"
 
 #mergeyears: this operation does merge the years together in the "outputpath"
-command_mergeyears = "nohup python mergeyears.py -v "+opt.version+" -i "+opt.outputpath+" -o "+opt.outputpath+ " --parallel 10 "+merge_dataset+" >& "+opt.outputpath+"/"+opt.version+"/mergeyears.log &"
+command_mergeyears = "nohup python mergeyears.py -v "+opt.version+" -i "+opt.inputpath+" -o "+opt.outputpath+ " --parallel 10 "+merge_dataset+" >& "+opt.outputpath+"/"+opt.version+"/mergeyears.log &"
 
 #makedd: this makes the dd method apply. If "e" is specified, runs over the _II and _III regions as well to derive an extra correction
 extrasamplesopt=""
 if "e" in opt.mode: extrasamplesopt=" -e "
 commands_makeddmu="nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions N --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
 commands_makeddmu=commands_makeddmu+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions B --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
-commands_makeddmucp= "cp "+opt.outputpath+"/"+opt.version+"/plot_merged/muon/* "+opt.outputpath+"/"+opt.version+"/plot_explin/muon/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpmu.log; "
+commands_makeddmucp= "cp "+opt.inputpath+"/"+opt.version+"/plot_merged/muon/WP*root "+opt.outputpath+"/"+opt.version+"/plot_explin/muon/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpmu.log; "
 
 commands_makeddel= "nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c electron "+extrasamplesopt+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions N --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddel.log; " 
 commands_makeddel=commands_makeddel+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c electron "+extrasamplesopt+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions B --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddel.log; " 
-commands_makeddelcp="cp "+opt.outputpath+"/"+opt.version+"/plot_merged/electron/* "+opt.outputpath+"/"+opt.version+"/plot_explin/electron/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpele.log"
+commands_makeddelcp="cp "+opt.inputpath+"/"+opt.version+"/plot_merged/electron/WP*root "+opt.outputpath+"/"+opt.version+"/plot_explin/electron/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpele.log"
 
 command_extraunc= "nohup python makecorrection.py "+corroption+"  -i "+opt.inputpath+"/"+opt.version+"/plot_explin"+corrfolder+"/ "+"  >& "+opt.outputpath+"/"+opt.version+"/extracr.log "
 
@@ -137,6 +137,8 @@ if "r" in opt.mode:
         os.system(command_replot)
 
 if "m" in opt.mode:
+    if("p" in opt.mode):# if plotting is done, run from plotting directory
+        command_mergeyears=command_mergeyears.replace(opt.inputpath,opt.outputpath)
     print ("mergeyears command is: \n "+command_mergeyears)
     if not opt.dryrun:
         os.system(command_mergeyears)
@@ -158,11 +160,21 @@ if opt.mode=="e": #if e alone: run only this one
         os.system(command_extraunc)
 
 if "c" in opt.mode:
+    if("m" in opt.mode):#if merged is done, take it from the output
+        commands_makeddmucp=commands_makeddmucp.replace(opt.inputpath,opt.outputpath)
+        commands_makeddelcp=commands_makeddelcp.replace(opt.inputpath,opt.outputpath)
+
+    commands_qcdmucp=commands_makeddmucp.replace("WP*","QCD*")
+    commands_qcdelcp=commands_makeddelcp.replace("WP*","QCD*")
     print("makeddcp commands mu are: \n "+ commands_makeddmucp)
     print("makeddcp commands el are: \n "+ commands_makeddelcp)
+    print("qcdddcp commands mu are: \n "+ commands_qcdmucp)
+    print("qcdddcp commands el are: \n "+ commands_qcdelcp)
     if not opt.dryrun:
         os.system(commands_makeddmucp)
         os.system(commands_makeddelcp)
+        os.system(commands_qcdelcp)
+        os.system(commands_qcdmucp)
 
 
 if "f" in opt.mode:

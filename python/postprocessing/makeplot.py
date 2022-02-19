@@ -27,6 +27,7 @@ parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v6'
 #parser.add_option('-T', '--topol', dest='topol', type='string', default = 'all', help='Default all njmt')
 parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', help="")
 parser.add_option('-t', '--tag', dest='tag', type='string', default = '', help="version of the signal region naming convention")
+parser.add_option('', '--varset', dest='varset', type='string', default = '', help="variables set: S: signal, V: validation, A: AN")
 (opt, args) = parser.parse_args()
 
 folder = opt.folder
@@ -61,11 +62,16 @@ def mergepart(dataset,filenameMissing="missingSamples.txt",missingSamples=[]):
      for sample in samples:
           if sample in missingSamples:
                continue
-          add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
+          print "plotrepo is ",plotrepo
+          if not os.path.exists(plotrepo + '/'+sample.label):
+               os.makedirs(plotrepo + '/'+sample.label)
+
+          add = "hadd -f " + plotrepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + "_part*.root" 
+          print "add command is ",add
           try:
                os.system(str(add))
-               check = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root ")
-               print "Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_nominal")).GetEntries())
+               check = ROOT.TFile.Open(plotrepo + sample.label + "/"  + sample.label + "_merged.root ")
+               print "Number of entries of the file %s are %s" %(plotrepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_nominal")).GetEntries())
           except:
                print("File missing for: "+ filerepo + sample.label + "/"  + sample.label + "_merged.root , skipping")
                newMissingSamples.append(sample.label)
@@ -78,21 +84,25 @@ def mergepart(dataset,filenameMissing="missingSamples.txt",missingSamples=[]):
      
           #print "Number of entries of the file %s are %s" %(filerepo + sample.label + "/"  + sample.label + "_merged.root", (check.Get("events_all")).GetEntries())
 
-def mergetree(sample,missingSamples):
-     if not os.path.exists(filerepo + sample.label):
-          os.makedirs(filerepo + sample.label)
+def mergetree(sample,missingSamples,haslumi):
+     inputrepo=filerepo
+     if(haslumi):inputrepo=plotrepo #when has merged before, take the output of the merge
+     if not os.path.exists(plotrepo + sample.label):
+          os.makedirs(plotrepo + sample.label)
      if hasattr(sample, 'components'): # How to check whether this exists or not
-          add = "hadd -f " + filerepo + sample.label + "/"  + sample.label + ".root" 
+          add = "hadd -f " + plotrepo + sample.label + "/"  + sample.label + ".root" 
           for comp in sample.components:
                if comp.label in missingSamples:
                     print ("careful, sample "+comp.label+" is missing, will be skipped! ")
                     continue
-               add += " " + filerepo + comp.label + "/"  + comp.label + ".root" 
+               add += " " + inputrepo + comp.label + "/"  + comp.label + ".root" 
           print add
           os.system(str(add))
 
-def lumi_writer(dataset, lumi, missingSamples):
+def lumi_writer(dataset, lumi, missingSamples, hasmerged):
      samples = []
+     inputrepo=filerepo
+     if(hasmerged):inputrepo=plotrepo #when has merged before, take the output of the merge
      if hasattr(dataset, 'components'): # How to check whether this exists or not
           samples = [sample for sample in dataset.components]# Method exists and was used.
      else:
@@ -102,7 +112,7 @@ def lumi_writer(dataset, lumi, missingSamples):
                print ("careful, sample "+sample.label+" is missing, will be skipped! ")
                continue
           if not ('Data' in sample.label or 'TT_dilep' in sample.label):
-               infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root")
+               infile =  ROOT.TFile.Open(inputrepo + sample.label + "/"  + sample.label + "_merged.root")
                tree = infile.Get('events_nominal')
                treejesup = infile.Get('events_jesUp')
                treejesdown = infile.Get('events_jesDown')
@@ -114,7 +124,7 @@ def lumi_writer(dataset, lumi, missingSamples):
                treejesdown.SetBranchStatus('w_nominal', 0)
                treejerup.SetBranchStatus('w_nominal', 0)
                treejerdown.SetBranchStatus('w_nominal', 0)
-               outfile = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
+               outfile = ROOT.TFile.Open(plotrepo + sample.label + "/"  + sample.label + ".root","RECREATE")
                tree_new = tree.CloneTree(0)
                treejesup_new = treejesup.CloneTree(0)
                treejesdown_new = treejesdown.CloneTree(0)
@@ -200,7 +210,7 @@ def lumi_writer(dataset, lumi, missingSamples):
                outfile.Close()
                print('\n')
           else:
-               os.popen("mv " + filerepo + sample.label + "/"  + sample.label + "_merged.root " + filerepo + sample.label + "/"  + sample.label + ".root")
+               os.popen("mv " + inputrepo + sample.label + "/"  + sample.label + "_merged.root " + plotrepo + sample.label + "/"  + sample.label + ".root")
 
 def cutToTag(cut):
     newstring = cut.replace("-", "neg").replace(">=","_GE_").replace(">","_G_").replace(" ","").replace("&&","_AND_").replace("||","_OR_").replace("<=","_LE_").replace("<","_L_").replace(".","p").replace("(","").replace(")","").replace("==","_EQ_").replace("!=","_NEQ_").replace("=","_EQ_").replace("*","_AND_").replace("+","_OR_")
@@ -295,13 +305,15 @@ def plot(lep, reg, variable, sample, cut_tag, syst, missingSamplesFile="missingS
           content = h1.GetBinContent(i)
           if(content<0.):
                h1.SetBinContent(i, 0.)
-     fout = ROOT.TFile.Open(foutput, "UPDATE")
+     foption="UPDATE"
+     if(not os.path.exists(foutput)):foption="RECREATE"
+     fout = ROOT.TFile.Open(foutput, foption)
      fout.cd()
      h1.Write("", ROOT.TObject.kOverwrite)
      fout.Close()
      f1.Close()
 
-def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
+def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi,doBlind=False):
      os.system('set LD_PRELOAD=libtcmalloc.so')
      if variabile_._name=='WprAK8_tau2/WprAK8_tau1':
           variabile_._name = 'WprAK8_tau21' 
@@ -330,7 +342,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
      h_sig = []
      h_err = ROOT.TH1F()
      h_bkg_err = ROOT.TH1F()
-     blind = False
+     blind = doBlind
      print "Variabile:", variabile_._name
      ROOT.gROOT.SetStyle('Plain')
      ROOT.gStyle.SetPalette(1)
@@ -630,7 +642,6 @@ else:
           '2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
           #'2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJetsHT70to100_2018, WJetsHT100to200_2018, WJetsHT200to400_2018,  WJetsHT400to600_2018, WJetsHT600to800_2018, WJetsHT800to1200_2018, WJetsHT1200to2500_2018, WJetsHT2500toInf_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
      }
-#print(dataset_dict.keys())
 
 years = []
 if(opt.year!='all'):
@@ -718,13 +729,22 @@ for year in years:
           if(opt.merpart):
                missingSamples.extend(mergepart(sample,"missingSamples.txt",missingSamples))
           if(opt.lumi):
-               lumi_writer(sample, lumi[year], missingSamples)
+               lumi_writer(sample, lumi[year], missingSamples, opt.merpart)
           if(opt.mertree):
                if not('WP' in sample.label):
-                    mergetree(sample,missingSamples)
+                    mergetree(sample,missingSamples,opt.lumi)
 
-validationvars = False # True #
-plotAN = False # True #
+
+
+validationvars=("V" in opt.varset)
+signalvars=("S" in opt.varset)
+plotAN=("A" in opt.varset)
+
+blindCutList=["SRW","SRT","SR2B"]
+blindVarMap={"SRW":["best_Wprime_m","leadingjet_pt","best_top_pt","lepton_pt","MET_pt"],
+             "SRT":["best_Wprime_m","leadingjet_pt","best_top_pt","lepton_pt","MET_pt"],
+             "SR2B":["best_Wprime_m","leadingjet_pt","best_top_pt","lepton_pt","MET_pt"]
+        }
 
 if opt.tag!="":
      cut_tag = opt.tag
@@ -732,6 +752,7 @@ for year in years:
      for lep in leptons:
           dataset_plot = dataset_dict[year]
           dataset_stack = dataset_dict['stack'+year]
+          print "dataset stack is ",dataset_stack
           #if lep == 'muon' and sample_dict['DataEle_'+str(year)] in dataset_new:
                #dataset_new.remove(sample_dict['DataEle_'+str(year)])
           #elif lep == 'electron' and sample_dict['DataMu_'+str(year)] in dataset_new:
@@ -741,19 +762,19 @@ for year in years:
           cut = cut_dict[lep]
           #variables.append(variabile('closest_topjet_dRLepJet', '#DeltaR lep jet (closest crit)',  wzero+'*('+cut+')', 10, 0, 5))
           variables.append(variabile('best_Wprime_m', 'W\' mass [GeV]',  wzero+'*(best_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [1000., 1250., 1500., 1750., 2000., 2250., 2500., 2750., 3000., 3500., 4500., 6000.])))
+          if signalvars:
+               variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 750., 1000, 1500.])))#, 1650., 1800., 1950., 2100., 2300.])))
+               variables.append(variabile('best_top_pt', 'top p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 750., 1000., 1500.]))) #, 1650., 1800., 1950., 2100., 2300.])))
+               variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 600., 800., 1000.])))
+               variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
           #variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
 
           if validationvars:
-               variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
-               variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 600., 800., 1000.])))
                variables.append(variabile('lepMET_deltaphi', '#Delta#phi(l, MET)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
                variables.append(variabile('best_topjet_dRLepJet', '#DeltaR(lep, top jet)',  wzero+'*('+cut+')', 10, 0, 5))
-
                variables.append(variabile('best_top_m', 'top mass [GeV]',  wzero+'*(best_top_m>100&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 220, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
                variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', 100, 0, 500))
-
                variables.append(variabile('deltaR_bestWAK4_closestAK8', '#DeltaR (best)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
-               
                variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
 
           #variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 500.])))
@@ -765,6 +786,7 @@ for year in years:
           #variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_phi', 'Missing transverse momentum #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
+          print "pre plotan" 
           #variables.append(variabile('best_topW_jets_deltaPhi', '#Delta #phi jets (t+W\') (best)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
           if plotAN:
                #------->   plot nota
@@ -951,6 +973,7 @@ for year in years:
           variables.append(variabile('WprAK8_phi', 'WprAK8 #phi', wzero+'*('+cut+')', 20, -3.14, 3.14))
           variables.append(variabile('WprAK8_pt', 'WprAK8 p_{T} [GeV]', wzero+'*('+cut+')', 200, 0, 2000))
           '''
+          print "post  plotan" 
           for sample in dataset_plot:
                if(opt.plot):
                     for syst in systematics:
@@ -959,10 +982,14 @@ for year in years:
                                    continue
                               plot(lep, 'jets', var, sample, cut_tag, syst)
           if(opt.stack):
-               #for syst in systematics:
+               print "stacking! "
                for var in variables:
+                    blindVar=False
+                    if cut_tag in blindCutList:
+                         blindVar=(cut_tag in blindCutList) and (var._name in blindVarMap[cut_tag] )
+
                     os.system('set LD_PRELOAD=libtcmalloc.so')
-                    makestack(lep, 'jets', var, dataset_stack, cut_tag, "", lumi[str(year)])
+                    makestack(lep, 'jets', var, dataset_stack, cut_tag, "", lumi[str(year)],doBlind=blindVar)
                     os.system('set LD_PRELOAD=libtcmalloc.so')
           #if lep == 'muon':
                #dataset_new.append(sample_dict['DataEle_'+str(year)])

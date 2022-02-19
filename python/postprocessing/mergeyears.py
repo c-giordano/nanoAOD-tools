@@ -68,6 +68,10 @@ if os.path.exists(pathout):
     print "path exists, not recreating it"
 else:
     if(not dryrun):os.makedirs(pathout)
+
+for lep in leps:
+    if not os.path.exists(pathout+"/"+lep):
+        if(not dryrun):os.makedirs(pathout+"/"+lep)
 '''
 for lep in leps:
     if os.path.exists(pathout+"/"+lep):

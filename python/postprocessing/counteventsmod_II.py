@@ -28,7 +28,8 @@ names.append(["SRT_II","SRT_III","SRW_II","SRW_III","CR0B_II","CR0B_III"])
 srcr={"SR2B":"SR2B_I","SRT":"SRT_I","SRW":"SRW_I","CR0B":"CR0B_I"}
 #srcr={"SRT_II":"SRT_III","SRW_II":"SRW_III","CR0B_II":"CR0B_III"}
 srcr={"SR2B":"SR2B_I","SRT":"SRT_I","SRW":"SRW_I","CR0B":"CR0B_I"}
-srcr={"SR2B":"SR2B_I"}
+srcr={"SRT_II":"SRT_III","SRW_II":"SRW_III","CR0B_II":"CR0B_III"}
+#srcr={"SR2B":"SR2B_I"}
 
 from repos import namemap 
 
@@ -43,13 +44,12 @@ standard=True
 if(standard):
     rebinfact=3
     lastbinv=0
-    srcr={"SR2B":"SR2B_I","SRT":"SRT_I","SRW":"SRW_I","CR0B":"CR0B_I"}
 extrastring=""
 if(rebinfact!=3):extrastring=extrastring+"_rebin"+str(rebinfact)
 if(lastbinv!=0):extrastring=extrastring+"_lastbin"+str(lastbinv)
 
 fout=file("table_events_II.tex","w") 
-fout=file("table_events"+extrastring+".tex","w") 
+fout=file("table_events"+extrastring+"_II.tex","w") 
 
 so="\\newpage \n"
 so+="\\begin{table} \n"
@@ -58,17 +58,17 @@ sobins=""
 sotot=""
 
 for lep in leps:
-    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I. In Region I also the ratio between the number of events for ech background $N$ divided by the difference between Data and total MC prediction ($|Data-Tot MC|$) is given. This is meant to indicate how large the excess or defect would be if attributed to the single process in question. }\\label{tab:background_prefit_rate_"+lep+"} \n"
+    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I. It is also shown the ratio between the number of events for ech background $N$ divided by the difference between Data and total MC prediction ($|Data-Tot MC|$) is given. This is meant to indicate how large the excess or defect would be if attributed to the single process in question. }\\label{tab:background_II_prefit_rate_"+lep+"} \n"
 #    head="\\caption{Number of background events from the MC simulations and their realtive abundance in the region II and in the region III.}\\label{tab:background_II_prefit_rate_"+lep+"} \n"
-    head+="\\resizebox{0.8\\textwidth}{!}{\\begin{tabular}{l| c c | c c c} "
-    head+='Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
-    head+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events. $\pm$  Unc.& Abundance($\%$) & $\\frac{N}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
+    head+="\\resizebox{0.8\\textwidth}{!}{\\begin{tabular}{l| c c c | c c c} "
+    head+='Lepton: '+str(lep)+'& \multicolumn{3}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
+    head+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events. $\pm$  Unc.& $\\frac{|N|}{|Data-Tot MC|}$ & Abundance($\%$) & $\\frac{N}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
 
-    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I divided in bins. In Region I also the ratio between the number of events for ech background $N$ divided by the difference between Data and total MC prediction ($|Data-Tot MC|$) is given. This is meant to indicate how large the excess or defect would be if attributed to the single process in question.}\\label{tab:background_bins_prefit_rate_"+lep+"} \n"
+    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the main region and in the region I divided in bins. It is also shown the ratio between the number of events for ech background $N$ divided by the difference between Data and total MC prediction ($|Data-Tot MC|$). This is meant to indicate how large the excess or defect would be if attributed to the single process in question.}\\label{tab:background_II_bins_prefit_rate_"+lep+"} \n"
 #    headbins="\\caption{Number of background events from the MC simulations and their realtive abundance in the region III and in the region III divided in bins.}\\label{tab:background_II_bins_prefit_rate_"+lep+"} \n"
-    headbins+="\\resizebox{0.8\\textwidth}{!}{\\begin{tabular}{l| c c | c c c} "
+    headbins+="\\resizebox{0.8\\textwidth}{!}{\\begin{tabular}{l| c c c | c c c} "
     headbins+='Lepton: '+str(lep)+'& \multicolumn{2}{c}{main region}  & \multicolumn{3}{c}{control region} \\\\ \n'
-    headbins+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events $\pm$  Unc. & Abundance($\%$) & $\\frac{|N|}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
+    headbins+='Process  & Events $\pm$  Unc. & Abundance($\%$) & Events $\pm$  Unc. & $\\frac{|N|}{|Data-Tot MC|}$  & Abundance($\%$) & $\\frac{|N|}{|Data-Tot MC|}$ \\\\ \n \\hline \n'
 
     sotot+=so
     sobins+=so
@@ -326,10 +326,10 @@ for lep in leps:
             stoterr=math.sqrt(stoterr)
             stoterr_I=math.sqrt(stoterr_I)
             if (sample!="Data"):
-                sotot+=slabels[sample]+" & "+"{:.0f}".format(stot)+" $\\pm$ "+ "{:.0f}".format(stoterr)+ " & " + "{:.0f}".format(stot/totreg *100) + " & " 
+                sotot+=slabels[sample]+" & "+"{:.0f}".format(stot)+" $\\pm$ "+ "{:.0f}".format(stoterr)+ " & " + "{:.0f}".format(stot/totreg *100) + " & " +"{:.2f}".format(abs((dataregion-totreg)/stot)) + " & " 
                 sotot +=" {:.0f}".format(stot_I)+" $\\pm$ "+ "{:.0f}".format(stoterr_I)+ " & " + "{:.0f}".format(stot_I/totreg_I *100) + " & " +"{:.2f}".format(abs((dataregion_I-totreg_I)/stot_I)) +" \\\\ \n"  
             if (sample=="Data"):
-                sotot+=sample+" & blinded  &  & " 
+                sotot+=sample+" & {:.0f}".format(stot)+" $\\pm$ "+ "{:.0f}".format(stoterr)+ " & " + "{:.0f}".format(stot/totreg *100) + " & & "  
                 sotot +=" {:.0f}".format(stot_I)+" $\\pm$ "+ "{:.0f}".format(stoterr_I)+ " & " + "{:.0f}".format(stot_I/totreg_I *100) + " & \\\\ \n \\hline \n "  
             
             for b in binrange:
@@ -337,41 +337,67 @@ for lep in leps:
                     ratio1="-"
                     ratio2="-"
                     ratio3="-"
+                    ratio4="-"
+
+                    ratio1err=""
                     ratio2err=""
                     ratio3err=""
-                    if(totregbins[b]>0):
-                        ratio1="{:.0f}".format(stotbins[b]/totregbins[b] *100)
-                        r1=stotbins[b]/totregbins[b] 
-                    if(totregbins_I[b]>0):
-                        ratio2="{:.0f}".format(stotbins_I[b]/totregbins_I[b] *100)
-                    if(stotbins_I[b]>0):
-                        de2=dataregionbins_I[b]
-                        te2=totregerrbins_I[b]*totregerrbins_I[b]
+                    ratio3err=""
 
-                        se2=stoterrbins_I[b]*stoterrbins_I[b]
-                        oe2=te2-se2               
-                        print("de2 ",de2," te2 ",te2, " oe2 ",oe2 , " se2 ",se2," s ",stotbins_I[b])
+                    if(totregbins[b]>0):
+                        r1=stotbins[b]/totregbins[b] 
+                        ratio1="{:.0f}".format(r1 *100)
+                    if(totregbins_I[b]>0):
                         r2=stotbins_I[b]/totregbins_I[b] 
-                        r3=abs((dataregionbins_I[b]-totregbins_I[b])/stotbins_I[b])
+                        ratio2="{:.0f}".format(r2 *100)
+
+
+                    if(stotbins[b]>0):
+                        de2=dataregionbins[b]
+                        te2=totregerrbins[b]*totregerrbins[b]
+
+                        se2=stoterrbins[b]*stoterrbins[b]
+                        oe2=te2-se2               
+                        print("de2 ",de2," te2 ",te2, " oe2 ",oe2 , " se2 ",se2," s ",stotbins[b])
+                        r3=abs((dataregionbins[b]-totregbins[b])/stotbins[b])
                         ratio3="{:.2f}".format(r3)
                         
                         if(sample != "Data"):
-                            serel2=stoterrbins_I[b]*stoterrbins_I[b]/(stotbins_I[b]*stotbins_I[b])
-                            ratio3err="$ \\pm$ {:.2f}".format(math.sqrt((de2+oe2)/(stotbins_I[b]*stotbins_I[b])+r3*r3*serel2))
-                            #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(oe2/(stotbins_I[b]*stotbins_I[b])+r2*r2*serel2))
+                            serel2=stoterrbins[b]*stoterrbins[b]/(stotbins[b]*stotbins[b])
+                            ratio3err="$ \\pm$ {:.2f}".format(math.sqrt((de2+oe2)/(stotbins[b]*stotbins[b])+r3*r3*serel2))
+                            #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(oe2/(stotbins[b]*stotbins[b])+r2*r2*serel2))
                         else:
-                            if(de2!=0 and totregbins_I[b]!=0):
-                                te2rel=(te2/(totregbins_I[b]*totregbins_I[b]))
+                            if(de2!=0 and totregbins[b]!=0):
+                                te2rel=(te2/(totregbins[b]*totregbins[b]))
                                 de2rel=1/(de2)
                                 ratio3err="$ \\pm$ {:.2f}".format(math.sqrt(te2rel+de2rel)*r3)
                                 #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(te2rel+de2rel)*r2)
 
-                    if(not(sr in excludesr_bins)):
-                        if(sample=="Data" and b):
-                            sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"blinded & & "                 
+
+                    if(stotbins_I[b]>0):
+                        de_I2=dataregionbins_I[b]
+                        te_I2=totregerrbins_I[b]*totregerrbins_I[b]
+
+                        se_I2=stoterrbins_I[b]*stoterrbins_I[b]
+                        oe_I2=te_I2-se_I2               
+                        print("de_I2 ",de_I2," te_I2 ",te_I2, " oe_I2 ",oe_I2 , " se_I2 ",se_I2," s ",stotbins_I[b])
+                        r4=abs((dataregionbins_I[b]-totregbins_I[b])/stotbins_I[b])
+                        ratio4="{:.2f}".format(r4)
+                        
+                        if(sample != "Data"):
+                            serel_I2=stoterrbins_I[b]*stoterrbins_I[b]/(stotbins_I[b]*stotbins_I[b])
+                            ratio4err="$ \\pm$ {:.2f}".format(math.sqrt((de_I2+oe_I2)/(stotbins_I[b]*stotbins_I[b])+r4*r4*serel_I2))
+                            #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(oe2/(stotbins_I[b]*stotbins_I[b])+r2*r2*serel2))
                         else:
-                            sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"{:.0f}".format(stotbins[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins[b])+ " & " + ratio1 + " & "                 
-                        sobins +=" {:.0f}".format(stotbins_I[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins_I[b])+ " & " +ratio2+ratio2err+ " & " + ratio3 + ratio3err+" \\\\ \n "  
+                            if(de_I2!=0 and totregbins_I[b]!=0):
+                                te_I2rel=(te_I2/(totregbins_I[b]*totregbins_I[b]))
+                                de_I2rel=1/(de_I2)
+                                ratio4err="$ \\pm$ {:.2f}".format(math.sqrt(te_I2rel+de_I2rel)*r4)
+                                #ratio2err="$ \\pm$ {:.2f}".format(100*math.sqrt(te2rel+de2rel)*r2)
+
+                    if(not(sr in excludesr_bins)):
+                        sobins+=slabels[sample]+", bin "+binranges[b]+" & "+"{:.0f}".format(stotbins[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins[b])+ " & " + ratio1 + ratio1err +" & " + ratio3 +ratio3err+ " & "                 
+                        sobins +=" {:.0f}".format(stotbins_I[b])+" $\\pm$ "+ "{:.0f}".format(stoterrbins_I[b])+ " & " +ratio2+ratio2err+ " & " + ratio4 + ratio4err+" \\\\ \n "  
 
     sotot=sotot+'''\end{tabular}}
 \end{table}

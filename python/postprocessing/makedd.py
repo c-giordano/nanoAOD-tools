@@ -1470,7 +1470,7 @@ class data_driven(single_process):
         for s in samplelist:
             for sr,cr in regions.iteritems():
                 if(verbose): print "porting sample is ",s,"syst is" ,self.__syst
-                hsr= self.getHisto(region=sr,sample=s,verbose=True)
+                hsr= self.getHisto(region=sr,sample=s,verbose=False)
                 self.writeHistoToFile(histo=hsr,pathout=pathout,region=sr,sample=s+portname,syst=syst,tag=tagout)
                 if(savecr):
                     if(syst_sf):self.set_syst(None)
@@ -1664,7 +1664,7 @@ if(altwjetstt):
 for s in systs:
     print "running syst  ",s
     resetParameters()
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=False,tag=None,verbose=True)#this should take the pathout default, which is the v14_rebin folder
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=False,tag=None,verbose=False)#this should take the pathout default, which is the v14_rebin folder
     resetParameters()   
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=False,tag=None)#this should take the pathout default, which is the v14_rebin folder
     resetParameters()
