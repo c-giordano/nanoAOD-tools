@@ -61,6 +61,8 @@ if opt.syst=="all":
     systs=systlist
 elif opt.syst=="noSyst":
     systs=["noSyst"]
+elif opt.syst=="extra":
+    systs = ["mistagUp", "mistagDown","pdf_totalUp", "pdf_totalDown","LHEUp","LHEDown"]
 else:
     systs=opt.syst.split(',')
 
@@ -87,7 +89,7 @@ if("sr" in opt.mode):
     ctrlCuts["SRW"]=[centralCut,regionIcut,regionIIcut,regionIIIcut,regionVcut]
     ctrlCuts["SRT"]=[centralCut,regionIcut,regionIIcut,regionIIIcut,regionVcut]
     
-    if tagversion=="v18":
+    if "v18" in tagversion:
         tagRegions[("SR2B",centralCut)]="SR2B"
         tagRegions[("SR2B",regionIcutSR2B)]="SR2B_I"
         tagRegions[("SR2B",regionIcut)]="SR2B_IV"
@@ -110,7 +112,7 @@ if("cr" in opt.mode):
     regionCuts["CR0B"]="best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==0"
     ctrlCuts["CR0B"]=[centralCut,regionIcut,regionIIcut,regionIIIcut,regionVcut]
 
-    if tagversion=="v18":
+    if "v18" in tagversion:
         tagRegions[("CR0B",centralCut)]="CR0B"
         tagRegions[("CR0B",regionIcut)]="CR0B_I"
         tagRegions[("CR0B",regionIIcut)]="CR0B_II"

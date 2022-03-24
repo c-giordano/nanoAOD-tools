@@ -23,6 +23,7 @@ pathout = opt.outputpath+"/"+version+"/plot_merged"
 dryrun = opt.dryrun
 
 systs_corr = ["jes", "jer", "btag", "mistag", "pdf_total", "pu", "PF", "lep", "trig"]
+systs_corr.extend(["LHE"])
 systs_uncorr = []
 
 samples = []
@@ -72,8 +73,10 @@ else:
 for lep in leps:
     if not os.path.exists(pathout+"/"+lep):
         if(not dryrun):os.makedirs(pathout+"/"+lep)
-'''
+
 for lep in leps:
+    if not "Data" in sample:
+        continue
     if os.path.exists(pathout+"/"+lep):
         print "path for "+lep+" exists, not recreating it"
     else:
@@ -82,16 +85,17 @@ for lep in leps:
     commandrm = 'rm ' + pathin + '/' + lep + '/Data*_201*_' + lep + '_*.root '
     for year in years:
         command += pathin + '/' + lep + '/Data*_' + year + '_' + lep + '.root '
-        print(commandrm)
+        #print(commandrm)
         #os.system(commandrm)
     #print(command)
     if(not dryrun):os.system(command)
-'''
+
 #sommare tutti gli anni
 nparallel = opt.parallel
 parallelize = (nparallel>1)
 nplot = 0
 extrastring = ''
+systs_splitbysample={"LHE":["TT_Mtt","WJets","QCD","ST"]}
 for lep in leps:
     for sample in samples:
         if 'Data' in sample:
@@ -105,8 +109,12 @@ for lep in leps:
         print(command+extrastring)
         print ######### fine nominal #########
         for syst in systs_corr:
+            splitbysample=""
             for vs in versus:
-                command = 'hadd -f ' + pathout + '/' + lep + '/' + sample + '_2020_' +  lep + '_' + syst + vs +'.root'
+                if(syst in systs_splitbysample.keys()): 
+                    splitbysample=sample
+                    
+                command = 'hadd -f ' + pathout + '/' + lep + '/' + sample + '_2020_' +  lep + '_' + syst+splitbysample + vs +'.root'
                 command += ' ' + pathin + '/' + lep + '/' + sample + '_2016_' + lep + '_' + syst + vs +'.root'
                 command += ' ' + pathin + '/' + lep + '/' + sample + '_2017_' + lep + '_' + syst + vs +'.root'
                 command += ' ' + pathin + '/' + lep + '/' + sample + '_2018_' + lep + '_' + syst + vs +'.root'
@@ -152,3 +160,19 @@ for lep in leps:
                 if(not dryrun): os.system(command + extrastring)
                 print(command+extrastring)
 
+    #here we copythe nominal sample YY to the XXLHEUp/Down , e.g. WJets_TT_MTTLHEUp is put to nominal
+print ("pcche")
+nplot=0
+for lep in leps:
+    for syst in systs_splitbysample.keys():
+        for sampsys in systs_splitbysample[syst]:
+            for sample in samples:
+                for vs in versus:
+                    commandcp=""
+                    if sample!=sampsys:
+                        commandcp = 'cp ' + pathout + '/' + lep + '/' + sample + '_2020_' +  lep +'.root'
+                        commandcp += ' ' + pathout + '/' + lep + '/' + sample + '_2020_' + lep + "_"+syst + sampsys+ vs+'.root'
+                        nplot=nplot+1
+                        extrastring = '' if ( nplot%nparallel==0) else ' & ' 
+                        if(not dryrun): os.system(commandcp + extrastring)
+                        print(commandcp+extrastring)

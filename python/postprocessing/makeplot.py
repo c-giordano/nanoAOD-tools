@@ -285,6 +285,8 @@ def plot(lep, reg, variable, sample, cut_tag, syst, missingSamplesFile="missingS
                     cut += '/PFSF*'+syst
                elif syst.startswith("mistag"):
                     cut += '/btagSF*'+syst
+               elif syst.startswith("LHE"):
+                    cut += '/LHESF*'+syst
                else:
                     cut += '*'+syst
      if 'Data' in sample.label: 
