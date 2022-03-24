@@ -12,19 +12,14 @@ parser.add_option('-o', '--outputpath', dest='outputpath', default = '/eos/user/
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
 parser.add_option('-t', '--tag', dest='tag', type='string', default = '', help="version of the signal region naming convention ")
 parser.add_option('', '--varset', dest='varset', type='string', default = '', help="variables set: S: signal, V: validation, A: AN")
-
 parser.add_option('-m', '--mode', dest='mode',default = 'fit sr cr' , type='string', help='type of plots to do: fit (only plot for mWprime, no stack), plot (plot AN variables), stack (stack after plotting) ')
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
-
 
 signalsamples=[ "WP_M"+str(x)+"000W"+str(x)+"0_RH_2017" for x in xrange(2,7)]
 samples=""
 #samples=",".join(signalsamples)
 parser.add_option('-d', '--samples', dest='samples', default = samples, type='string', help='samples to run, default all')
-
-
 #parser.add_option('--cut','-c', dest='cuts', default = '', type='string', help='years to run')
-
 (opt, args) = parser.parse_args()
 
 dryrun = opt.dryrun

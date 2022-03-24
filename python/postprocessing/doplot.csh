@@ -16,26 +16,26 @@ set syst = 'noSyst'
 #
 
 set commcut = "&&best_top_m>120&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60" #&&abs(best_topW_jets_deltaPhi)>2.5"
-:<<EOF
+#:<<EOF
+#set commcut = ""
 # Plots for fit
-python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag"$commcut --plot -S $syst -s 
-python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag==0"$commcut --plot -S $syst -s 
-python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag"$commcut --plot -S $syst -s 
+python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag"$commcut -S $syst -s 
+python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag==0"$commcut -S $syst -s 
+python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag"$commcut -S $syst -s 
 #EOF
 #:<<EOF
-python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag"$commcut --plot -S $syst -s 
-python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag"$commcut --plot -S $syst -s 
-python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag==0"$commcut --plot -S $syst -s 
+python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag"$commcut -S $syst -s 
+python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag"$commcut -S $syst -s 
+python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag==0"$commcut -S $syst -s 
 #EOF
-#:<<EOF
+:<<EOF
 #set commcut = "&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
 #set commcut = "&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD>60"
-#set commcut = ""
 python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==0"$commcut --plot -S $syst -s 
 python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==0"$commcut --plot -S $syst -s 
 #python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==1"$commcut -s $syst -d $extratext 
 #python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==1"$commcut --plot -S $syst -d $extratext 
-EOF
+#EOF
 
 :<<EOF
 #set commcut = "&&(best_top_m<120||best_top_m>220)&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
@@ -44,7 +44,7 @@ EOF
 set commcut = "&&best_top_m>340&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD>30"
 python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag"$commcut --plot -s -S $syst  
 python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag"$commcut --plot -s -S $syst  
-#:<<EOF
+:<<EOF
 set commcut = "&&best_top_m>220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60"
 python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag&&best_Wpjet_isbtag==0"$commcut --plot -s -S $syst  
 python makeplot.py -y $year -L muon --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag"$commcut --plot -s -S $syst  
@@ -108,13 +108,13 @@ python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag==0&&b
 #python makeplot.py -y $year -L electron --sel -f $v -C "best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==1"$commcut --plot -S $syst -d $extratext 
 EOF
 
-#:<<EOF
+:<<EOF
 set syst = 'noSyst'
 #python makeplot.py -y $year -L muon -f $v -s -S $syst -d $extratext 
 #python makeplot.py -y $year -L electron -f $v -s -S $syst -d $extratext 
-#python makeplot.py -y $year -L muon -f $v --sel --plot -S $syst -s # -d $extratext -C "lepton_pt>500"
+python makeplot.py -y $year -L muon -f $v --sel --plot -S $syst -s # -d $extratext -C "lepton_pt>500"
 python makeplot.py -y $year -L electron -f $v --sel --plot -S $syst -s # -d $extratext
-EOF
+#EOF
 
 set cut = ''
 set cut = 'deltaR_bestWAK4_closestAK8<0.4'

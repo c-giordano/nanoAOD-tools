@@ -1,2 +1,8 @@
-Cannot find .requestcache file in CRAB project directory /afs/cern.ch/work/a/adeiorio/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/crab_WP_M6000W60_LHSMinter_2017
-Log file is /afs/cern.ch/work/a/adeiorio/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/crab/crab.log
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_8.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_7.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_3.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_2.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_4.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_5.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_1.root
+root://cms-xrd-global.cern.ch//store/user/adeiorio/Wprime/Wprimetotb_M6000W60_LHSMinter_TuneCP5_13TeV-madgraph-pythia8/WP_M6000W60_LHSMinter_2017/220205_215639/0000/tree_hadd_6.root

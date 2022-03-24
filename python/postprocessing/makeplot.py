@@ -344,7 +344,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
           histoname = "h_"+reg_+"_"+variabile_._name+"_"+cut_tag_
           stackname = "stack_"+reg_+"_"+variabile_._name+"_"+cut_tag_
           canvasname = "stack_"+reg_+"_"+variabile_._name+"_"+cut_tag_+"_"+lep_ + "_" + str(samples_[0].year)
-     if(("SRT" in cut_tag_ ) or ("SRW" in cut_tag_ ) or  ("SR2B" in cut_tag_ )) and "best_Wprime_m" in variabile_._name :
+     if(("SRT" in cut_tag_ ) or ("SRW" in cut_tag_ ) or  ("SR2B" in cut_tag_ )): # and "best_Wprime_m" in variabile_._name
           blind = True
      if '_I' in cut_tag_:
           blind = False
@@ -664,7 +664,7 @@ else:
                     cut_tag = 'SRW'
                elif 'best_topjet_isbtag==0&&best_Wpjet_isbtag==0&&nbjet_pt100==0&&best_top_m>120&&best_top_m<220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60' in cut:
                     cut_tag = 'CR0B'
-               elif 'best_topjet_isbtag&&best_Wpjet_isbtag&&best_top_m>220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60' in cut:
+               elif 'best_topjet_isbtag&&best_Wpjet_isbtag&&best_top_m>340&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD>30' in cut:
                     cut_tag = 'SR2B_I'
                elif 'best_topjet_isbtag&&best_Wpjet_isbtag==0&&best_top_m>220&&deltaR_bestWAK4_closestAK8<0.4&&WprAK8_mSD<60' in cut:
                     cut_tag = 'SRT_I'
@@ -739,10 +739,12 @@ for year in years:
           variables = []
           wzero = 'w_nominal*PFSF*puSF*lepSF*trigSF*btagSF'
           cut = cut_dict[lep]
-          #variables.append(variabile('closest_topjet_dRLepJet', '#DeltaR lep jet (closest crit)',  wzero+'*('+cut+')', 10, 0, 5))
+          variables.append(variabile('closest_topjet_dRLepJet', '#DeltaR lep jet (closest crit)',  wzero+'*('+cut+')', 10, 0, 5))
           variables.append(variabile('best_Wprime_m', 'W\' mass [GeV]',  wzero+'*(best_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [1000., 1250., 1500., 1750., 2000., 2250., 2500., 2750., 3000., 3500., 4500., 6000.])))
-          #variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
-
+          variables.append(variabile('best_top_m', 'top mass [GeV]',  wzero+'*(best_top_m>100&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 220, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+          variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
+          variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+               
           if validationvars:
                variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', None, None, None,  array('f', [120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
                variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 600., 800., 1000.])))
@@ -756,7 +758,7 @@ for year in years:
                
                variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 10, 20, 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
 
-          #variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 500.])))
+          variables.append(variabile('mtw', 'W boson transverse mass [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [55., 60., 65., 80., 100., 130., 200., 300., 400., 500.])))
 
           #variables.append(variabile('abs(muon_pt_tuneP-lepton_pt)/lepton_pt', 'muon p_{T}(1-tuneP)/p_{T}',  wzero+'*('+cut+')', 40, 0, 0.4)) 
           #variables.append(variabile('w_nominal', 'w_nominal',  wzero+'*('+cut+')', 350, 0, 3.5)) 
@@ -764,8 +766,8 @@ for year in years:
 
           #variables.append(variabile('lepton_pt', 'lepton p_{T} [GeV]', wzero+'*('+cut+')', 120, 0, 1200))
           #variables.append(variabile('MET_pt', "Missing transverse momentum [GeV]",wzero+'*('+cut+')', 120, 0, 1200))
-          #variables.append(variabile('MET_phi', 'Missing transverse momentum #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
-          #variables.append(variabile('best_topW_jets_deltaPhi', '#Delta #phi jets (t+W\') (best)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
+          variables.append(variabile('MET_phi', 'Missing transverse momentum #phi',  wzero+'*('+cut+')', 20, -3.14, 3.14))
+          variables.append(variabile('best_topW_jets_deltaPhi', '#Delta #phi jets (t+W\') (best)',  wzero+'*('+cut+')', 20, -3.14, 3.14))
           if plotAN:
                #------->   plot nota
                variables.append(variabile('njet_pt100', 'no. of jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 8, 1.5, 9.5))
@@ -773,7 +775,6 @@ for year in years:
                variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300.])))
                variables.append(variabile('subleadingjet_pt', 'subleading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800.])))
                variables.append(variabile('WprAK8_mSD', 'W\' AK8 jet soft drop mass [GeV]', wzero+'*('+cut+')', None, None, None,  array('f', [0., 30., 55., 70., 90., 110., 130., 150., 175., 200., 225., 250., 275., 300., 350., 400.])))
-
           '''
           #variables.append(variabile('nPV_good', 'n good PV', wzero+'*('+cut+')', 120, 0, 120))
           #variables.append(variabile('nPV_tot', 'total n PV', wzero+'*('+cut+')', 120, 0, 120))
@@ -783,7 +784,13 @@ for year in years:
           #variables.append(variabile('best_top_m', 'top mass [GeV] (best)',  wzero+'*(best_top_m>0&&'+cut+')',  9, 100, 1000))
           #variables.append(variabile('best_Wprime_m', 'Wprime mass [GeV] (best)',  wzero+'*(best_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
           #variables.append(variabile('best_top_m', 'top mass [GeV] (best)',  wzero+'*(best_top_m>0&&'+cut+')', None, None, None,  array('f', [50., 60., 70., 80., 90., 100., 110., 120., 130., 140., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
-          '''
+
+          variables.append(variabile('chi_top_m', 'top mass [GeV] (chimass)',  wzero+'*(chi_top_m>0&&'+cut+')',  None, None, None,  array('f', [80., 100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+          variables.append(variabile('chi_Wprime_m', 'Wprime mass [GeV] (chimass)',  wzero+'*(chi_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
+          variables.append(variabile('closest_top_m', 'top mass [GeV] (closest)',  wzero+'*(closest_top_m>0&&'+cut+')', None, None, None,  array('f', [80., 100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
+          variables.append(variabile('closest_Wprime_m', 'Wprime mass [GeV] (closest)',  wzero+'*(closest_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
+          variables.append(variabile('sublead_Wprime_m', 'Wprime mass [GeV] (sublead)',  wzero+'*(sublead_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
+          variables.append(variabile('sublead_top_m', 'top mass [GeV] (sublead)',  wzero+'*(sublead_top_m>0&&'+cut+')', None, None, None,  array('f', [80., 100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
           #variables.append(variabile('leadingjets_pt', 'leading jets system p_{T} [GeV]',  wzero+'*('+cut+')', 150, 0, 3000))
           #variables.append(variabile('leadingjets_pt', 'leading jets system p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000.,])))
           variables.append(variabile('best_top_pt', 'top p_{T} [GeV] (best)',  wzero+'*(best_top_pt>0&&'+cut+')', 40, 0, 1000))
@@ -801,12 +808,6 @@ for year in years:
           variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', 150, 0, 3000))
           variables.append(variabile('subleadingjet_pt', 'subleading jet p_{T} [GeV]',  wzero+'*('+cut+')', 150, 0, 3000))          
 
-          variables.append(variabile('chi_top_m', 'top mass [GeV] (chimass)',  wzero+'*(chi_top_m>0&&'+cut+')',  None, None, None,  array('f', [80., 100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
-          variables.append(variabile('chi_Wprime_m', 'Wprime mass [GeV] (chimass)',  wzero+'*(chi_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
-          variables.append(variabile('closest_top_m', 'top mass [GeV] (closest)',  wzero+'*(closest_top_m>0&&'+cut+')', None, None, None,  array('f', [80., 100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
-          variables.append(variabile('closest_Wprime_m', 'Wprime mass [GeV] (closest)',  wzero+'*(closest_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
-          variables.append(variabile('sublead_Wprime_m', 'Wprime mass [GeV] (sublead)',  wzero+'*(sublead_Wprime_m>0&&'+cut+')', None, None, None,  array('f', [100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300., 2500., 2750., 3000., 3250., 3500., 3750., 4000., 4500., 5000., 6000.])))
-          variables.append(variabile('sublead_top_m', 'top mass [GeV] (sublead)',  wzero+'*(sublead_top_m>0&&'+cut+')', None, None, None,  array('f', [80., 100., 120., 150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050.])))
 
           variables.append(variabile('WprAK8_tau2/WprAK8_tau1', 'WprAK8 tau21', wzero+'*('+cut+')', 80, 0, 1.))
           variables.append(variabile('WprAK8_tau3/WprAK8_tau2', 'WprAK8 tau32', wzero+'*('+cut+')', 60, 0, 1.))
@@ -835,14 +836,15 @@ for year in years:
           variables.append(variabile('deltaR_bestWAK4_closestAK8', '#DeltaR (best)W\' AK4 closest AK8',  wzero+'*('+cut+')', 50, 0, 5))
           variables.append(variabile('best_topjet_isbtag', 'top jet b tagged (best)',  wzero+'*('+cut+')', 2, -0.5, 1.5))
           variables.append(variabile('best_Wpjet_isbtag', "W' jet b tagged (best)",  wzero+'*('+cut+')', 2, -0.5, 1.5))
-          variables.append(variabile('MC_Wpjet_pt', "MCtruth W' jet p_{T} [GeV]",  wzero+'*('+cut+')', 150, 0, 3000))
-          variables.append(variabile('MC_topjet_pt', "MCtruth top jet p_{T} [GeV]",  wzero+'*('+cut+')', 150, 0, 3000))
-          variables.append(variabile('MC_top_pt', "MCtruth top p_{T} [GeV]",  wzero+'*('+cut+')', 150, 0, 3000))
-          variables.append(variabile('MC_top_m', "MCtruth top m [GeV]",  wzero+'*('+cut+')', 46, 80, 1000))
-          variables.append(variabile('MC_Wprime_pt', 'Wprime p_{T} [GeV] (MC)',  wzero+'*(MC_Wprime_pt>0&&'+cut+')', 150, 0, 3000))
-          variables.append(variabile('MC_Wprime_eta', 'Wprime #eta (MC)', wzero+'*(MC_Wprime_eta>-10.&&'+cut+')', 48, -4., 4.))
-          variables.append(variabile('MC_Wprime_phi', 'Wprime #phi (MC)',  wzero+'*(MC_Wprime_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
-          variables.append(variabile('MC_Wprime_m', 'Wprime mass [GeV] (MC)',  wzero+'*(MC_Wprime_m>0&&'+cut+')',  61, 80, 5000))
+          
+          #variables.append(variabile('MC_Wpjet_pt', "MCtruth W' jet p_{T} [GeV]",  wzero+'*('+cut+')', 150, 0, 3000))
+          #variables.append(variabile('MC_topjet_pt', "MCtruth top jet p_{T} [GeV]",  wzero+'*('+cut+')', 150, 0, 3000))
+          #variables.append(variabile('MC_top_pt', "MCtruth top p_{T} [GeV]",  wzero+'*('+cut+')', 150, 0, 3000))
+          #variables.append(variabile('MC_top_m', "MCtruth top m [GeV]",  wzero+'*('+cut+')', 46, 80, 1000))
+          #variables.append(variabile('MC_Wprime_pt', 'Wprime p_{T} [GeV] (MC)',  wzero+'*(MC_Wprime_pt>0&&'+cut+')', 150, 0, 3000))
+          #variables.append(variabile('MC_Wprime_eta', 'Wprime #eta (MC)', wzero+'*(MC_Wprime_eta>-10.&&'+cut+')', 48, -4., 4.))
+          #variables.append(variabile('MC_Wprime_phi', 'Wprime #phi (MC)',  wzero+'*(MC_Wprime_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
+          #variables.append(variabile('MC_Wprime_m', 'Wprime mass [GeV] (MC)',  wzero+'*(MC_Wprime_m>0&&'+cut+')',  61, 80, 5000))
           
           variables.append(variabile('bjets_pt', 'leading bjets system p_{T} [GeV]',  wzero+'*('+cut+')', 150, 0, 3000))
           variables.append(variabile('topAK8_area', 'topAK8 area', wzero+'*('+cut+')', 30, 1.5, 3.0))
@@ -871,6 +873,7 @@ for year in years:
           variables.append(variabile('sublead_top_pt', 'top p_{T} [GeV] (sublead)',  wzero+'*(sublead_top_pt>0&&'+cut+')', 150, 0, 3000))
           variables.append(variabile('sublead_top_eta', 'top #eta (sublead)', wzero+'*(sublead_top_eta>-10.&&'+cut+')', 48, -4., 4.))
           variables.append(variabile('sublead_top_phi', 'top #phi (sublead)',  wzero+'*(sublead_top_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
+          '''
           variables.append(variabile('GenPart_top_pt', 'top p_{T} [GeV] (GenPart)',  wzero+'*(GenPart_top_pt>0&&'+cut+')', 150, 0, 3000))
           variables.append(variabile('GenPart_top_eta', 'top #eta (GenPart)', wzero+'*(GenPart_top_eta>-10.&&'+cut+')', 48, -4., 4.))
           variables.append(variabile('GenPart_top_phi', 'top #phi (GenPart)',  wzero+'*(GenPart_top_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
@@ -879,6 +882,11 @@ for year in years:
           variables.append(variabile('GenPart_bottom_eta', 'bottom #eta (GenPart)', wzero+'*(GenPart_bottom_eta>-10.&&'+cut+')', 48, -4., 4.))
           variables.append(variabile('GenPart_bottom_phi', 'bottom #phi (GenPart)',  wzero+'*(GenPart_bottom_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
           variables.append(variabile('GenPart_bottom_m', 'bottom mass [GeV] (GenPart)',  wzero+'*(GenPart_bottom_m>0&&'+cut+')',  92, 80, 1000))
+          variables.append(variabile('GenPart_Wprime_pt', 'Wprime p_{T} [GeV] (GenPart)',  wzero+'*(GenPart_Wprime_pt>0&&'+cut+')', 150, 0, 3000))
+          variables.append(variabile('GenPart_Wprime_eta', 'Wprime #eta (GenPart)', wzero+'*(GenPart_Wprime_eta>-10.&&'+cut+')', 48, -4., 4.))
+          variables.append(variabile('GenPart_Wprime_phi', 'Wprime #phi (GenPart)',  wzero+'*(GenPart_Wprime_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
+          variables.append(variabile('GenPart_Wprime_m', 'Wprime mass [GeV] (GenPart)',  wzero+'*(GenPart_Wprime_m>0&&'+cut+')',  61, 80, 5000))
+          '''
           variables.append(variabile('chi_Wprime_pt', 'Wprime p_{T} [GeV] (chimass)',  wzero+'*(chi_Wprime_pt>0&&'+cut+')', 150, 0, 3000))
           variables.append(variabile('chi_Wprime_eta', 'Wprime #eta (chimass)', wzero+'*(chi_Wprime_eta>-10.&&'+cut+')', 48, -4., 4.))
           variables.append(variabile('chi_Wprime_phi', 'Wprime #phi (chimass)',  wzero+'*(chi_Wprime_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
@@ -891,10 +899,6 @@ for year in years:
           variables.append(variabile('sublead_Wprime_pt', 'Wprime p_{T} [GeV] (sublead)',  wzero+'*(sublead_Wprime_pt>0&&'+cut+')', 150, 0, 3000))
           variables.append(variabile('sublead_Wprime_eta', 'Wprime #eta (sublead)', wzero+'*(sublead_Wprime_eta>-10.&&'+cut+')', 48, -4., 4.))
           variables.append(variabile('sublead_Wprime_phi', 'Wprime #phi (sublead)',  wzero+'*(sublead_Wprime_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
-          variables.append(variabile('GenPart_Wprime_pt', 'Wprime p_{T} [GeV] (GenPart)',  wzero+'*(GenPart_Wprime_pt>0&&'+cut+')', 150, 0, 3000))
-          variables.append(variabile('GenPart_Wprime_eta', 'Wprime #eta (GenPart)', wzero+'*(GenPart_Wprime_eta>-10.&&'+cut+')', 48, -4., 4.))
-          variables.append(variabile('GenPart_Wprime_phi', 'Wprime #phi (GenPart)',  wzero+'*(GenPart_Wprime_phi>-4.&&'+cut+')', 20, -3.14, 3.14))
-          variables.append(variabile('GenPart_Wprime_m', 'Wprime mass [GeV] (GenPart)',  wzero+'*(GenPart_Wprime_m>0&&'+cut+')',  61, 80, 5000))
           variables.append(variabile('sublead_topjet_pt', 'sub leading jet p_{T} [GeV]',  wzero+'*('+cut+')', 150, 0, 3000))
           variables.append(variabile('sublead_topjet_eta', 'sub leading jet #eta',  wzero+'*('+cut+')', 48, -2.4, 2.4))
           variables.append(variabile('closest_topjet_eta', 'closest top jet #eta',  wzero+'*('+cut+')', 48, -2.4, 2.4))
@@ -950,7 +954,7 @@ for year in years:
           variables.append(variabile('WprAK8_eta', 'WprAK8 #eta', wzero+'*('+cut+')', 48, -4.8, 4.8)) 
           variables.append(variabile('WprAK8_phi', 'WprAK8 #phi', wzero+'*('+cut+')', 20, -3.14, 3.14))
           variables.append(variabile('WprAK8_pt', 'WprAK8 p_{T} [GeV]', wzero+'*('+cut+')', 200, 0, 2000))
-          '''
+
           for sample in dataset_plot:
                if(opt.plot):
                     for syst in systematics:
