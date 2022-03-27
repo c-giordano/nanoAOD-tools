@@ -38,7 +38,8 @@ parser.add_option('', '--sfregions', dest='sfregions',type='string', default='CR
 runoptions=opt.runoptions
 categories =[""]
 systs=[""]
-#systs = ["","_btagUp","_btagDown","_mistagUp","_mistagDown","_pdf_totalUp","_pdf_totalDown","_puUp","_puDown","_q2TTUp","_q2QCDUp","_q2ZJetsUp","_q2WJetsUp","_q2TprimeUp","_q2TTDown","_q2QCDDown","_q2ZJetsDown","_q2WJetsDown","_q2TprimeDown","_jesUp","_jesDown","_jerUp","_jerDown","_topTagUp", "_topTagDown","_wTagUp", "_wTagDown","_topPtWeightDown","_topPtWeightUp"]
+systs = ["","_btagUp","_btagDown","_mistagUp","_mistagDown","_pdf_totalUp","_pdf_totalDown","_puUp","_puDown","_q2TTUp","_q2QCDUp","_q2ZJetsUp","_q2WJetsUp","_q2TprimeUp","_q2TTDown","_q2QCDDown","_q2ZJetsDown","_q2WJetsDown","_q2TprimeDown","_jesUp","_jesDown","_jerUp","_jerDown","_topTagUp", "_topTagDown","_wTagUp", "_wTagDown","_topPtWeightDown","_topPtWeightUp"]
+systs = ["","_btagUp","_btagDown","_jesUp","_jesDown","_jerUp","_jerDown"]
 
 #if os.path.exists(opt.pathout):
 #    os.popen('rm -r '+ opt.pathout + '/*')
@@ -164,15 +165,20 @@ fexplin02=TF1("fexplin02","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 
 
 if(opt.category=="electron"):
-    fexplin.SetParameters(1,801,0.01,0.003)
+    fexplin.SetParameters(10,1001,0.1,0.003)
     fexplinw.SetParameters(50,101,11.5,0.1,1,0.000002)
     fexplintele.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
-    fexplin0.SetParameters(10,1001,211,0.01,1,0.0000002)
+    fexplin0.SetParameters(10,1,211,0.01,1,0.0000002)
+    fexplin02.SetParameters(50,101,211,0.01,1,0.00002)
+
+#    fexplin0.SetParameters(1200,1501,0.5,0.0001)
 
 if(opt.category=="muon"):
     fexplin.SetParameters(10,1001,0.1,0.001)
     fexplinw.SetParameters(110,101,5.5,0.3,10,0.000002)
     fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.00002)
+    fexplin02.SetParameters(50,101,211,0.01,1,0.00002)
+
 #    fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
     fexplin0.SetParameters(1200,1001,0.5,0.0001)
 
@@ -282,13 +288,17 @@ def resetParameters(reg=""):
 
     fexp2data.SetParameters(310,0.1,0.01,0.0000002)
     if(opt.category=="electron"):
-        fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
+        fexplin.SetParameters(1,801,0.01,0.003)
+        #        fexplin.SetParameters(10,101,0.5,0.01,1,0.0000002)
+        fexplin0.SetParameters(10,311,0.3,1,0.0000002)
         fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
         if(reg=="TTMttvar"):
             fexplinw.SetParameters(300,1,1,1,0.1,0.0)
 
         fexplintele.SetParameters(5,1/4400.,-2,0.0001,.01,0.0000002)
-        fexplin0.SetParameters(50,101,211,0.01,1,0.00002)
+      
+#        fexplin0.SetParameters(10,1,211,0.01,1,0.0000002)
+#        fexplin0.SetParameters(1050,1501,211,0.01,1,0.00002)
 
         fexplin2.SetParameters(10,1001,0.5,0.01,1,0.0000002)
         fexplinw2.SetParameters(1,101,11.5,0.1,1,0.0002)
@@ -300,7 +310,7 @@ def resetParameters(reg=""):
 
     if(opt.category=="muon"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
-        fexplinw.SetParameters(110,501,5.5,0.1,1,0.0000002)
+        fexplinw.SetParameters(5,1101,0.8,0.005 ,1,0.0002)
         if(reg=="TTMttvar"):
             fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
 
@@ -347,10 +357,13 @@ expo2ele_fit_map={"SR2B":fexplin,"SRW":fexplinw,"SRT":fexplintele,"CR1B":fexplin
 poly2_fit_map_option={"SR2B":"SIE","SRW":"SI","SRT":"SIE","CR1B":"SI","CR0B":"SEMI"}
 poly2ele_fit_map_option={"SR2B":"SIE","SRW":"SIEM","SRT":"SIE","CR1B":"SI","CR0B":"SIEM"}
 
-expo2_fit_map_option={"SR2B":"SEMI","SRW":"SEMI","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
-expo2ele_fit_map_option={"SR2B":"SEMI","SRW":"SEM","SRT":"SEMI","CR1B":"SEM","CR0B":"SMI"}
+expo2_fit_map_option={"SR2B":"SEMI","SRW":"SEM","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
+expo2ele_fit_map_option={"SR2B":"SEMI","SRW":"SEM","SRT":"SEMI","CR1B":"SEM","CR0B":"SEMI"}
 
- #setup for fit including SR_II /SR_III
+if opt.plotonly:
+    gStyle.SetOptFit(1)
+    
+#setup for fit including SR_II /SR_III
 poly2_fit_map["SR2B_II"]=fexp1
 poly2_fit_map["SRW_II"]=fexp1
 poly2_fit_map["SRT_II"]=fexp1
@@ -363,12 +376,12 @@ poly2ele_fit_map["CR0B_II"]=fpoly2
 
 expo2_fit_map["SRW_II"]=fexplinw
 expo2_fit_map["SRT_II"]=fexplint2
-expo2_fit_map["CR0B_II"]=fexplin0
+expo2_fit_map["CR0B_II"]=fexplin02
 expo2_fit_map["SRT_I"]=fexplint2#for alternative srt
     
 expo2ele_fit_map["SRW_II"]=fexplinw
 expo2ele_fit_map["SRT_II"]=fexplint2
-expo2ele_fit_map["CR0B_II"]=fexplin0
+expo2ele_fit_map["CR0B_II"]=fexplin02
 expo2ele_fit_map["SRT_I"]=fexplint2#for alternative srt
 
 
@@ -408,12 +421,15 @@ expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1pl
 
 
 def_fitrange = [1250,6000]
+data_fitrange = [1250,6000]
+def_fitrange = [1500,6000]
 data_fitrange = [1500,6000]
-if opt.category=="electron":
-    data_fitrange = [1250,6000]
-    def_fitrange = [1250,6000]
+#if opt.category=="electron":
+#    data_fitrange = [1500,6000]
+#    def_fitrange = [1500,6000]
 #wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}
 #def_fitrange=[2050,5000]
+#
 def_fitrange = None
 data_fitrange = None
 alt1_fitrange = [1250,6000]
@@ -525,14 +541,16 @@ class single_process(namecollection):
 #        print " looking for histo ", histoname , " in file ", self.__filename
         h_ret=TH1
         f=TFile(self.__filename,"OPEN")
+        if(verbose):print ("file ", f," keys ", f.GetListOfKeys().Print())
         try:
+
             h_ret=f.Get(histoname).Clone(histoname)
         except:
             if(verbose):print "no histogram", histoname, " in file ", self.__filename
             f.Close()
             return 0
         h_ret.SetDirectory(0)
-        print self.__bins
+        if(verbose):print self.__bins
         if self.__bins!=None:
             if(self.__bins[3]=="uniform"):
                 h_ret.GetXaxis().SetRangeUser(self.__bins[0],self.__bins[1])
@@ -582,21 +600,22 @@ class single_process(namecollection):
     def transfer_factors(self,regions_map,onlyCentral=False,mapFitFunction=None,mapFitOption=None,plot=True,syst=None,tag=None,category=None,verbose=False):
         histomap={}
         removeFunction=not plot
-        if syst is None:
-            syst=self.__syst
-        if tag is None:
-            tag=self.__tag
+        if(verbose):
+            print "syst is ", syst
+            print "tag is ", tag
         for sr,cr in regions_map.iteritems():
             hname_sr= self.getmap()[sr] if sr in self.getmap().keys() else " no sr histo found in map names!"
             hname_cr= self.getmap()[cr] if sr in self.getmap().keys() else " no cr histo found in map names!"
-            print "test, filename ",self.__filename
-            if(verbose):
+            if(verbose ):
+                print "test, filename ",self.__filename
                 print "sr is ", sr, " histo ", hname_sr
                 print "cr is ", cr, " histo ", hname_cr
             try:
                 print ("now trying to get them ")
                 hsr=self.getHistoR(region=sr,verbose=verbose)
                 hbg=self.getHistoR(region=cr,verbose=verbose)
+                print("hup ",hsr.Integral()," hdown ", hbg.Integral())
+                if(hbg.Integral()>0):print("ratio is ", hsr.Integral()/hbg.Integral())
                 #hsr=self.getHisto(sr,verbose)  
                 #hbg=self.getHisto(cr)
                 if hsr==0:
@@ -618,20 +637,21 @@ class single_process(namecollection):
                         mapfitoption = "SI"
                         if not (mapFitOption is None):
                             mapfitoption=mapFitOption[sr]
-                        print "sr ",sr," mapfitoption is ",mapfitoption
+                        if(verbose):print "sr ",sr," mapfitoption is ",mapfitoption
                         hs_ret_up = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alt1_fitrange, fitoption=mapfitoption,postfix="alttfup")
                         hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alt2_fitrange, fitoption=mapfitoption,postfix="alttfdown")
                         if 'CR0B' in sr and category == 'muona':
                             hs_ret_up = fittedHisto(historatio,mapFitFunction[sr+'_alt'],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,postfix="alttfup")
                             hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,postfix="alttfdown")
-                        hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption)
+                        hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,verbose=False) #Set verbose here
+                        
                         historatio_coll.update(hs_ret)
                         historatio_coll["nominal_alttfup"]=hs_ret_up[0]
                         historatio_coll["nominal_alttfdown"]=hs_ret_down[0]
                     except (ValueError):
                         print "fit mode failed! Only nominal will be saved"
                 histomap[sr]=historatio_coll
-                print historatio_coll
+                if(verbose): print historatio_coll
                 #print("swobul")
                 c=TCanvas("c")
                 if(plot):
@@ -771,7 +791,7 @@ class data_driven(single_process):
         if(verbose):print("tag is ",self.__tag)
         self.update_filename()
         self.update_single_channel()
-        #print "getting histo now!!! sample ",sample, "region",region,"syst",self.__syst
+        if(verbose):print "getting histo now!!! sample ",sample, "region",region,"syst",self.__syst
         hs=super(data_driven,self).getHistoR(region=region,verbose=verbose)
         self.reset_info()
         self.__year = year
@@ -789,6 +809,8 @@ class data_driven(single_process):
         systtmp=syst
         if syst_sf==True:
             syst=None
+        if(verbose):print "filneame before", self.__filename, "syst bef" , self.__syst, "sysy" , syst, " syst_sf ",syst_sf
+
         self.set_syst(syst)
         if not(year is None):
             self.set_year(year)
@@ -800,13 +822,16 @@ class data_driven(single_process):
             path=self.__pathout#not a mistake: by default taking the path where multiprocess below will write it. This avoids overwriting local files as default behavior 
         self.set_path(path)
         if(verbose):print self.__path
+
         if syst_sf==True:
             syst=None
         self.set_syst(syst)
+
         if not(sample is None):    
             if isinstance(sample,list):
                 if len(sample)>1:
                     if(verbose):print "making internal multiprocess"
+                    
                     sp=self.make_multiprocess(regions=regions,pathout=path, samplelist=sample,year=year,sampleweights=sampleweights,syst=syst,syst_sf=syst_sf,savecr=savecr,tag=tag)
                     if(verbose):print "got it "
                 if len(sample)==1:
@@ -821,9 +846,11 @@ class data_driven(single_process):
         self.update_single_channel(namemap)
            
         #print "filename is ",self.__filename
-        if(verbose):print "calling super  method"
-        print "mapfit option passed to tf ",mapFitOption
-        histomap = super(data_driven,self).transfer_factors(regions_map=regions,onlyCentral=onlyCentral,mapFitFunction=mapFitFunction,mapFitOption=mapFitOption,tag=tag,plot=plot,category=category,verbose=verbose)
+        if(verbose):
+            print "calling super  method"
+            print "mapfit option passed to tf ",mapFitOption
+            print "filneame ", self.__filename
+        histomap = super(data_driven,self).transfer_factors(regions_map=regions,onlyCentral=onlyCentral,syst=syst,mapFitFunction=mapFitFunction,mapFitOption=mapFitOption,tag=tag,plot=plot,category=category,verbose=verbose)
         self.reset_info()
         self.set_syst(systtmp)
         self.set_path(pathtmp)
@@ -963,9 +990,9 @@ class data_driven(single_process):
         
         for sr,cr in regions.iteritems():
             for s in self.__samples:
-#                print "porting sample ",s," in samplelist ", (s in samplelist)
+                if(verbose): print "porting sample ",s," in samplelist ", (s in samplelist)
                 if not s in samplelist:
- #                   print "porting now"
+                    if(verbose): print "porting now"
                     self.set_tag(None)
                     h_srout=(self.getHisto(region=sr,sample=s,verbose=False)).Clone()
 #                    self.writeHistoToFile(histo=h_srout,pathout=self.__path,region=sr,sample=s,tag=tag)
@@ -978,7 +1005,7 @@ class data_driven(single_process):
 #                        self.writeHistoToFile(histo=h_crout,pathout=self.__path,region=cr,sample=s,tag=tag)
                         if(syst_sf):self.set_syst(syst)
                     self.set_tag(tag)
-
+                if(verbose):print("after port")
             self.set_tag(None)
             h_sr=(self.getHisto(region=sr,sample=self.__sample,verbose=False)).Clone()
             self.set_tag(tag)
@@ -986,7 +1013,7 @@ class data_driven(single_process):
             if savecr:
                 if(syst_sf):self.set_syst(None)
                 self.set_tag(None)
-                #print "just before sr, srname is  ",h_sr.GetName()
+                if(verbose):print "just before sr, srname is  ",h_sr.GetName()
                 h_cr=(self.getHisto(region=cr,sample=self.__sample,verbose=False)).Clone()
                 #print "just aftr cr, crname is  ",h_cr.GetName()
                 self.set_tag(tag)
@@ -997,8 +1024,10 @@ class data_driven(single_process):
                 self.set_sample(sl)
                 self.update_filename()
                 self.set_tag(None)
-                print "sample, ",sl," making multiprocess sr ", sr, " cr ", cr
-                htempsr=(self.getHisto(region=sr,sample=sl,verbose=False))
+                if (verbose):
+                    print "sample, ",sl," making multiprocess sr ", sr, " cr ", cr, "syst ", self.__syst
+                htempsr=(self.getHisto(region=sr,sample=sl,verbose=verbose))
+                if(verbose):print "sr name " , htempsr.GetName(), " ", htempsr.Integral() 
                 self.set_tag(tag)
 #                self.writeHistoToFile(histo=htempsr,pathout=self.__path,region=sr,sample=sl,tag=tag)
                 self.writeHistoToFile(histo=htempsr,pathout=pathout,region=sr,sample=sl,tag=tag)
@@ -1006,6 +1035,9 @@ class data_driven(single_process):
                     if(syst_sf):self.set_syst(None)
                     self.set_tag(None)
                     htempcr=(self.getHisto(region=cr,sample=sl,verbose=False))
+                    if(verbose):
+                        print "cr name " , htempcr.GetName(), " ", htempcr.Integral() 
+
                     if(syst_sf):self.set_syst(syst)
                     self.set_tag(tag)
                     self.writeHistoToFile(histo=htempcr,pathout=pathout,region=cr,sample=sl,tag=tag)
@@ -1025,9 +1057,11 @@ class data_driven(single_process):
                         wsr=abs(sw)
                         wcr=1.0/abs(sw)
                 h_sr.Add(htempsr,wsr)
+                if(verbose):print "hsr ",h_sr.GetName(), " hsr int ", h_sr.Integral()
                 if savecr:
                     h_cr.Add(htempcr,wcr)
-#                    print "in savecr, integral after sum",h_cr.Integral()
+                    if(verbose):print "hcr ",h_cr.GetName(), " hcr int ", h_cr.Integral()
+                    #                    print "in savecr, integral after sum",h_cr.Integral()
             fout.cd()
 #            print "in savecr, integral after sum sr",h_sr.Integral()
 
@@ -1086,18 +1120,20 @@ class data_driven(single_process):
                 mpalternate=self.make_multiprocess(regions=regions,samplelist=samplelist,pathout=pathout,year=year_sf,sampleweights=sampleweights,syst_sf=syst_sf,syst=syst,tag=tag, verbose=True)#hwere we produce this in the input file directory
 
         self.set_syst(syst)
-        if(verbose):print "after multiprocess, syst",self.__syst
+        if(verbose):print "after multiprocess mapalternate, syst",self.__syst
         hs_proj_ss={}
         #if len(samplelist)==1:
 
 #        for sl in samplelist:
 #            hs_proj_ss[sl] = self.transfer_factor(regions,sl,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
         if(verbose):print "pathout is ",pathout, " mp is ",mp
-        if (year_sf is None): hs_proj_multiprocess = self.transfer_factor(regions,mp,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,mapFitOption=tfMapFitOption,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
+        if (year_sf is None): 
+            print "make multiprocess hsproj", "syst sf" , syst_sf
+            hs_proj_multiprocess = self.transfer_factor(regions,mp,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,mapFitOption=tfMapFitOption,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
         if not (year_sf is None):
             if(verbose):print " =========> tf what year it is ?", year_sf, " mpalternate is ",mpalternate
             hs_proj_multiprocess = self.transfer_factor(regions,mpalternate,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,mapFitOption=tfMapFitOption,year=year_sf,category=category,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
-        
+        if(verbose):print "after multiprocess hs proj, syst",self.__syst
         self.set_syst(syst)
         if(verbose):print "before regions syst is" ,self.__syst
         for sr,cr in regions.iteritems():
@@ -1434,7 +1470,7 @@ class data_driven(single_process):
         for s in samplelist:
             for sr,cr in regions.iteritems():
                 if(verbose): print "porting sample is ",s,"syst is" ,self.__syst
-                hsr= self.getHisto(region=sr,sample=s,verbose=True)
+                hsr= self.getHisto(region=sr,sample=s,verbose=False)
                 self.writeHistoToFile(histo=hsr,pathout=pathout,region=sr,sample=s+portname,syst=syst,tag=tagout)
                 if(savecr):
                     if(syst_sf):self.set_syst(None)
@@ -1455,19 +1491,25 @@ dd = data_driven(namemap=namemap,samples=samples,year=opt.year,category=opt.cate
 #wjets.transfer_factors(srcr_map_3)ex
 
 sampleweights_wup={"WJets":2.0,"TT_Mtt":1.,"ST":1}
-sampleweights_wdown={"WJets":0.5,"TT_Mtt":1,"ST":1}
+sampleweights_wdown={"WJets":0.25,"TT_Mtt":1,"ST":1}
 
 sampleweights_wcrup={"WJets":-2.0,"TT_Mtt":1.,"ST":1}#negative sign means only applied in control region
 sampleweights_wcrdown={"WJets":-0.5,"TT_Mtt":1,"ST":1}
 
-sampleweights_ttup={"WJets":1.0,"TT_Mtt":1.33,"ST":1.}
-sampleweights_ttdown={"WJets":1.0,"TT_Mtt":0.75,"ST":1}
+#sampleweights_wup={"WJets":-2.0,"TT_Mtt":1.,"ST":1}#negative sign means only applied in control region
+#sampleweights_wdown={"WJets":-0.5,"TT_Mtt":1,"ST":1}
 
-sampleweights_ttcrup={"WJets":1.0,"TT_Mtt":-1.33,"ST":1.}#negative sign means only applied in control region
-sampleweights_ttcrdown={"WJets":1.0,"TT_Mtt":-0.75,"ST":1}
+sampleweights_ttup={"WJets":1.0,"TT_Mtt":1.8,"ST":1.}
+sampleweights_ttdown={"WJets":1.0,"TT_Mtt":0.2,"ST":1}
 
-sampleweights_stup={"WJets":1.0,"TT_Mtt":1.,"ST":1.50}
-sampleweights_stdown={"WJets":1.0,"TT_Mtt":1.,"ST":0.667}
+sampleweights_ttcrup={"WJets":1.0,"TT_Mtt":-1.5,"ST":1.}#negative sign means only applied in control region
+sampleweights_ttcrdown={"WJets":1.0,"TT_Mtt":-0.5,"ST":1}
+
+#sampleweights_ttup={"WJets":1.0,"TT_Mtt":-1.5,"ST":1.}#negative sign means only applied in control region
+#sampleweights_ttdown={"WJets":1.0,"TT_Mtt":-0.5,"ST":1}
+
+sampleweights_stup={"WJets":1.0,"TT_Mtt":1.,"ST":1.80}
+sampleweights_stdown={"WJets":1.0,"TT_Mtt":1.,"ST":0.2}
 
 #######v2
 '''
@@ -1502,7 +1544,10 @@ copysignals=False
 
 #systslist=["jesDown","jesUp","jerUp","jerDown","PFUp","PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown"]
 systslist=[]#"jes2016Down","jes2016Up","jer2016Up","jer2016Down","PF2016Up","PF2016Down","pu2016Up","pu2016Down","btag2016Up","btag2016Down","mistag2016Up","mistag2016Down", "lep2016Up", "lep2016Down", "trig2016Up", "trig2016Down", "pdf_total2016Up", "pdf_total2016Down", "jes2017Down","jes2017Up","jer2017Up","jer2017Down","PF2017Up","PF2017Down","pu2017Up","pu2017Down","btag2017Up","btag2017Down","mistag2017Up","mistag2017Down", "lep2017Up", "lep2017Down", "trig2017Up", "trig2017Down", "pdf_total2017Up", "pdf_total2017Down" ,"jes2018Down","jes2018Up","jer2018Up","jer2018Down","PF2018Up","PF2018Down","pu2018Up","pu2018Down","btag2018Up","btag2018Down","mistag2018Up","mistag2018Down", "lep2018Up", "lep2018Down", "trig2018Up", "trig2018Down", "pdf_total2018Up", "pdf_total2018Down"]
-
+#systslist=["jesUp","jesDown","btagUp","btagDown","trigUp","trigDown"]#, "q2Up", "q2Down"]
+systslist=["jerUp","jerDown","lepUp","lepDown","puUp","puDown"]#, "q2Up", "q2Down"]
+#systslist=["jesUp"]
+           
 
 runall= "A" in runoptions
 copysignals=True
@@ -1512,6 +1557,7 @@ if("B" in runoptions or runall):
     altwjetstt=True
 if("S" in runoptions or runall):
     #systs=["jesDown","jesUp","jerUp","jerDown","PFUp","PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown"]#, "q2Up", "q2Down"]
+    systs=["jesDown","jesUp","jerUp","jerDown","puUp","puDown","btagUp","btagDown","trigUp","trigDown"]#, "q2Up", "q2Down"]
     print "running syst  ",systs
     systs=systslist
     print "running syst  ",systs
@@ -1572,8 +1618,12 @@ if plotonly:
 resetParameters()
 if testnominal:
     dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None) #this takes CR as from nominal always
+    if(plotonly):
+        resetParameters()
+        dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,verbose=False)
+        resetParameters()
+        dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=plotonly,verbose=False)
 
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=plotonly)
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False)
     resetParameters()
 
@@ -1613,8 +1663,10 @@ if(altwjetstt):
 
 for s in systs:
     print "running syst  ",s
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=True,tag=None)#this should take the pathout default, which is the v14_rebin folder
-    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=True,tag=None)#this should take the pathout default, which is the v14_rebin folder
+    resetParameters()
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=False,tag=None,verbose=False)#this should take the pathout default, which is the v14_rebin folder
+    resetParameters()   
+    dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=False,tag=None)#this should take the pathout default, which is the v14_rebin folder
     resetParameters()
     if(copysignals):
         dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst=s,syst_sf=True,savecr=True) #this takes CR as from nominal always

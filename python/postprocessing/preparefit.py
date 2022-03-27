@@ -18,10 +18,11 @@ parser.add_option('-v', '--version', dest='version', default = 'v18', type='stri
 parser.add_option('-i', '--inputpath', dest='inputpath', default = pi, type='string', help='file in , not working yet!')
 parser.add_option('-o', '--outputpath', dest='outputpath', default = po, type='string', help='file in , not working yet!')
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
-parser.add_option('-m', '--mode', dest='mode',default = 'sum symmetrize smooth' , type='string', help='"sum" splits systs per years, "symmetrize" symmetrizes DD uncertainties, "smooth" smooths QCD histograms')
+parser.add_option('-m', '--mode', dest='mode',default = 'sum symmetrize smooth pdfeval' , type='string', help='"sum" splits systs per years, "symmetrize" symmetrizes DD uncertainties, "smooth" smooths QCD histograms')
 parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='if called run on more than 1 plot simultaneously')
 parser.add_option('-r', '--refresh', dest='refresh', action= 'store_true' , default = False, help='if called empty the output folders first')
 parser.add_option('-e','--extraregions', dest='extraregions', action="store_true", default = False, help='use extra regions for later recorrection')
+parser.add_option('-M', '--missingSamplesFile', dest='missing', default = 'missingSamples.txt', type='string', help='missing samples file')
 #parser.add_option('--cut','-c', dest='cuts', default = '', type='string', help='years to run')
 (opt, args) = parser.parse_args()
 
@@ -34,23 +35,12 @@ pathout = opt.outputpath
 dryrun = opt.dryrun
 
 signals = {}
-
-signals['RH2020'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_RH_2016'].components]
 signals['RH2016'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_RH_2016'].components]
 signals['RH2017'] = [sample.label.replace('_2017', '') for sample in sample_dict['WP_RH_2017'].components]
 signals['RH2018'] = [sample.label.replace('_2018', '') for sample in sample_dict['WP_RH_2018'].components]
-signals['LHSMinter2020'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_LHSMinter_2016'].components]
 signals['LHSMinter2016'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_LHSMinter_2016'].components]
 signals['LHSMinter2017'] = [sample.label.replace('_2017', '') for sample in sample_dict['WP_LHSMinter_2017'].components]
 signals['LHSMinter2018'] = [sample.label.replace('_2018', '') for sample in sample_dict['WP_LHSMinter_2018'].components]
-#simple case
-
-basesigs = ["WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
-signals={}
-for ye in ["2016","2017","2018","2020"]:
-    signals["RH"+ye]= basesigs
-    signals["LHSMinter"+ye]= []
-
 #print(signals)
 
 samples = ["DDFitWJetsTT_MttST"]
@@ -62,26 +52,42 @@ samples2 = ["QCD"] #, "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_
 #samples2 = []
 systs2 = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total"]
 
+missingSamplesFile=opt.missing
+fmiss=file(missingSamplesFile)
+missingSamplesList=(fmiss.read()).split()
+
+leps = opt.leptons.split(',')
+for s in signals['LHSMinter2016']:
+    if (s+"_2016" in missingSamplesList) or (s+"_2017" in missingSamplesList) or (s+"_2018" in missingSamplesList):
+        signals['LHSMinter2016'].remove(s)
+        for lep in leps:
+            os.system("rm "+pathout+"/"+lep+"/"+s+"*.root")
+            print("removing "+pathout+"/"+lep+"/"+s+"*.root")
+
+for s in signals['RH2016']:
+    if (s+"_2016" in missingSamplesList) or (s+"_2017" in missingSamplesList) or (s+"_2018" in missingSamplesList):
+        signals['RH2016'].remove(s)
+        for lep in leps:
+            os.system("rm "+pathout+"/"+lep+"/"+s+"*.root")
+            print("removing "+pathout+"/"+lep+"/"+s+"*.root")
+
 samples_smooth = {"QCD":["h_jets_best_Wprime_m_SR2B"]}
 samples_smooth["QCD"].append("h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30")
 samples_smooth["QCD"].append("h_jets_best_Wprime_m_SR2B_I")
 systs_smooth = systs2
 
 samples_symmetrize = copy.deepcopy(samples)
-samples_pdfeval = []
-samples_pdfeval = signals["RH2020"]
+samples_pdfeval = signals['LHSMinter2016']+signals['RH2016']
 
-#samples_pdfeval 
 #samples_symmetrize.append("QCD")
 systs_symmetrize = systs
-systs_symmetrize = ["TF_2020", "DD_2020", "Alt_2020", "AltTF_2020"]+["TT_Mtt", "WJets", "ST"]+["jes","btag"]+["jer","lep","pu"]
+systs_symmetrize = ["TF_2020", "DD_2020", "Alt_2020", "AltTF_2020"]+["TT_Mtt", "WJets", "ST"]
 
 versus = ['Up', 'Down']
 leps = ['muon', 'electron']
 #leps = ['muon']
 years = ['2016', '2017', '2018']
 
-leps = opt.leptons.split(',')
 years = opt.years.split(',')
 mode = opt.mode
 
@@ -103,7 +109,6 @@ splityears = False
 smooth = False
 symmetrize = False
 pdfeval = False
-reducebins=False
 if 'sum' in mode: 
     summedyears = True
 if 'splityears' in mode: 
@@ -114,8 +119,6 @@ if 'symmetrize' in mode:
     symmetrize = True
 if 'pdfeval' in mode:
     pdfeval = True
-if 'reduce' in mode:
-    reducebins = True
 
 for lep in leps:
     if not os.path.exists(pathout+"/"+lep):os.makedirs(pathout + '/' + lep)
@@ -160,7 +163,6 @@ for lep in leps:
         systs_DD = ["TF_2020", "DD_2020", "Alt_2020", "TT_Mtt", "WJets", "ST","AltTF_2020"]
         if extended: systs_DD.extend(["CR_2020"])
         systs_perlep = ["lep", "trig"]
-        systs_perlep = []
 
         filename = 'Data_2020_' + lep + '.root'
         print('copying ', filename)
@@ -212,8 +214,6 @@ for lep in leps:
             fileout = pathout+'/'+lep+'/'+filename
             print(" nominal fileout ",fileout)
             for h in allhistos:
-                if not(h in samples_smooth[sample]):
-                    continue
                 filename = sample + '_2020_' + lep + '.root'
                 fileout = pathout+'/'+lep+'/'+filename
                 print("sample ",sample , " syst nominal histo ",h, " fileout ",fileout)
@@ -277,12 +277,7 @@ for lep in leps:
                 fileoutUp = pathout+'/'+lep+'/'+filenameUp
                 fileoutDown = pathout+'/'+lep+'/'+filenameDown
                 print("symmetry file,up,down ", fileoutUp,fileoutDown,fileout)
-                optionsym=""
-                #if("CR" in syst) or ("Alt" in syst) :optionsym="switch" 
-                if("CR" in syst):optionsym="switch" 
-                optionsym="switch"
-                if("jes" in syst or "jer" in syst):optionsym=""
-                symmetry(histosr,fUp=fileoutUp,fDown=fileoutDown,fNom=fileout,option=optionsym)
+                symmetry(histosr,fUp=fileoutUp,fDown=fileoutDown,fNom=fileout)
 
     if(pdfeval):
         print "evaluating pdf"
@@ -307,55 +302,4 @@ for lep in leps:
             os.system("cp "+fileoutUp+" "+fileoutRMS)
 
             nnpdfeval(histosr,fUp=fileoutUp,fDown=fileoutDown,fNom=fileout,fRMS=fileoutRMS)
-
-
-#versus = ['Up', 'Down']
-#leps = ['muon', 'electron']
-print histosr
-if ( reducebins) :
-    from fit_utils import behead,behead_all
-    beheadprefix="beheaded"
-    beheadprefix=""
-    signals_r=signals["RH2020"]+signals["LHSMinter2020"]
-    qcds_r=["QCD"]
-    Data_r="Data"
-    DDBkg_r=["DDFitWJetsTT_MttST"]
-
-    systs_r= ["PF", "pu", "jes", "jer", "btag", "mistag", "pdf_total"]
-    systs_lep_r= {"muon":["trig_mu","lep_mu"],"electron":["trig_ele","lep_ele"]}
-
-    systs_perlep_dd=["CR_2020","AltTF_2020","Alt_2020","TF_2020","DD_2020","TT_Mtt","WJets","ST"]
-    systs_lep_dd= {"muon":[x+"_mu" for x in systs_perlep_dd],
-                   "electron":[x+"_ele" for x in systs_perlep_dd]}
-    print "reducing head "
-    for lep in leps:
-        pathl=pathout +  '/' + lep + '/'
-
-        datafile=pathl+Data_r+'_2020_' + lep + '.root'
-        behead_all(datafile, histosr, beheadprefix)
-
-        for sample in signals_r+qcds_r:
-
-            filename = pathl+sample + '_2020_' + lep + '.root'
-            print (" sample ", sample, " file nominal ",filename)
-            behead_all(filename, histosr, beheadprefix)
-            print(systs_r+systs_lep_r[lep])
-            for syst in systs_r+systs_lep_r[lep]:
-                filenameUp = pathl+sample + '_2020_' + lep + '_' + syst + "Up" + '.root'
-                filenameDown = pathl+sample + '_2020_' + lep + '_' + syst + "Down" + '.root'
-                print(filenameUp,filenameDown)
-                behead_all(filenameUp, histosr, beheadprefix)
-                behead_all(filenameDown, histosr, beheadprefix)
-                
-        for sample in DDBkg_r:
-            filename = pathl+sample + '_2020_' + lep + '.root'
-            print (" sample ", sample, " file nominal ",filename)
-            print(systs_r+systs_lep_r[lep])
-            behead_all(filename, histosr, beheadprefix)
-            for syst in systs_lep_dd[lep]:
-                filenameUp = pathl+sample + '_2020_' + lep + '_' + syst + "Up" + '.root'
-                filenameDown = pathl+sample + '_2020_' + lep + '_' + syst + "Down" + '.root'
-                print(filenameUp,filenameDown)
-                behead_all(filenameUp, histosr, beheadprefix)
-                behead_all(filenameDown, histosr, beheadprefix)
 
