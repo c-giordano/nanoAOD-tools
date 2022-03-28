@@ -30,6 +30,7 @@ parser.add_option('', '--plotonly', dest='plotonly', action="store_true", defaul
 parser.add_option('', '--year_sf', dest='year_sf',type='string', default='None', help='year from which to extract sf, if None it is done from the same as Data')
 parser.add_option('', '--resetMF', dest='resetMF',action="store_true" ,default=False, help='reset missing files file or append to it')
 parser.add_option('', '--runoptions', dest='runoptions', type='string', default='N', help='run options: A = all, N = nominal, B = background composition up/down, S = systs, D = dryrun  ')
+parser.add_option('', '--splitregions', dest='splitregions', action= 'store_true' , default = False, help='split systs. for signal and control regions')
 parser.add_option('', '--sfregions', dest='sfregions',type='string', default='CR*,SR*vsCR*_I,SR*_I', help='regions to consider SR vs CR ; SR can be : * [all] or split by comma. Special regions are: "SR" = "SR2B,SRT,SRB" ; "CR" = "CR0B"')
 
 
@@ -121,6 +122,8 @@ if extended:
     wjets_veto_map["CR0B_II"]="CR0B_III"
     wjets_veto_map["SRW_II"]="SRW_III"
     wjets_veto_map["SRT_II"]="SRT_III"
+
+#wjets_veto_map = {"SRT":"SRT_I"}
 
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
@@ -224,6 +227,11 @@ fexp1plus2data2=TF1("fexp1plus2data2","landau",1000,6000)
 fexp1plus2data2.SetParameters(1000,1100,1002)
 fexp1plus2data_v22=TF1("fexp1plus2data_v22","landau",1000,6000)
 fexp1plus2data_v22.SetParameters(5000,1000,152)
+#fexp1plus2data3=TF1("fexp1plus2data3","landau+[3]+[4]*x",1000,6000)
+#fexp1plus2data3.SetParameters(1000,1100,1002,20,-0.001)
+
+fexp1plus2data3=TF1("fexp1plus2data3","landau+exp(-([4]+[5]*x))",1000,6000)
+fexp1plus2data3.SetParameters(1000,1100,1002,0.001,0.0001)
 
 #fexp1plus2data=TF1("fexp1plus2","[3]*TMath::GammaDist(x,[0],[1],[2])",1000,6000)
 #fexp1plus2data.SetParameters(1000,0,2,1000)
@@ -422,8 +430,8 @@ expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1pl
 
 def_fitrange = [1250,6000]
 data_fitrange = [1250,6000]
-def_fitrange = [1500,6000]
-data_fitrange = [1500,6000]
+#def_fitrange = [1500,6000]
+#data_fitrange = [1500,6000]
 #if opt.category=="electron":
 #    data_fitrange = [1500,6000]
 #    def_fitrange = [1500,6000]
@@ -432,6 +440,7 @@ data_fitrange = [1500,6000]
 #
 def_fitrange = None
 data_fitrange = None
+
 alt1_fitrange = [1250,6000]
 alt2_fitrange = [1500,6000]
 
@@ -772,7 +781,7 @@ class data_driven(single_process):
         else:
             fw=TFile(filename,"NEW")
         fw.cd()
-        histo.Write(histoname)
+        histo.Write(histoname,TObject.kOverwrite)
         fw.Close()
 
     def getHisto(self,region,sample,nominaltag=False,nominalsyst=False,verbose=False):
@@ -1145,7 +1154,7 @@ class data_driven(single_process):
             print "hdatsr integral ",  h_data_sr.Integral()
             print "hdatcr integral ",  h_data_cr.Integral()
             print "hdatacrfit integral ",  h_data_cr_fit.Integral()
-            opop="SI"
+            opop="SIEM"
             h_data_cr_fit_alt1=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=alt1_fitrange,fitoption=opop)[0]
             h_data_cr_fit_alt2=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=alt2_fitrange,fitoption=opop)[0]
             h_data_cr_fit_up=fittedHisto(self.getHisto(region=cr,sample="Data"),ddMapFitFunction[cr],doRemove=(not plot),npars=-1,behavior="shape_only",fitrange=data_fitrange)[1]
@@ -1203,7 +1212,7 @@ class data_driven(single_process):
                 if (s in samplelist):continue
                 try:
                     if(verbose):print "sample is ",s,"syst is" ,self.__syst
-                                
+                    print "sample is ",s,"syst is" ,self.__syst
                     if(verbose):print "adding hsr and hcr for sample ",s, " regions are ",sr,cr, " "
                     hsr= self.getHisto(region=sr,sample=s,verbose=False,nominaltag=True)
                     
@@ -1218,6 +1227,7 @@ class data_driven(single_process):
                     hcr= self.getHisto(region=cr,sample=s,verbose=False,nominaltag=True)
 
                     #                    if(verbose):
+                    #print "hcr integral",hcr.Integral()
                     print "hcr integral",hcr.Integral()
                     h_dd_cr.Add(hcr,-1)
                     h_dd_cr_fit.Add(hcr,-1)
@@ -1255,6 +1265,8 @@ class data_driven(single_process):
             if(verbose):print "ischanigng cr 1",h_dd_cr.Integral()
             if(plot):
                 h_dd_cr_fit.Draw()
+                h_dd_cr_fit.SetLineColor(kBlue)
+                h_data_cr.Draw("esame")
                 h_data_sr.Write(str("Data"+sr+"_"+category))
                 c2.SetLogy()
                 c2.SaveAs(str(plotpath+"h_dd_cr"+h_dd_cr_fit.GetName()+"_"+str(year)+".png"))
@@ -1417,18 +1429,42 @@ class data_driven(single_process):
             self.writeHistoToFile(histo=h_dd_sr,pathout=pathout,region=sr,sample="DD_counting"+"".join(samplelist),syst=syst,tag=tag)
             self.writeHistoToFile(histo=histo_res[0],pathout=pathout,region=sr,sample="DD"+"".join(samplelist),syst=syst,tag=tag)
             self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag=tag)
+                
             #            self.writeHistoToFile(histo=histo_res_fit[0][1],pathout=pathout,region=sr,sample="DDFitUp"+"".join(samplelist),syst=syst,tag=tag)
             #            self.writeHistoToFile(histo=histo_res_fit[0][2],pathout=pathout,region=sr,sample="DDFitDown"+"".join(samplelist),syst=syst,tag=tag)
            
             if(not onlyCentral):
-                self.writeHistoToFile(histo=histo_res_fit[0][1],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+year+"Up")
-                self.writeHistoToFile(histo=histo_res_fit[0][2],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+year+"Down")
-                self.writeHistoToFile(histo=histo_res_fit[1][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+year+"Up")
-                self.writeHistoToFile(histo=histo_res_fit[2][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+year+"Down")
-                self.writeHistoToFile(histo=histo_res_fit["alt1"],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+year+"Up")
-                self.writeHistoToFile(histo=histo_res_fit["alt2"],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+year+"Down")
-                self.writeHistoToFile(histo=histo_res_fit["nominal_alttfup"][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="AltTF_"+year+"Up")
-                self.writeHistoToFile(histo=histo_res_fit["nominal_alttfdown"][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="AltTF_"+year+"Down")
+                exss=""
+                splitdd=opt.splitregions
+                #                splitdd=False
+                #splitdd=True
+                if splitdd:
+                    exss=sr+"_"
+                self.writeHistoToFile(histo=histo_res_fit[0][1],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+exss+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit[0][2],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+exss+year+"Down")
+                self.writeHistoToFile(histo=histo_res_fit[1][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+exss+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit[2][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+exss+year+"Down")
+                self.writeHistoToFile(histo=histo_res_fit["alt1"],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+exss+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit["alt2"],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+exss+year+"Down")
+                self.writeHistoToFile(histo=histo_res_fit["nominal_alttfup"][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="AltTF_"+exss+year+"Up")
+                self.writeHistoToFile(histo=histo_res_fit["nominal_alttfdown"][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="AltTF_"+exss+year+"Down")
+                if splitdd:
+                    for sro,cro in regions.iteritems():
+                        if(sr==sro):
+                            continue
+                        else:
+                            exsso=sro+"_"
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+exsso+year+"Up")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="DD_"+exsso+year+"Down")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+exsso+year+"Up")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="TF_"+exsso+year+"Down")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+exsso+year+"Up")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="Alt_"+exsso+year+"Down")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="AltTF_"+exsso+year+"Up")
+                            self.writeHistoToFile(histo=histo_res_fit[0][0],pathout=pathout,region=sr,sample="DDFit"+"".join(samplelist),syst=syst,tag="AltTF_"+exsso+year+"Down")
+                        
+                            
+
 
             #if not (pathout is None):
             srregions=regions

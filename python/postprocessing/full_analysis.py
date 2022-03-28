@@ -10,7 +10,10 @@ parser.add_option('-i', '--inputpath', dest='inputpath', default = '/eos/user/o/
 parser.add_option('-o', '--outputpath', dest='outputpath', default = '/eos/user/o/oiorio/Wprime/nosynch/', type='string', help='file in , not working yet!')
 parser.add_option('-n', '--dryrun', dest='dryrun', action= 'store_true' , default = False, help='if called not running the command')
 parser.add_option('', '--alt', dest='alt', action= 'store_true' , default = False, help='alternative fit from cr-corrected shape')
-parser.add_option('--parallel', dest='parallel', type='int', default=5 , help='if called run on more than 1 plot simultaneously')
+
+
+parser.add_option('--parallel', dest='parallel', type='int', default=10 , help='if called run on more than 1 plot simultaneously')
+
 parser.add_option('-d', '--samples', dest='samples', default = '', type='string', help='samples to run, default all')
 parser.add_option('', '--varset', dest='varset', type='string', default = '', help="variables set: S: signal, V: validation, A: AN")
 parser.add_option('', '--nosplit', dest='nosplit', action= 'store_true' , default = False, help="if triggered doesn't spli data driven systs by region")
@@ -111,6 +114,7 @@ extrasamplesopt=""
 if "e" in opt.mode: extrasamplesopt=" -e "
 commands_makeddmu="nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions N --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
 commands_makeddmu=commands_makeddmu+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions B --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
+#commands_makeddmu=commands_makeddmu+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions S --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
 commands_makeddmucp= "cp "+opt.inputpath+"/"+opt.version+"/plot_merged/muon/WP*root "+opt.outputpath+"/"+opt.version+"/plot_explin/muon/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpmu.log; "
 
 commands_makeddel= "nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c electron "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions N --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddel.log; " 
