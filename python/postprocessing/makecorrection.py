@@ -7,13 +7,6 @@ from symmetry import symmetry,nnpdfeval
 from repos import histosr,histocr
 from fit_utils import shift,smoothing,scale
 
-
-pi = '/afs/cern.ch/work/o/oiorio/Wprimean/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/python/postprocessing/newtest5/v17_explin/'
-po = '/afs/cern.ch/work/o/oiorio/Wprimean/CMSSW_10_5_0/src/PhysicsTools/NanoAODTools/python/postprocessing/newtest5/v17_explin_fit/'
-
-pi = "/eos/home-o/oiorio/Wprime/nosynch/v18/plot_explin_fit/"
-po = "/eos/home-o/oiorio/Wprime/nosynch/v18/plot_explin_fit/"
-
 pi = "/eos/home-o/oiorio/Wprime/nosynch/v18/plot_explin/"
 po = "/eos/home-o/oiorio/Wprime/nosynch/v18/plot_explin/"
 
@@ -31,30 +24,41 @@ parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='i
 parser.add_option('-r', '--refresh', dest='refresh', action= 'store_true' , default = False, help='if called empty the output folders first')
 parser.add_option('-O', '--overwrite', dest='overwrite', action= 'store_true' , default = False, help='overwrite original files with corrected ones, default false')
 parser.add_option('', '--addsystematic', dest='addsystematic', action= 'store_true' , default = False, help='create alternative file with systematic variation')
+parser.add_option('', '--splitregions', dest='splitregions', action= 'store_true' , default = False, help='split systs. for signal and control regions')
 #parser.add_option('--cut','-c', dest='cuts', default = '', type='string', help='years to run')
 (opt, args) = parser.parse_args()
-
-version = 'v17'
-pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_explin_v3/'
-#pathin = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_merged_bis/'
-pathout = '/eos/user/a/adeiorio/Wprime/nosynch/' + version + '/plot_fit_ddsummed_explin_v3'
-
 
 version = opt.version
 pathin = opt.inputpath
 pathout = opt.outputpath
 dryrun = opt.dryrun
+leps = map(str,opt.leptons.split(','))
+
+print leps
 
 from repos import namemap, wjets_veto_map
 
 pred = "DDFitWJetsTT_MttST"
 data = "Data"
-systs = ["noSyst","PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST"]
-systs=["noSyst"]
-systs.extend(["noSyst","WJets","ST","TT_Mtt","AltTF_2020","Alt_2020","DD_2020","TF_2020"])
-#systs.extend(["noSyst","WJets","ST","TT_Mtt","AltTF","Alt","DD","TF"])
+systs = ["noSyst","PF", "pu", "lep", "trig", "jes2016", "jer2016", "jes2017", "jer2017", "jes2018", "jer2018", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST", "LHETT_Mtt", "LHEWJets", "LHEST"]
+#systs=["noSyst"]
+#systs.extend(["WJets","ST","TT_Mtt","AltTF_2020","Alt_2020","DD_2020","TF_2020"])
+listdd=["TF_2020", "DD_2020", "Alt_2020", "AltTF_2020"]
 
+splitddreg=opt.splitregions
+#splitddreg=False
+if(splitddreg):
+    newlistdd=[]
+    for l in listdd:
+        newlistdd.append(l.replace("_2020","_SR2B_2020"))
+        newlistdd.append(l.replace("_2020","_SRT_2020"))
+        newlistdd.append(l.replace("_2020","_SRW_2020"))
+        newlistdd.append(l.replace("_2020","_CR0B_2020"))
+    listdd= copy.deepcopy(newlistdd)
 
+#crlist=["CR_2020"]
+
+systs.extend(["WJets","ST","TT_Mtt"]+listdd)
 snames=[]
 for s in systs:
     if s=="noSyst":
@@ -63,21 +67,27 @@ for s in systs:
         snames.append("_"+s+"Up")
         snames.append("_"+s+"Down")
 lepslabel={"muon":"mu","electron":"ele"}
-leps=["muon","electron"]
-#leps=["muon"]
 
 #corrections={"CR0B":["CR0B_II","CR0B_II"],"SRT":["SRT_II","SRT_II"],"SRW":["SRW_II","SRW_II"]}
-corrections={"CR0B":["CR0B_II","CR0B_II"],"SR2B":["SRT_II","SRT_II"],"SRT":["SRT_II","SRT_II"],"SRW":["SRW_II","SRW_II"]}
+corrections={"CR0B":["CR0B_II","CR0B_II"],"SR2B":["SRT_II","SRT_II"],"SRT":["SRT_II","SRT_II"],"SRW":["CR0B_II","CR0B_II"]}
+#corrections={"CR0B":["CR0B_II","CR0B_II"]}
+
+splitddreg=False #DON'T CHANGE THIS! from here on out it's done in the splitregions.py, don't change it
 
 for lep in leps:
     for s in snames:
         for c in corrections:
             if(s!="" and "_fit" in opt.inputpath):
                 sn=s.replace ("Up","_"+lepslabel[lep]+"Up").replace("Down","_"+lepslabel[lep]+"Down")
+                sn=s.replace ("Up","_"+lepslabel[lep]+"Up").replace("Down","_"+lepslabel[lep]+"Down")
             else: sn = s
+            exss=""
+            if splitddreg:
+                exss=c+"_"
             fnamepred=pathin+"/"+lep+"/"+pred+"_2020_"+lep+sn+".root"
             fnamedata=pathin+"/"+lep+"/"+data+"_2020_"+lep+".root"
             fnameprednom=pathin+"/"+lep+"/"+pred+"_2020_"+lep+".root"
+            fqcd=pathin+"/"+lep+"/QCD_2020_"+lep+".root"
             
             hname_tofix=namemap[c]
             hname_nom=namemap[corrections[c][0]]
@@ -86,16 +96,22 @@ for lep in leps:
             
             f_pred=ROOT.TFile(fnamepred)
             f_data=ROOT.TFile(fnamedata)
+            f_qcd=ROOT.TFile(fqcd)
             f_prednom=ROOT.TFile(fnameprednom)
             updateopt="RECREATE"
-            if(os.path.exists(fnamepred.replace(pred,pred+"corr"))):updateopt="UPDATE"
-            f_out=ROOT.TFile(fnamepred.replace(pred,pred+"corr"),updateopt)
+            
+            if(os.path.exists(fnamepred.replace(pred,pred+exss+"corr"))):updateopt="UPDATE"
+            f_out=ROOT.TFile(fnamepred.replace(pred,pred+exss+"corr"),updateopt)
 
+            print("fpred ",f_pred, " hnametotfix ",hname_tofix)
             h_tofix=f_pred.Get(hname_tofix)
             h_nom=f_data.Get(hname_nom)
             h_den=f_prednom.Get(hname_den)
-            
-            print("tofix",h_tofix,"nom",h_nom,"den",h_den)
+
+            h_den_sub=f_qcd.Get(hname_den)
+            print("tofix",h_tofix,"nom",h_nom,"den",h_den," den sub ",h_den_sub)
+
+            h_den.Add(h_den_sub,-1)
             
             h_new=copy.deepcopy(h_tofix)
             h_new.SetName(hname_tofix+"new")
@@ -107,43 +123,88 @@ for lep in leps:
             h_temp.Reset("ICES")
             h_temp.Add(h_nom)
             h_temp.Divide(h_den)
-#            h_temp.Smooth(4)
-
+            for b in range(1,h_temp.GetNbinsX()+1):
+                if h_temp.GetBinContent(b)==0:
+                    h_temp.SetBinContent(b,1)#dont' perform any operation if no info available
+            if("SRW" in c):
+                h_temp.Smooth()
+#            if("SRW" in c):
+#                h_temp.Smooth()
+#            h_temp.SetBinContent(1,1)
+#            h_temp.SetBinContent(2,1)
+#            h_temp.SetBinContent(3,1)
             #Obtaining new histo with the correction
             h_new.Multiply(h_temp)
 #            h_new.Scale(1/h_temp.Integral())
             #writing in the corr file
+                
             f_out.cd()
-            h_tofix.Write(h_new.GetName().replace("new","pred"))
-            h_new.Write(h_new.GetName().replace("new",""))
+            h_tofix.Write(h_new.GetName().replace("new","pred"), ROOT.TObject.kOverwrite)
+            h_new.Write(h_new.GetName().replace("new",""), ROOT.TObject.kOverwrite)
+            if splitddreg:
+                updateopt2="RECREATE"
+                if(os.path.exists(fnamepred.replace(pred,pred+"corr"))):updateopt2="UPDATE"
+                f_out_tot=ROOT.TFile(fnamepred.replace(pred,pred+"corr"),updateopt2)
+                f_out_tot.cd()
+                h_tofix.Write(h_new.GetName().replace("new","pred"), ROOT.TObject.kOverwrite)
+                h_new.Write(h_new.GetName().replace("new",""), ROOT.TObject.kOverwrite)
+                f_out.cd()
+                for c2 in corrections:
+                    if c2==c:
+                        continue
+                    hname_nomc2=namemap[c2]  
+                    h_tnomc2=f_pred.Get(hname_nomc2)
+                    h_tnomc2.Write( ROOT.TObject.kOverwrite)
             f_out.Close()
             f_prednom.Close()
             f_data.Close()
             f_pred.Close()
+clists=[""]
 
 for lep in leps:
+    
     for s in snames:
-        for c in corrections:
+        for cl in clists:
+            print (s, lep)
             if(s!="" and "_fit" in opt.inputpath):
                 sn=s.replace ("Up","_"+lepslabel[lep]+"Up").replace("Down","_"+lepslabel[lep]+"Down")
             else: sn = s
+            exss=""
+            if splitddreg:
+                exss=c+"_"
+           
             fnamepred=pathin+"/"+lep+"/"+pred+"_2020_"+lep+sn+".root"
             fnamedata=pathin+"/"+lep+"/"+data+"_2020_"+lep+".root"
             fnameprednom=pathin+"/"+lep+"/"+pred+"_2020_"+lep+".root"
-            
-           
-
-            if opt.addsystematic:
+            if opt.addsystematic and not opt.overwrite:
                 if(s==""):
-                    nameup=fnamepred.replace(lep+".root",lep+"_CR_2020Up.root")
-                    namedown=fnamepred.replace(lep+".root",lep+"_CR_2020Down.root")
-                    os.system("cp "+fnamepred.replace(pred,pred+"corr")+" "+nameup)
-                    os.system("cp "+fnamepred.replace(pred,pred+"corr")+" "+namedown)
+                    nameup=fnamepred.replace(lep+".root",lep+"_CR_"+cl+"2020Up.root")
+                    namedown=fnamepred.replace(lep+".root",lep+"_CR_"+cl+"2020Down.root")
+                    os.system("cp "+fnamepred.replace(pred,pred+exss+"corr")+" "+nameup)
+                    os.system("cp "+fnamepred.replace(pred,pred+exss+"corr")+" "+namedown)
                 else:
                     continue
 
-            if opt.overwrite and not opt.addsystematic:#addsystematic will overrule the "overwrite" option
-                os.system("cp "+fnamepred+" "+fnamepred.replace(pred,pred+"old"))
-                os.system("sleep 0.1")
-                os.system("cp "+fnamepred.replace(pred,pred+"corr")+" "+fnamepred)
+            if opt.overwrite:#addsystematic will not overrule the "overwrite" option
+                print("firstcommand")
+                if(cl==""):
+                    print ("cp "+fnamepred+" "+fnamepred.replace(pred,pred+exss+"old"))
+                    if not opt.dryrun:
+                        os.system("cp "+fnamepred+" "+fnamepred.replace(pred,pred+exss+"old"))
+                        os.system("sleep 0.1")
+                        os.system("cp "+fnamepred.replace(pred,pred+exss+"corr")+" "+fnamepred)
+                        print("secondcommand")
+                    print ("cp "+fnamepred.replace(pred,pred+"corr")+" "+fnamepred)
+                    if opt.addsystematic and s=="":#
+                        os.system("sleep 0.1")
+                        nameup=fnamepred.replace(lep+".root",lep+"_CR_"+cl+"2020Up.root")
+                        namedown=fnamepred.replace(lep+".root",lep+"_CR_"+cl+"2020Down.root")
+                        print ("cp "+fnamepred.replace(pred,pred+exss+"old")+" "+nameup)
+                        print ("cp "+fnamepred.replace(pred,pred+exss+"old")+" "+namedown)
+                        if not opt.dryrun:
+                            os.system("cp "+fnamepred.replace(pred,pred+exss+"old")+" "+nameup)
+                            os.system("cp "+fnamepred.replace(pred,pred+exss+"old")+" "+namedown)
 
+
+            if(splitddreg):
+                clist.extend(corrections)
