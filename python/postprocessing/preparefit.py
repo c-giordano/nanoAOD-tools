@@ -23,16 +23,22 @@ parser.add_option('--parallel', dest='parallel', type='int', default=1 , help='i
 parser.add_option('-r', '--refresh', dest='refresh', action= 'store_true' , default = False, help='if called empty the output folders first')
 parser.add_option('-e','--extraregions', dest='extraregions', action="store_true", default = False, help='use extra regions for later recorrection')
 parser.add_option('-M', '--missingSamplesFile', dest='missing', default = 'missingSamples.txt', type='string', help='missing samples file')
+parser.add_option('', '--splitregions', dest='splitregions', action= 'store_true' , default = False, help='split systs. for signal and control regions')
 #parser.add_option('--cut','-c', dest='cuts', default = '', type='string', help='years to run')
 (opt, args) = parser.parse_args()
 
 extended = opt.extraregions
-#extended=True
-
 version = opt.version
 pathin = opt.inputpath 
 pathout = opt.outputpath
 dryrun = opt.dryrun
+missingSamplesFile=opt.missing
+fmiss=file(missingSamplesFile)
+missingSamplesList=(fmiss.read()).split()
+leps = opt.leptons.split(',')
+years = opt.years.split(',')
+mode = opt.mode
+splitddreg=opt.splitregions
 
 signals = {}
 signals['RH2016'] = [sample.label.replace('_2016', '') for sample in sample_dict['WP_RH_2016'].components]
@@ -43,20 +49,6 @@ signals['LHSMinter2017'] = [sample.label.replace('_2017', '') for sample in samp
 signals['LHSMinter2018'] = [sample.label.replace('_2018', '') for sample in sample_dict['WP_LHSMinter_2018'].components]
 #print(signals)
 
-samples = ["DDFitWJetsTT_MttST"]
-#systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST"]
-systs = ["TT_Mtt", "WJets", "ST"]
-systs_peryear = ["TF", "DD", "Alt"]
-#systs = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total", "TT_Mtt", "WJets", "ST", "TF", "DD"]
-samples2 = ["QCD"] #, "WP_M2000W20_RH", "WP_M3000W30_RH", "WP_M4000W40_RH", "WP_M5000W50_RH", "WP_M6000W60_RH"]
-#samples2 = []
-systs2 = ["PF", "pu", "lep", "trig", "jes", "jer", "btag", "mistag", "pdf_total"]
-
-missingSamplesFile=opt.missing
-fmiss=file(missingSamplesFile)
-missingSamplesList=(fmiss.read()).split()
-
-leps = opt.leptons.split(',')
 for s in signals['LHSMinter2016']:
     if (s+"_2016" in missingSamplesList) or (s+"_2017" in missingSamplesList) or (s+"_2018" in missingSamplesList):
         signals['LHSMinter2016'].remove(s)
@@ -71,36 +63,36 @@ for s in signals['RH2016']:
             os.system("rm "+pathout+"/"+lep+"/"+s+"*.root")
             print("removing "+pathout+"/"+lep+"/"+s+"*.root")
 
-samples_smooth = {"QCD":["h_jets_best_Wprime_m_SR2B"]}
-samples_smooth["QCD"].append("h_jets_best_Wprime_m_selection_AND_best_topjet_isbtag_AND_best_Wpjet_isbtag_AND_best_top_m_G_340_AND_deltaR_bestWAK4_closestAK8_L_0p4_AND_WprAK8_mSD_G_30")
-samples_smooth["QCD"].append("h_jets_best_Wprime_m_SR2B_I")
-systs_smooth = systs2
+baseFit=False
+#baseFit=True
+if(baseFit):
+    signals['LHSMinter2016']=[]
+    signals['RH2016']=["WP_M"+str(x)+"000W"+str(x)+"0_RH" for x in range(2,7)]
 
-samples_symmetrize = copy.deepcopy(samples)
-samples_pdfeval = signals['LHSMinter2016']+signals['RH2016']
+listdd=["TF_2020", "DD_2020", "Alt_2020", "AltTF_2020"]
+crlist=["CR_2020"]
 
-#samples_symmetrize.append("QCD")
-systs_symmetrize = systs
-systs_symmetrize = ["TF_2020", "DD_2020", "Alt_2020", "AltTF_2020"]+["TT_Mtt", "WJets", "ST"]
+#splitddreg=False
+if(splitddreg):
+    newlistdd=[]
+    for l in listdd:
+        newlistdd.append(l.replace("_2020","_SR2B_2020"))
+        newlistdd.append(l.replace("_2020","_SRT_2020"))
+        newlistdd.append(l.replace("_2020","_SRW_2020"))
+        newlistdd.append(l.replace("_2020","_CR0B_2020"))
+    listdd= copy.deepcopy(newlistdd)
+    crlist=["CR_SR2B_2020" ,
+            "CR_SRW_2020" ,
+            "CR_SRT_2020" ,
+            "CR_CR0B_2020" ]
 
-versus = ['Up', 'Down']
-leps = ['muon', 'electron']
-#leps = ['muon']
-years = ['2016', '2017', '2018']
-
-years = opt.years.split(',')
-mode = opt.mode
-
-allhistos = histosr+histocr
+allhistos = histosr#+histocr
 if(extended):
-    allistos = allhistos+extrasr+extracr
-
-if opt.refresh:
-    os.system(" rm -rf "+pathout+"/*")
-    
+    allistos = allhistos#+extrasr+extracr
 if os.path.exists(pathout):
-    #os.popen('rm -r '+ pathout + '/*')
-    print 'ciao'
+    if opt.refresh:
+        os.popen('rm -r '+ pathout + '/*')
+        print('folder ' + pathout + " cleared") 
 else:
     os.makedirs(pathout)
 
@@ -120,8 +112,28 @@ if 'symmetrize' in mode:
 if 'pdfeval' in mode:
     pdfeval = True
 
+###################################
+# Definition of systs collections #
+###################################
+systs = ["jes2016", "jer2016", "jes2017", "jer2017", "jes2018", "jer2018", "btag", "mistag", "pdf_total", "pu", "PF", "LHETT_Mtt", "LHEWJets", "LHEST", "LHEQCD"]
+systs_DD = listdd+["TT_Mtt", "WJets", "ST"]
+#systs_DD_nolep = ["jes2016", "jer2016", "jes2017", "jer2017", "jes2018", "jer2018", "btag", "mistag", "pdf_total", "pu", "PF", "LHETT_Mtt", "LHEWJets", "LHEST", "LHEQCD"]
+if extended: systs_DD.extend(crlist)
+systs_perlep = ["lep", "trig"]
+systs_smooth = systs + systs_perlep
+systs_symmetrize = systs + systs_DD + systs_perlep
+
+#####################################
+# Definition of samples collections #
+#####################################
+samples_symmetrize = ["DDFitWJetsTT_MttST"]
+samples_pdfeval = signals['LHSMinter2016']+signals['RH2016']
+
+versus = ['Up', 'Down']
+
 for lep in leps:
     if not os.path.exists(pathout+"/"+lep):os.makedirs(pathout + '/' + lep)
+    os.system("cp " + pathin.replace("plot_merged", "") + "plot_explin/" + lep + "/DDFit* " + pathin + "/" +lep + "/" )
     if not summedyears:
         if splityears:
             for year in years:
@@ -159,15 +171,17 @@ for lep in leps:
                             print('copying ', filename)
                             shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + filename)
     else:
-        systs = ["jes", "jer", "btag", "mistag", "pdf_total", "pu", "PF"]#, "q2"]
-        systs_DD = ["TF_2020", "DD_2020", "Alt_2020", "TT_Mtt", "WJets", "ST","AltTF_2020"]
-        if extended: systs_DD.extend(["CR_2020"])
-        systs_perlep = ["lep", "trig"]
+        #systs = ["jes2016", "jer2016", "jes2017", "jer2017", "jes2018", "jer2018", "btag", "mistag", "pdf_total", "pu", "PF", "LHETT_Mtt", "LHEWJets", "LHEST", "LHEQCD"]
+        #systs_DD = listdd+["TT_Mtt", "WJets", "ST"]
+        #systs_DD_nolep = ["jes2016", "jer2016", "jes2017", "jer2017", "jes2018", "jer2018", "btag", "mistag", "pdf_total", "pu", "PF", "LHETT_Mtt", "LHEWJets", "LHEST", "LHEQCD"]
+        #if extended: systs_DD.extend(crlist)
+        #systs_perlep = ["lep", "trig"]
 
         filename = 'Data_2020_' + lep + '.root'
         print('copying ', filename)
         shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + filename)
 
+        samples = ["DDFitWJetsTT_MttST"]
         for sample in samples:
             filename = sample + '_2020_' + lep + '.root'
             print('copying ', filename)
@@ -182,7 +196,10 @@ for lep in leps:
                     print('copying ', filename)
                     shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + fileout)
 
+        samples2 = ["QCD"] + samples 
         samples2 += signals['RH2016'] + signals['LHSMinter2016']
+        #samples2 = ['WP_M5800W58_LHSMinter', 'WP_M6000W60_LHSMinter']
+        #samples2 = ["DDFitWJetsTT_MttST"]
         for sample in samples2:
             filename = sample + '_2020_' + lep + '.root'
             print('copying ', filename)
@@ -204,16 +221,14 @@ for lep in leps:
                     #print('copying ', filename)
                     print('copying ', pathin + '/' + lep + '/' + filename, " in ", pathout +  '/' + lep + '/' + fileout)
                     shutil.copyfile(pathin + '/' + lep + '/' + filename, pathout +  '/' + lep + '/' + fileout)
-
     if(smooth):
+        #samples_smooth = ["DDFitWJetsTT_MttST"]
+        samples_smooth = {"QCD":allhistos}
         for sample in samples_smooth:
-            #                print "sample to smooth ",sample, " histograms:"
-            #                print allhistos 
-            #print samples_smooth[sample]
             filename = sample + '_2020_' + lep + '.root'
             fileout = pathout+'/'+lep+'/'+filename
             print(" nominal fileout ",fileout)
-            for h in allhistos:
+            for h in samples_smooth[sample]:
                 filename = sample + '_2020_' + lep + '.root'
                 fileout = pathout+'/'+lep+'/'+filename
                 print("sample ",sample , " syst nominal histo ",h, " fileout ",fileout)
@@ -244,7 +259,7 @@ for lep in leps:
     
     if(symmetrize):
         print "symmetrizing"
-        if extended: systs_symmetrize.extend(["CR_2020"])
+        if extended: systs_symmetrize.extend(crlist)
         for sample in samples_symmetrize:
             #print "sample to smooth ",sample, " histograms:"
             filename = sample + '_2020_' + lep + '.root'
@@ -276,11 +291,18 @@ for lep in leps:
                 fileout = pathout+'/'+lep+'/'+filename
                 fileoutUp = pathout+'/'+lep+'/'+filenameUp
                 fileoutDown = pathout+'/'+lep+'/'+filenameDown
-                print("symmetry file,up,down ", fileoutUp,fileoutDown,fileout)
-                symmetry(histosr,fUp=fileoutUp,fDown=fileoutDown,fNom=fileout)
+                symoption="switch"
+                symoption=""
+                if(("CR_CR" in syst) or ("CR_SR" in syst)):
+                    symoption="switch"
+                if(("TT_Mtt" in syst) or ("WJets" in syst) or ("ST" in syst ) or ("Alt" in syst)):# or ("TF" in syst) or ("DD" in syst) ):
+                    symoption="switch"
+                print("symmetry file,up,down ", fileoutUp,fileoutDown,fileout, " option ")
+                symmetry(histosr,fUp=fileoutUp,fDown=fileoutDown,fNom=fileout,option = symoption)
 
     if(pdfeval):
         print "evaluating pdf"
+        #samples_pdfeval = ['WP_M5800W58_LHSMinter', 'WP_M6000W60_LHSMinter']
         for sample in samples_pdfeval:
             #print "sample to smooth ",sample, " histograms:"
             filename = sample + '_2020_' + lep + '.root'

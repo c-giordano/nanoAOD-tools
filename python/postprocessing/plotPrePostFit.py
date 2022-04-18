@@ -24,10 +24,9 @@ regions_ele = {
 
 lep = ""
 fitPhase = "prefit"
-#fitPhase = "fit_b"
-fitfolder = "/afs/cern.ch/work/a/adeiorio/CMSSW_10_2_5/src/Stat/Limits/test/26Jul21_dd_summedyears_CR_explin_v6"
-fitfolder = "/eos/home-o/oiorio/Wprime/fitsetups/corrected_cr_2022"
-histfolder = "/eos/home-o/oiorio/Wprime/nosynch/v18/plot_final_fit"
+fitPhase = "fit_b"
+fitfolder = "/afs/cern.ch/work/a/adeiorio/CMSSW_10_2_5/src/Stat/Limits/test/3Apr22_CRNW_RH_systsall"
+histfolder = "/eos/user/a/adeiorio/Wprime/nosynch/v18/plot_fit3Apr"
 
 print('hello! Starting now')
 #lep = "muon"

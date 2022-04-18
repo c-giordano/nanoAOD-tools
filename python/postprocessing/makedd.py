@@ -15,7 +15,6 @@ parser.add_option('-c','--category', dest='category', type='string', default='mu
 parser.add_option('-y','--year', dest='year', type='string', default='2016', help='year of data taking')
 parser.add_option('-e','--extraregions', dest='extraregions', action="store_true", default = False, help='use extra regions for later recorrection')
 parser.add_option('--date', dest='date', type='string', default='', help='the date of the folder folder where the root file is stored')
-
 #old
 parser.add_option('', '--skipJesJer', dest='skipJesJer', action="store_true", default = False, help='skip jes/jer systematics')
 parser.add_option('', '--test', dest='test', action="store_true", default = False, help='do test version')
@@ -32,15 +31,10 @@ parser.add_option('', '--resetMF', dest='resetMF',action="store_true" ,default=F
 parser.add_option('', '--runoptions', dest='runoptions', type='string', default='N', help='run options: A = all, N = nominal, B = background composition up/down, S = systs, D = dryrun  ')
 parser.add_option('', '--splitregions', dest='splitregions', action= 'store_true' , default = False, help='split systs. for signal and control regions')
 parser.add_option('', '--sfregions', dest='sfregions',type='string', default='CR*,SR*vsCR*_I,SR*_I', help='regions to consider SR vs CR ; SR can be : * [all] or split by comma. Special regions are: "SR" = "SR2B,SRT,SRB" ; "CR" = "CR0B"')
-
-
 (opt, args) = parser.parse_args()
 
 runoptions=opt.runoptions
 categories =[""]
-systs=[""]
-systs = ["","_btagUp","_btagDown","_mistagUp","_mistagDown","_pdf_totalUp","_pdf_totalDown","_puUp","_puDown","_q2TTUp","_q2QCDUp","_q2ZJetsUp","_q2WJetsUp","_q2TprimeUp","_q2TTDown","_q2QCDDown","_q2ZJetsDown","_q2WJetsDown","_q2TprimeDown","_jesUp","_jesDown","_jerUp","_jerDown","_topTagUp", "_topTagDown","_wTagUp", "_wTagDown","_topPtWeightDown","_topPtWeightUp"]
-systs = ["","_btagUp","_btagDown","_jesUp","_jesDown","_jerUp","_jerDown"]
 
 #if os.path.exists(opt.pathout):
 #    os.popen('rm -r '+ opt.pathout + '/*')
@@ -1566,11 +1560,9 @@ sampleweights_stdown={"WJets":1.0,"TT_Mtt":1.,"ST":0.35}
 '''
 
 signalsamples=[ "WP_M"+str(x)+"000W"+str(x)+"0_RH" for x in xrange(2,7)]
-allsamples= signalsamples
-allsamples.extend(["TT_Mtt","WJets","QCD","ST","Data"])
+allsamples = ["TT_Mtt","WJets","QCD","ST","Data"]
 
 print signalsamples
-
 
 systs=[]
 testnominal=False
@@ -1578,35 +1570,26 @@ altwjetstt=False
 doTFPlots=False
 copysignals=False
 
-#systslist=["jesDown","jesUp","jerUp","jerDown","PFUp","PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown"]
-systslist=[]#"jes2016Down","jes2016Up","jer2016Up","jer2016Down","PF2016Up","PF2016Down","pu2016Up","pu2016Down","btag2016Up","btag2016Down","mistag2016Up","mistag2016Down", "lep2016Up", "lep2016Down", "trig2016Up", "trig2016Down", "pdf_total2016Up", "pdf_total2016Down", "jes2017Down","jes2017Up","jer2017Up","jer2017Down","PF2017Up","PF2017Down","pu2017Up","pu2017Down","btag2017Up","btag2017Down","mistag2017Up","mistag2017Down", "lep2017Up", "lep2017Down", "trig2017Up", "trig2017Down", "pdf_total2017Up", "pdf_total2017Down" ,"jes2018Down","jes2018Up","jer2018Up","jer2018Down","PF2018Up","PF2018Down","pu2018Up","pu2018Down","btag2018Up","btag2018Down","mistag2018Up","mistag2018Down", "lep2018Up", "lep2018Down", "trig2018Up", "trig2018Down", "pdf_total2018Up", "pdf_total2018Down"]
-#systslist=["jesUp","jesDown","btagUp","btagDown","trigUp","trigDown"]#, "q2Up", "q2Down"]
-systslist=["jerUp","jerDown","lepUp","lepDown","puUp","puDown"]#, "q2Up", "q2Down"]
-#systslist=["jesUp"]
-           
+systslist = ["jes2016Down","jes2016Up","jer2016Up","jer2016Down","jes2017Down","jes2017Up","jer2017Up","jer2017Down","jes2018Down","jes2018Up","jer2018Up","jer2018Down","puUp","puDown","btagUp","btagDown","trigUp","trigDown", "PFUp", "PFDown", "mistagUp", "mistagDown", "lepUp", "lepDown","pdf_totalUp", "pdf_totalDown", "LHETT_MttUp", "LHETT_MttDown", "LHEWJetsUp", "LHEWJetsDown", "LHESTUp", "LHESTDown", "LHEQCDUp", "LHEQCDDown"]
 
 runall= "A" in runoptions
-copysignals=True
+
 if("N" in runoptions or runall):
     testnominal=True
 if("B" in runoptions or runall):
     altwjetstt=True
 if("S" in runoptions or runall):
-    #systs=["jesDown","jesUp","jerUp","jerDown","PFUp","PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown", "lepUp", "lepDown", "trigUp", "trigDown", "pdf_totalUp", "pdf_totalDown"]#, "q2Up", "q2Down"]
-    systs=["jesDown","jesUp","jerUp","jerDown","puUp","puDown","btagUp","btagDown","trigUp","trigDown"]#, "q2Up", "q2Down"]
-    print "running syst  ",systs
     systs=systslist
     print "running syst  ",systs
-
 if("T" in runoptions):
     doTFPlots=True
-#systs=["PFDown","puUp","puDown","btagUp","btagDown","mistagUp","mistagDown"]
-
 
 resetMF = opt.resetMF
 skipall=False
 cross_check=False
 skipall=not(dd.get_missing_histos(samples=allsamples,regions=wjets_veto_map,resetFile=resetMF))
+if skipall:
+    print("Some files are missing! Please check missing_files.txt")
 plotonly = opt.plotonly
 for sy in systs:
     print "syst is ",sy 
@@ -1653,7 +1636,8 @@ if plotonly:
 #testnominal=True
 resetParameters()
 if testnominal:
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None) #this takes CR as from nominal always
+    if(copysignals):
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None) #this takes CR as from nominal always
     if(plotonly):
         resetParameters()
         dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,verbose=False)
@@ -1689,12 +1673,13 @@ if(altwjetstt):
     #resetParameters()
 
 
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="WJetsUp") #this takes CR as from nominal always
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="WJetsDown") #this takes CR as from nominal always
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="TT_MttUp") #this takes CR as from nominal always
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="TT_MttDown") #this takes CR as from nominal always
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="STUp") #this takes CR as from nominal always
-    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="STDown") #this takes CR as from nominal always
+    if(copysignals):
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="WJetsUp") #this takes CR as from nominal always
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="WJetsDown") #this takes CR as from nominal always
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="TT_MttUp") #this takes CR as from nominal always
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="TT_MttDown") #this takes CR as from nominal always
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="STUp") #this takes CR as from nominal always
+        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout="STDown") #this takes CR as from nominal always
 
 
 for s in systs:
@@ -1704,8 +1689,8 @@ for s in systs:
     resetParameters()   
     dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=s,savecr=False,syst_sf=False,tag=None)#this should take the pathout default, which is the v14_rebin folder
     resetParameters()
-    if(copysignals):
-        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst=s,syst_sf=True,savecr=True) #this takes CR as from nominal always
+    #if(copysignals):
+    #    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst=s,syst_sf=True,savecr=True) #this takes CR as from nominal always
 
 ##Transfer factors
 #doTFPlots=False
@@ -1723,7 +1708,8 @@ if cross_check:
     nominalmiss= dd.get_missing_output_histos(samples=outsamples,regions=wjets_veto_map,resetFile=resetMF)
     if("R" in runoptions and not nominalmiss):
         print "rerunning nominal"
-        dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,verbose=True) #this takes CR as from nominal always
+        if(copysignals):
+            dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,verbose=True) #this takes CR as from nominal always
         
         dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,onlyCentral=False,year_sf=year_sf,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],savecr=True,syst_sf=False,plot=plotonly)
         resetParameters()
@@ -1736,7 +1722,8 @@ if cross_check:
             sampleweights_t=sw_t[t]
             if("B"in runoptions and not tmiss):
                 dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,sampleweights=sampleweights_t,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],tag=t,plot=False)
-                dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout=t)
+                if(copysignals):
+                    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst_sf=True,savecr=True,tag=None,tagout=t)
                 resetParameters()
 
     if("S" in runoptions):
@@ -1748,5 +1735,6 @@ if cross_check:
                 dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=sy,savecr=False,syst_sf=True,tag=None)#this should take the pathout default
                 dd.tfratio(wjets_veto_map,ddMapFitFunction=expo2_cr_fit_map,year_sf=year_sf,onlyCentral=True,tfMapFitFunction=mapTFFunctions,tfMapFitOption=mapTFOptions,samplelist=["WJets","TT_Mtt","ST"],syst=sy,savecr=False,syst_sf=True,tag=None)#this should take the pathout default
                 resetParameters()
-                dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst=sy,syst_sf=True,savecr=True) #this takes CR as from nominal always
+                if(copysignals):
+                    dd.portSamples(samplelist=signalsamples,regions=wjets_veto_map,syst=sy,syst_sf=True,savecr=True) #this takes CR as from nominal always
         
