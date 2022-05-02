@@ -261,6 +261,8 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
             isOutOfBounds=(maxb<=fitrange[0] ) or ( minb>=fitrange[1] )   
             if isOutOfBounds:
                 content_x=histo.GetBinContent(b)
+                content_x_up=histo.GetBinContent(b)
+                content_x_down=histo.GetBinContent(b)
         if(verbose):print "bin ",b," min , max ",minb," , ",maxb," orig ",histo.GetBinContent(b)," fit ", content_x 
         h_ret.SetBinContent(b,content_x)
     hs_ret[0]=h_ret    
@@ -279,12 +281,17 @@ def fittedHisto(histo,function,npars=-1,onlyCentral=False,behavior="nominal",doR
     for b in xrange(1,histo.GetNbinsX()+1):
         minb=histo.GetBinLowEdge(b)
         maxb=histo.GetBinLowEdge(b+1)
-        content_x= getIntegral(function, minb, maxb)
         
         isOutOfBounds=False
         if not (fitrange is None):
             isOutOfBounds=(maxb<=fitrange[0] ) or ( minb>=fitrange[1] )   
+
+        content_x= getIntegral(function, minb, maxb)
         content_x_up, content_x_down = totalError(function, npars, pars, variations, covmatrix, minb, maxb,status=status)
+        if(isOutOfBounds):
+            content_x=histo.GetBinContent(b)
+            content_x_up=0
+            content_x_down=0
 #        content_x_up_v2, content_x_down_v2 = totalErrorCorr(function, npars, pars, variations, corrmatrix, minb, maxb,status=status)
         print '********************************************************************************************************************'
         if(verbose): print "bin ",b," min , max ",minb," , ",maxb," orig ",histo.GetBinContent(b)," fit up ", content_x_up , " nominal, ", content_x, " fit down ",content_x_down

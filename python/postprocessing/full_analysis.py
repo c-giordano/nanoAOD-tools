@@ -15,7 +15,9 @@ parser.add_option('-d', '--samples', dest='samples', default = '', type='string'
 parser.add_option('', '--varset', dest='varset', type='string', default = '', help="variables set: S: signal, V: validation, A: AN")
 parser.add_option('', '--nosplit', dest='nosplit', action= 'store_true' , default = False, help="if triggered doesn't spli data driven systs by region")
 parser.add_option('-m', '--mode', dest='mode',default = '' , type='string', help='options: lpsmdecf. Determines the type of operations to do: l:lumimerge (merge and evaluate lumi), p:plot (plot fit variables), m:mergeyears (merge years into one plot), d:datadriven (evaluate background from data driven methods), f:fit (prepare fit with prefit routines)  ')
+parser.add_option('', '--fitdir', dest='fitdir', type='string', default = '', help="suffix for the fit directory")
 (opt, args) = parser.parse_args()
+
 
 runs_dataset="" #this option by default runs the base samples, but not the extended signals
 merge_dataset="" #this option by default merges the base samples, but not the extended signals
@@ -109,12 +111,12 @@ if "e" in opt.mode: extrasamplesopt=" -e "
 commands_makeddmu="nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions N --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
 commands_makeddmu=commands_makeddmu+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions B --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
 commands_makeddmu=commands_makeddmu+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c muon "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions S --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddmu.log; " 
-commands_makeddmucp= "cp "+opt.inputpath+"/"+opt.version+"/plot_merged/muon/WP*root "+opt.outputpath+"/"+opt.version+"/plot_explin/muon/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpmu.log; "
+commands_makeddmucp= "cp "+opt.inputpath+"/"+opt.version+"/plot_explin/muon/DD*root "+opt.outputpath+"/"+opt.version+"/plot_merged/muon/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpmu.log; "
 
 commands_makeddel= "nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c electron "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions N --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddel.log; " 
 commands_makeddel=commands_makeddel+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c electron "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions B --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddel.log; " 
 commands_makeddel=commands_makeddel+"nohup python makedd.py --pathin "+opt.inputpath+"/"+opt.version+"/plot_merged -y 2020 --plotpath plot_"+opt.version+" -c electron "+extrasamplesopt+splitregoption+"--pathout "+opt.outputpath+"/"+opt.version+"/plot_explin --runoptions S --resetMF >& "+opt.outputpath+"/"+opt.version+"/makeddel.log; " 
-commands_makeddelcp="cp "+opt.inputpath+"/"+opt.version+"/plot_merged/electron/WP*root "+opt.outputpath+"/"+opt.version+"/plot_explin/electron/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpele.log"
+commands_makeddelcp="cp "+opt.inputpath+"/"+opt.version+"/plot_explin/electron/DD*root "+opt.outputpath+"/"+opt.version+"/plot_merged/electron/ >& "+opt.outputpath+"/"+opt.version+"/makeddcpele.log"
 
 ####### 7
 command_extraunc= "nohup python makecorrection.py "+corroption+splitregoption+"  -i "+opt.inputpath+"/"+opt.version+"/plot_explin"+corrfolder+"/ "+"  >& "+opt.outputpath+"/"+opt.version+"/extracr.log "
@@ -122,7 +124,7 @@ command_extraunc=command_extraunc+ "; nohup python splitregions.py "+corroption+
 
 ####### 8
 commands_preparefit = "nohup python preparefit.py -m 'sum symmetrize smooth pdfeval' "+extrasamplesopt+" -i "+ opt.inputpath+"/"+opt.version+"/plot_explin -o "+ opt.outputpath+"/"+opt.version+"/plot_explin_fit "+"  >& "+opt.outputpath+"/"+opt.version+"/fitprepare.log &"
-commands_preparefit = "nohup python preparefit.py -m 'sum symmetrize pdfeval' "+extrasamplesopt+splitregoption+" -i "+ opt.inputpath+"/"+opt.version+"/plot_merged -o "+ opt.outputpath+"/"+opt.version+"/plot_fit2Apr "+"  >& "+opt.outputpath+"/"+opt.version+"/fitprepare.log &"
+commands_preparefit = "nohup python preparefit.py -m 'sum symmetrize pdfeval' "+extrasamplesopt+splitregoption+" -i "+ opt.inputpath+"/"+opt.version+"/plot_merged -o "+ opt.outputpath+"/"+opt.version+"/plot_fit"+opt.fitdir+" "+"  >& "+opt.outputpath+"/"+opt.version+"/fitprepare.log &"
 
 if opt.mode=="":
     print("Note that no operating mode was given, will do nothing. Usage is: "+usage+" ; Check 'mode' options for more info.")
@@ -183,13 +185,13 @@ if "c" in opt.mode:
     commands_qcdelcp=commands_makeddelcp.replace("WP*","QCD*")
     print("makeddcp commands mu are: \n "+ commands_makeddmucp)
     print("makeddcp commands el are: \n "+ commands_makeddelcp)
-    print("qcdddcp commands mu are: \n "+ commands_qcdmucp)
-    print("qcdddcp commands el are: \n "+ commands_qcdelcp)
+#    print("qcdddcp commands mu are: \n "+ commands_qcdmucp)
+#    print("qcdddcp commands el are: \n "+ commands_qcdelcp)
     if not opt.dryrun:
         os.system(commands_makeddmucp)
         os.system(commands_makeddelcp)
-        os.system(commands_qcdelcp)
-        os.system(commands_qcdmucp)
+#        os.system(commands_qcdelcp)
+#        os.system(commands_qcdmucp)
 
 
 if "f" in opt.mode:

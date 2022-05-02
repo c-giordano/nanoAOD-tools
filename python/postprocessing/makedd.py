@@ -117,7 +117,7 @@ if extended:
     wjets_veto_map["SRW_II"]="SRW_III"
     wjets_veto_map["SRT_II"]="SRT_III"
 
-#wjets_veto_map = {"SRT":"SRT_I"}
+#wjets_veto_map = {"SRW":"SRW_I"}
 
 ttbar_veto_map= {"SR2B":"SR2B_II","SRW":"SRW_II","SRT":"SRT_II","CR0B":"CR0B_II","CR1B":"CR1B_II"}
 srcr_map = {"SR2B":"SRT","SR2B_I":"SRT_I","SRW":"CR1B","SRW_I":"CR1B_I"}
@@ -148,7 +148,14 @@ fexp1m.SetParameters(310,0.001)
 flin=TF1("flin","[0]+x*[1]",1000,6000)
 
 fexplin=TF1("fexplin","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
-fexplinw=TF1("fexplinw","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+
+
+fexplinw=TF1("fexplinw","[0]*exp(-(x/[1]+x*x/[4]))+[2]+[3]*x",1000,6000)
+fexplinw=TF1("fexplinw","landau+[3]+[4]*x",1000,6000)
+fexplinw=TF1("fexplinw","[0]+[1]*exp(-(x/[2]))",1000,6000)#CHECKPOINT1
+#fexplinw=TF1("fexplinw","[1]*exp(-(x/[2]))+[0]+[3]*x",1000,6000)
+
+
 fexplintele=TF1("fexplintele","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
 fexplint=TF1("fexplint","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
 fexplin0=TF1("fexplin0","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
@@ -156,7 +163,7 @@ fexplin0=TF1("fexplin0","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 #for extended version with SR_II
 fexplin2=TF1("fexplin2","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 fexplinw2=TF1("fexplinw2","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
-fexplintele2=TF1("fexplintele2","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
+fexplintele2=TF1("fexplintele2","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 fexplint2=TF1("fexplint2","[0]*exp(-(x*[1]))+[2]+[3]*x",1000,6000)
 fexplin02=TF1("fexplin02","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
 
@@ -173,6 +180,7 @@ if(opt.category=="electron"):
 if(opt.category=="muon"):
     fexplin.SetParameters(10,1001,0.1,0.001)
     fexplinw.SetParameters(110,101,5.5,0.3,10,0.000002)
+    fexplinw.SetParameters(110,101,5.5,0.3,100000.)
     fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.00002)
     fexplin02.SetParameters(50,101,211,0.01,1,0.00002)
 
@@ -190,8 +198,9 @@ if(opt.category=="muon"):
 #fexp1plus20b.SetParameters(310,0.001,10,1.,0.001,0.000002)
 fexp1plus20b=TF1("fexp1plus20b","[0]+x*[1]+x*x*[2]",1000,6000)
 
-fexp1plus2w=TF1("fexp1plus2w","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,6000)
-fexp1plus2w.SetParameters(310,0.001,210,0.1,0.001,0.0000002)
+fexp1plus2w=TF1("fexp1plus2w","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]))",1000,6000)
+fexp1plus2w.SetParameters(310,0.001,210,0.01,0.0001,0)
+
 if opt.year == "2017" or opt.year == "2018":
     fexp1plus2w=TF1("fexp1plus2w","[0]*exp(-(x*[1]))+[2]*exp(-([3]+x*[4]+x*x*[5]))",1000,6000)
 #    fexp1plus2w=TF1("fexp1plus2","[0]*(-(x*[1]))+[2]+(-([3]+x*[4]+x*x*[5]))",1000,6000)
@@ -217,12 +226,25 @@ fexp1plus2data.SetParameters(1000,1100,1002)
 fexp1plus2data_v2=TF1("fexp1plus2data_v2","landau",1000,6000)
 fexp1plus2data_v2.SetParameters(5000,1000,152)
 
+#Test here
+fexp1plus2dataw=TF1("fexp1plus2dataw","landau+exp(-([3]+[4]*x))",1000,6000)
+fexp1plus2dataw=TF1("fexp1plus2dataw","landau",1000,6000)
+fexp1plus2dataw.SetParameters(1000,1100,1002,0.0001,0.00001,0.0000001)
+if(opt.category=="electronsda"):#in the end keeping previous version is better
+#    fexp1plus2dataw=TF1("fexp1plus2data","landau+[3]*exp(-([4]+x*[5]+x*x*[6]))",1000,6000)
+#    fexp1plus2dataw.SetParameters(1000,1100,1002,10,0.0001,0.00001,0.0000001)
+    fexp1plus2dataw=TF1("fexp1plus2dataw","[0]*exp(-(x/[1]))+[2]+[3]*x",1000,6000)
+    fexp1plus2dataw.SetParameters(10,1000,0.001,0.0000001)
+
+#fexP1plus2dataw.SetParameters(1000,1100,1002,0.01,0.001)
+#fexp1plus2dataw=TF1("fexp1plus2data3","landau+[3]+[4]*x",1000,6000)
+#fexp1plus2dataw.SetParameters(1000,1100,1002,0,-0.0001)
+
+
 fexp1plus2data2=TF1("fexp1plus2data2","landau",1000,6000)
 fexp1plus2data2.SetParameters(1000,1100,1002)
 fexp1plus2data_v22=TF1("fexp1plus2data_v22","landau",1000,6000)
 fexp1plus2data_v22.SetParameters(5000,1000,152)
-#fexp1plus2data3=TF1("fexp1plus2data3","landau+[3]+[4]*x",1000,6000)
-#fexp1plus2data3.SetParameters(1000,1100,1002,20,-0.001)
 
 fexp1plus2data3=TF1("fexp1plus2data3","landau+exp(-([4]+[5]*x))",1000,6000)
 fexp1plus2data3.SetParameters(1000,1100,1002,0.001,0.0001)
@@ -293,7 +315,8 @@ def resetParameters(reg=""):
         fexplin.SetParameters(1,801,0.01,0.003)
         #        fexplin.SetParameters(10,101,0.5,0.01,1,0.0000002)
         fexplin0.SetParameters(10,311,0.3,1,0.0000002)
-        fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
+        #fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
+        fexplinw.SetParameters(0.4,3.,100)#CHECKPOINT2
         if(reg=="TTMttvar"):
             fexplinw.SetParameters(300,1,1,1,0.1,0.0)
 
@@ -307,18 +330,22 @@ def resetParameters(reg=""):
         if(reg=="TTMttvar"):
             fexplinw2.SetParameters(300,1,1,1,0.1,0.0)
 
-        fexplintele2.SetParameters(5,1/4400.,-2,0.0001,.01,0.0000002)
+        fexplintele2.SetParameters(50,0.01,20.,0.01)
         fexplin02.SetParameters(50,101,211,0.01,1,0.00002)
 
     if(opt.category=="muon"):
         fexplin.SetParameters(10,1001,0.5,0.01,1,0.0000002)
         fexplinw.SetParameters(5,1101,0.8,0.005 ,1,0.0002)
+        fexplinw.SetParameters(0.1,900,1200,.1,2000)#CHECKPOINT2
+        fexplinw.SetParameters(0.4,1,2000)#CHECKPOINT2
+#        fexplinw.FixParameter(1,990)
         if(reg=="TTMttvar"):
             fexplinw.SetParameters(1,101,11.5,0.1,1,0.0002)
 
         fexplint.SetParameters(5,1/4400.,-2,0.0001,1,0.0000002)
         # fexplint.SetParameters(10,1001,111,0.1,1,0.0000002)
         fexplin0.SetParameters(1050,1501,0.5,0.00001,)
+
 
         fexplin2.SetParameters(10,1001,0.5,0.01,1,0.0000002)
         fexplinw2.SetParameters(110,501,5.5,0.1,1,0.0000002)
@@ -382,7 +409,7 @@ expo2_fit_map["CR0B_II"]=fexplin02
 expo2_fit_map["SRT_I"]=fexplint2#for alternative srt
     
 expo2ele_fit_map["SRW_II"]=fexplinw
-expo2ele_fit_map["SRT_II"]=fexplint2
+expo2ele_fit_map["SRT_II"]=fexplintele
 expo2ele_fit_map["CR0B_II"]=fexplin02
 expo2ele_fit_map["SRT_I"]=fexplint2#for alternative srt
 
@@ -417,26 +444,48 @@ expo2ele_fit_map_option["SRT_I"]="SEMI"#for alternative srt
 
 
 #CR fit functions
-expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2data,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2,
+expo2_cr_fit_map={"SR2B_I":fexp1plus2data,"SRW_I":fexp1plus2dataw,"SRT_I":fexp1plus2data,"CR1B_I":fexp1plus2data,"CR0B_I":fexp1plus2data_v2,
                   "SR2B_III":fexp1plus2data2,"SRW_III":fexp1plus2data2,"SRT_III":fexp1plus2data2,"CR1B_III":fexp1plus2data2,"CR0B_III":fexp1plus2data_v22,
                   "SRT_II":fexp1plus2data}
 
 
+
+moderange="alt"
+moderange="standard"
+
 def_fitrange = [1250,6000]
 data_fitrange = [1250,6000]
-#def_fitrange = [1500,6000]
-#data_fitrange = [1500,6000]
+def_fitrange = [1500,6000]
+data_fitrange = [1500,6000]
 #if opt.category=="electron":
 #    data_fitrange = [1500,6000]
 #    def_fitrange = [1500,6000]
 #wjets_veto_map = {"SR2B":"SR2B_I","SRW":"SRW_I","SRT":"SRT_I"}
 #def_fitrange=[2050,5000]
 #
-def_fitrange = None
-data_fitrange = None
 
+
+data_fitrange = None
 alt1_fitrange = [1250,6000]
+alt1_fitrange = [1500,6000]
 alt2_fitrange = [1500,6000]
+
+def_fitrange = None
+init_fitrange = [1250,6000]
+alttf1_fitrange = [1250,6000]
+alttf1_fitrange = [1500,6000]
+alttf2_fitrange = [1500,6000]
+
+if moderange=="alt":
+    data_fitrange = [1500,6000]
+    alt1_fitrange = [1250,6000]
+    alt1_fitrange = None
+    alt2_fitrange = None
+
+#    def_fitrange = [1500,6000]
+#    alttf1_fitrange = [1250,6000]
+#    alttf2_fitrange = None
+
 
 #alt1_fitrange = None
 #alt2_fitrange = None
@@ -641,12 +690,14 @@ class single_process(namecollection):
                         if not (mapFitOption is None):
                             mapfitoption=mapFitOption[sr]
                         if(verbose):print "sr ",sr," mapfitoption is ",mapfitoption
-                        hs_ret_up = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alt1_fitrange, fitoption=mapfitoption,postfix="alttfup")
-                        hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alt2_fitrange, fitoption=mapfitoption,postfix="alttfdown")
+                        #hs_ret_init = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=init_fitrange, fitoption=mapfitoption,verbose=False) #Set verbose here
+                        hs_ret_up = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alttf1_fitrange, fitoption=mapfitoption,postfix="alttfup")
+                        hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=alttf2_fitrange, fitoption=mapfitoption,postfix="alttfdown")
                         if 'CR0B' in sr and category == 'muona':
                             hs_ret_up = fittedHisto(historatio,mapFitFunction[sr+'_alt'],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,postfix="alttfup")
                             hs_ret_down = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=True,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,postfix="alttfdown")
                         hs_ret = fittedHisto(historatio,mapFitFunction[sr],onlyCentral=onlyCentral,doRemove=removeFunction,npars=-1,behavior="nominal",fitrange=def_fitrange, fitoption=mapfitoption,verbose=False) #Set verbose here
+                        
                         
                         historatio_coll.update(hs_ret)
                         historatio_coll["nominal_alttfup"]=hs_ret_up[0]
@@ -1130,6 +1181,8 @@ class data_driven(single_process):
 #        for sl in samplelist:
 #            hs_proj_ss[sl] = self.transfer_factor(regions,sl,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
         if(verbose):print "pathout is ",pathout, " mp is ",mp
+        #        syst_t=syst
+        #if("SRW" in sr)
         if (year_sf is None): 
             print "make multiprocess hsproj", "syst sf" , syst_sf
             hs_proj_multiprocess = self.transfer_factor(regions,mp,path=pathout,namemap=namemap,onlyCentral=onlyCentral,mapFitFunction=tfMapFitFunction,mapFitOption=tfMapFitOption,category=category,year=year,plot=plot,syst=syst,tag=tag,syst_sf=syst_sf,verbose=False)
@@ -1191,7 +1244,7 @@ class data_driven(single_process):
             h_dd_cr=h_data_cr.Clone("DD"+"".join(samplelist)+"_"+cr+"_"+category)
             
             #            h_dd_cr_fit=fittedHisto(h_dd_cr,ddMapFitFunction[cr],doRemove=False,npars=-1,behavior="shape_only")[0]
-            #h_dd_cr_fit=fittedHisto(h_dd_cr,ddMapFitFunction[cr],doRemove=False,npars=-1,behavior="shape_only")[0]
+            #h_dd_cr_fit=fittedHisto(h_d_cr,ddMapFitFunction[cr],doRemove=False,npars=-1,behavior="shape_only")[0]
             #h_dd_cr_fit.SetName("DDFit"+"".join(samplelist)+"_"+cr+"_"+category)
             h_dd_cr_fit=h_data_cr_fit.Clone("DDFit"+"".join(samplelist)+"_"+cr+"_"+category)
             h_dd_cr_fit_alt1=h_data_cr_fit_alt1.Clone("DDFitAlt1"+"".join(samplelist)+"_"+cr+"_"+category)
