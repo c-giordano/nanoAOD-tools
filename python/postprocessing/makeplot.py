@@ -18,7 +18,7 @@ parser.add_option('-p', '--plot', dest='plot', default = False, action='store_tr
 parser.add_option('-s', '--stack', dest='stack', default = False, action='store_true', help='Default make no stacks')
 parser.add_option('-N', '--notstacked', dest='tostack', default = True, action='store_false', help='Default make plots stacked')
 parser.add_option('-L', '--lep', dest='lep', type='string', default = 'muon', help='Default make muon analysis')
-parser.add_option('-S', '--syst', dest='syst', type='string', default = 'all', help='Default all systematics added')
+parser.add_option('-S', '--syst', dest='syst', type='string', default = 'noSyst', help='Default all systematics added')
 parser.add_option('-C', '--cut', dest='cut', type='string', default = 'lepton_eta>-10.', help='Default no cut')
 parser.add_option('-y', '--year', dest='year', type='string', default = 'all', help='Default 2016, 2017 and 2018 are included')
 parser.add_option('-f', '--folder', dest='folder', type='string', default = 'v6', help='Default folder is v0')
@@ -27,10 +27,11 @@ parser.add_option('-d', '--dat', dest='dat', type='string', default = 'all', hel
 (opt, args) = parser.parse_args()
 
 folder = opt.folder
-
+#/eos/user/c/cgiordan/Wprime/WP_M4000W40_RH_2016/
 #filerepo = '/eos/user/a/apiccine/Wprime/nosynch/v13/'
 filerepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'
-plotrepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'#_topjet/'#/only_Wpjetbtag_ev1btag/'
+plotrepo = '/eos/user/'+str(os.environ.get('USER')[0])+'/'+str(os.environ.get('USER'))+'/Wprime/nosynch/' + folder + '/'
+#nosynch/' + folder + '/'#_topjet/'#/only_Wpjetbtag_ev1btag/'
 
 ROOT.gROOT.SetBatch() # don't pop up canvases
 if not os.path.exists(plotrepo + 'plot/muon'):
@@ -74,59 +75,60 @@ def lumi_writer(dataset, lumi):
           if not ('Data' in sample.label or 'TT_dilep' in sample.label):
                infile =  ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + "_merged.root")
                tree = infile.Get('events_nominal')
-               treejesup = infile.Get('events_jesUp')
-               treejesdown = infile.Get('events_jesDown')
-               treejerup = infile.Get('events_jerUp')
-               treejerdown = infile.Get('events_jerDown')
+               #treejesup = infile.Get('events_jesUp')
+               #treejesdown = infile.Get('events_jesDown')
+               #treejerup = infile.Get('events_jerUp')
+               #treejerdown = infile.Get('events_jerDown')
                tree.SetBranchStatus('w_nominal', 0)
-               tree.SetBranchStatus('w_PDF', 0)
-               treejesup.SetBranchStatus('w_nominal', 0)
-               treejesdown.SetBranchStatus('w_nominal', 0)
-               treejerup.SetBranchStatus('w_nominal', 0)
-               treejerdown.SetBranchStatus('w_nominal', 0)
+               #tree.SetBranchStatus('w_PDF', 0)
+               #treejesup.SetBranchStatus('w_nominal', 0)
+               #treejesdown.SetBranchStatus('w_nominal', 0)
+               #treejerup.SetBranchStatus('w_nominal', 0)
+               #treejerdown.SetBranchStatus('w_nominal', 0)
                outfile = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root","RECREATE")
                tree_new = tree.CloneTree(0)
-               treejesup_new = treejesup.CloneTree(0)
-               treejesdown_new = treejesdown.CloneTree(0)
-               treejerup_new = treejerup.CloneTree(0)
-               treejerdown_new = treejerdown.CloneTree(0)
+               #treejesup_new = treejesup.CloneTree(0)
+               #treejesdown_new = treejesdown.CloneTree(0)
+               #treejerup_new = treejerup.CloneTree(0)
+               #treejerdown_new = treejerdown.CloneTree(0)
                tree.SetBranchStatus('w_nominal', 1)
-               tree.SetBranchStatus('w_PDF', 1)
-               treejesup.SetBranchStatus('w_nominal', 1)
-               treejesdown.SetBranchStatus('w_nominal', 1)
-               treejerup.SetBranchStatus('w_nominal', 1)
-               treejerdown.SetBranchStatus('w_nominal', 1)
+               #tree.SetBranchStatus('w_PDF', 1)
+               #treejesup.SetBranchStatus('w_nominal', 1)
+               #treejesdown.SetBranchStatus('w_nominal', 1)
+               #treejerup.SetBranchStatus('w_nominal', 1)
+               #treejerdown.SetBranchStatus('w_nominal', 1)
                print("Getting the histos from %s" %(infile))
                h_genw_tmp = ROOT.TH1F(infile.Get("h_genweight"))
-               h_pdfw_tmp = ROOT.TH1F(infile.Get("h_PDFweight"))
-               nbins = h_pdfw_tmp.GetXaxis().GetNbins()
-               print("h_genweight first bin content is %f and h_PDFweight has %f bins" %(h_genw_tmp.GetBinContent(1), nbins))
+               #h_pdfw_tmp = ROOT.TH1F(infile.Get("h_PDFweight"))
+               #nbins = h_pdfw_tmp.GetXaxis().GetNbins()
+               #print("h_genw_tmp first bin content is %f and h_PDFweight has %f bins" %(h_genw_tmp.GetBinContent(1), nbins))
                w_nom = array('f', [0.]) 
-               w_nomjesup = array('f', [0.]) 
-               w_nomjesdown = array('f', [0.]) 
-               w_nomjerup = array('f', [0.]) 
-               w_nomjerdown = array('f', [0.]) 
-               w_PDF = array('f', [0.]*nbins)
-               print(nbins)
-               print(len(w_PDF))
+               #w_nomjesup = array('f', [0.]) 
+               #w_nomjesdown = array('f', [0.]) 
+               #w_nomjerup = array('f', [0.]) 
+               #w_nomjerdown = array('f', [0.]) 
+               #w_PDF = array('f', [0.]*nbins)
+               #print(nbins)
+               #print(len(w_PDF))
                tree_new.Branch('w_nominal', w_nom, 'w_nominal/F')
-               tree_new.Branch('w_PDF', w_PDF, 'w_PDF/F')
-               treejesup_new.Branch('w_nominal', w_nomjesup, 'w_nominal/F')
-               treejesdown_new.Branch('w_nominal', w_nomjesdown, 'w_nominal/F')
-               treejerup_new.Branch('w_nominal', w_nomjerup, 'w_nominal/F')
-               treejerdown_new.Branch('w_nominal', w_nomjerdown, 'w_nominal/F')
+               #tree_new.Branch('w_PDF', w_PDF, 'w_PDF/F')
+               #treejesup_new.Branch('w_nominal', w_nomjesup, 'w_nominal/F')
+               #treejesdown_new.Branch('w_nominal', w_nomjesdown, 'w_nominal/F')
+               #treejerup_new.Branch('w_nominal', w_nomjerup, 'w_nominal/F')
+               #treejerdown_new.Branch('w_nominal', w_nomjerdown, 'w_nominal/F')
                for event in xrange(0, tree.GetEntries()):
                     tree.GetEntry(event)
                     if event%10000==1:
                          #print("Processing event %s     complete %s percent" %(event, 100*event/tree.GetEntries()))
                          sys.stdout.write("\rProcessing event {}     complete {} percent".format(event, 100*event/tree.GetEntries()))
-                    w_nom[0] = tree.w_nominal * sample.sigma * lumi * 1000./float(h_genw_tmp.GetBinContent(1))
-                    for i in xrange(1, nbins):
-                         w_PDF[i] = h_pdfw_tmp.GetBinContent(i+1)/h_genw_tmp.GetBinContent(2) 
+                    w_nom[0] = sample.sigma * lumi * 1000./float(h_genw_tmp.GetBinContent(1))
+                    #for i in xrange(1, nbins):
+                    #     w_PDF[i] = h_pdfw_tmp.GetBinContent(i+1)/h_genw_tmp.GetBinContent(2) 
                     tree_new.Fill()
                outfile.cd()
-               tree_new.Write()
+               tree_new.Write("", ROOT.TObject.kOverwrite)
                infile.cd()
+               """
                for event in xrange(0, treejesup.GetEntries()):
                     treejesup.GetEntry(event)
                     if event%10000==1:
@@ -137,6 +139,7 @@ def lumi_writer(dataset, lumi):
                outfile.cd()
                treejesup_new.Write()
                infile.cd()
+               
                for event in xrange(0, treejesdown.GetEntries()):
                     treejesdown.GetEntry(event)
                     if event%10000==1:
@@ -166,6 +169,7 @@ def lumi_writer(dataset, lumi):
                     treejerdown_new.Fill()
                outfile.cd()
                treejerdown_new.Write()
+               """
                outfile.Close()
                print('\n')
           else:
@@ -181,19 +185,9 @@ def plot(lep, reg, variable, sample, cut_tag, syst):
      f1 = ROOT.TFile.Open(filerepo + sample.label + "/"  + sample.label + ".root")
      treename = "events_nominal"
      if(cut_tag == ""):
-          if variable._name=='WprAK8_tau2/WprAK8_tau1':
-               histoname = "h_" + reg + "_WprAK8_tau21"
-          elif variable._name== 'WprAK8_tau3/WprAK8_tau2':
-               histoname =  "h_" + reg + "_WprAK8_tau32"
-          else:
-               histoname = "h_" + reg + "_" + variable._name
+          histoname = "h_" + reg + "_" + variable._name
      else:
-          if variable._name=='WprAK8_tau2/WprAK8_tau1':
-               histoname = "h_" + reg + "_WprAK8_tau21_" + cut_tag
-          elif variable._name== 'WprAK8_tau3/WprAK8_tau2':
-               histoname =  "h_" + reg + "_WprAK8_tau32_" + cut_tag
-          else:
-               histoname = "h_" + reg + "_" + variable._name + "_" + cut_tag
+          histoname = "h_" + reg + "_" + variable._name + "_" + cut_tag
      nbins = 0
      h1 = ROOT.TH1F()
      if variable._nbins == None:
@@ -204,9 +198,9 @@ def plot(lep, reg, variable, sample, cut_tag, syst):
           h1 = ROOT.TH1F(histoname, variable._name + "_" + reg, variable._nbins, variable._xmin, variable._xmax)
      h1.Sumw2()
      if 'muon' in lep: 
-          cut = variable._taglio + '*isMu'
+          cut = variable._taglio #+ '*isMu'
      elif 'electron' in lep:
-          cut  = variable._taglio + '*isEle'
+          cut  = variable._taglio #+ '*isEle'
           if 'MC' in variable._name:
                cut = cut + "*(" + str(variable._name) + "!=-100.)"
      print str(cut)
@@ -224,8 +218,8 @@ def plot(lep, reg, variable, sample, cut_tag, syst):
      f1.Get(treename).Project(histoname,variable._name,cut)
      #if not 'Data' in sample.label:
      #     h1.Scale((7.5)/35.89)
-     #h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
-     #h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
+     h1.SetBinContent(1, h1.GetBinContent(0) + h1.GetBinContent(1))
+     h1.SetBinError(1, math.sqrt(pow(h1.GetBinError(0),2) + pow(h1.GetBinError(1),2)))
      h1.SetBinContent(nbins, h1.GetBinContent(nbins) + h1.GetBinContent(nbins+1))
      h1.SetBinError(nbins, math.sqrt(pow(h1.GetBinError(nbins),2) + pow(h1.GetBinError(nbins+1),2)))
      for i in range(0, nbins+1):
@@ -392,6 +386,8 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
           step = float(variabile_._xmax - variabile_._xmin)/float(variabile_._nbins)
           print str(step)
           if "GeV" in variabile_._title:
+               print("e allora?")
+               print(step)
                if step.is_integer():
                     ytitle = "Events / %.0f GeV" %step
                else:
@@ -401,6 +397,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
                     ytitle = "Events / %.0f units" %step
                else:
                     ytitle = "Events / %.2f units" %step
+     
      stack.GetYaxis().SetTitle(ytitle)
      stack.GetYaxis().SetTitleFont(42)
      stack.GetXaxis().SetLabelOffset(1.8)
@@ -409,6 +406,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
      stack.GetYaxis().SetLabelSize(0.07)
      stack.GetYaxis().SetTitleSize(0.07)
      stack.SetTitle("")
+     
      if(signal):
           for hsig in h_sig:
                #hsig.Scale(1000)
@@ -536,7 +534,7 @@ def makestack(lep_, reg_, variabile_, samples_, cut_tag_, syst_, lumi):
           infile[s.label].Delete()
      os.system('set LD_PRELOAD=libtcmalloc.so')
 
-dataset_dict = {'2016':[],'2017':[],'2018':[]}
+dataset_dict = {'2016':[WP_M4000W40_RH_2016, QCD_2016, WJets_2016],'2017':[],'2018':[]}
 if(opt.dat!= 'all'):
      if not(opt.dat in sample_dict.keys()):
           print sample_dict.keys()
@@ -547,11 +545,12 @@ if(opt.dat!= 'all'):
      [dataset_dict[str(sample.year)].append(sample) for sample in samples]
 else:
      dataset_dict = {
-          '2016':[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
+          '2016':[WP_M4000W40_RH_2016, QCD_2016, WJets_2016]
+          #[DataMu_2016, DataEle_2016, DataHT_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M5000W50_RH_2016, WP_M6000W60_RH_2016],
           #'2016':[DataHTG_2016, DataMuG_2016, ST_2016, QCD_2016, TT_Mtt_2016, WJets_2016, WP_M2000W20_RH_2016, WP_M3000W30_RH_2016, WP_M4000W40_RH_2016, WP_M4000W400_RH_2016],
           #'2017':[DataMu_2017, DataEle_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M4000W400_RH_2017],
-          '2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
-          '2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
+          #'2017':[DataMu_2017, DataEle_2017, DataPh_2017, DataHT_2017, ST_2017, QCD_2017, TT_Mtt_2017, WJets_2017, WP_M2000W20_RH_2017, WP_M3000W30_RH_2017, WP_M4000W40_RH_2017, WP_M5000W50_RH_2017, WP_M6000W60_RH_2017],
+          #'2018':[DataMu_2018, DataEle_2018, DataHT_2018, ST_2018, QCD_2018, TT_Mtt_2018, WJets_2018, WP_M2000W20_RH_2018, WP_M3000W30_RH_2018, WP_M4000W40_RH_2018, WP_M5000W50_RH_2018, WP_M6000W60_RH_2018],
      }
 #print(dataset_dict.keys())
 
@@ -559,13 +558,18 @@ years = []
 if(opt.year!='all'):
      years = map(str,opt.year.strip('[]').split(','))
 else:
-     years = ['2016','2017','2018']
+     years = ['2016']#,'2017','2018']
 print(years)
 
 leptons = map(str,opt.lep.split(',')) 
 
 cut = opt.cut #default cut must be obvious, for example lepton_eta>-10.
 if opt.cut == "lepton_eta>-10." and not opt.sel:
+     
+     #fare mini dizionari per ogni categoria
+     #es:
+     #cu_dict = {}
+
      cut_dict = {'muon':"lepton_pt>55", #&&MET_pt>80",#&&best_topjet_isbtag==0&&best_Wpjet_isbtag==1&&nbjet_pt100==1", 
                  'electron':"lepton_pt>50&&abs(lepton_eta)<2.2"#&&MET_pt>80"#&&best_topjet_isbtag==0&&best_Wpjet_isbtag==1&&nbjet_pt100==1",
      }
@@ -586,7 +590,7 @@ else:
           cut_dict = {'muon':cut, 'electron':cut}
           cut_tag = cutToTag(opt.cut)
 
-lumi = {'2016': 35.9, "2017": 41.53, "2018": 59.7}
+lumi = {'2016': 35.9}#, "2017": 41.53, "2018": 59.7}
 
 #
 systematics = []
@@ -617,11 +621,14 @@ for year in years:
                #dataset_new.remove(sample_dict['DataMu_'+str(year)])
           variables = []
           wzero = 'w_nominal*PFSF*puSF*lepSF*trigSF*btagSF'
+          wnom = 'w_nominal'
           cut = cut_dict[lep]
-          variables.append(variabile('njet_pt100', 'no. of jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 8, 1.5, 9.5))
-          variables.append(variabile('nbjet_pt100', 'no. of b jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 7, -0.5, 6.5))
-          variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300.])))
-          variables.append(variabile('subleadingjet_pt', 'subleading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800.])))
+          variables.append(variabile('Top_M_mu_merged', 'Top Mass reco with #mu merged [GeV]', wnom+'*('+cut+')', 10, 100,300))
+          #variables.append(variabile('njet_pt100', 'no. of jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 8, 1.5, 9.5))
+          #variables.append(variabile('nbjet_pt100', 'no. of b jets with p_{T} > 100 GeV',  wzero+'*('+cut+')', 7, -0.5, 6.5))
+          #variables.append(variabile('leadingjet_pt', 'leading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [300., 350., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800., 1950., 2100., 2300.])))
+          #variables.append(variabile('subleadingjet_pt', 'subleading jet p_{T} [GeV]',  wzero+'*('+cut+')', None, None, None,  array('f', [150., 180., 230, 280., 340., 400., 480., 560., 650., 740., 840., 940., 1050., 1200., 1350., 1500., 1650., 1800.])))
+          
 
           for sample in dataset_new:
                if(opt.plot):

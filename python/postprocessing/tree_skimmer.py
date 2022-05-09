@@ -334,7 +334,7 @@ def reco(scenario, isMC, addPDF, MCReco):
         ## Selecting only jets with pt>100  ##
         ######################################
         goodJets = get_Jet(jets, 100)
-        bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')
+        bjets, nobjets = bjet_filter(goodJets, 'DeepFlv', 'M')###prenditi questa!
         if(len(bjets) > 1):
             btagreco = True
         nJet_pt100_nominal[0] = len(goodJets)

@@ -44,6 +44,8 @@ def cfg_writer(sample, isMC, outdir):
             f.write("config.Data.lumiMask = '/afs/cern.ch/cms/CAF/CMSCOMM/COMM_DQM/certification/Collisions18/13TeV/ReReco/Cert_314472-325175_13TeV_17SeptEarlyReReco2018ABC_PromptEraD_Collisions18_JSON.txt'\n")
         f.write("config.Data.unitsPerJob = 50\n")
     else:
+        #        f.write("config.Data.splitting = 'EventAwareLumiBased'\n")
+        #        f.write("config.Data.unitsPerJob = 10000\n")
         f.write("config.Data.splitting = 'FileBased'\n")
         f.write("config.Data.unitsPerJob = 1\n")
     #config.Data.runRange = ''
@@ -68,14 +70,16 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
     f.write("from PhysicsTools.NanoAODTools.postprocessing.framework.crabhelper import inputFiles,runsAndLumis\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.MCweight_writer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.MET_HLT_Filter import *\n")
-    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.HLT_Filter import *\n")
+    #f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.HLT_Filter import *\n")
+    
     f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.preselection import *\n")
-    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.trigger_preselection import *\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.examples.highpt import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.PrefireCorr import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.puWeightProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.common.lepSFProducer import *\n")
     f.write("from PhysicsTools.NanoAODTools.postprocessing.modules.btv.btagSFProducer import *\n")
-
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.unpacking_attempt import unpacking_vers2\n")
+    f.write("from PhysicsTools.NanoAODTools.postprocessing.GenPart_MomFirstCp import *\n")
     #f.write("infile = "+str(sample.files)+"\n")
     #f.write("outpath = '"+ outpath+"'\n")
     #Deafult PostProcessor(outputDir,inputFiles,cut=None,branchsel=None,modules=[],compression='LZMA:9',friend=False,postfix=None, jsonInput=None,noOut=False,justcount=False,provenance=False,haddFileName=None,fwkJobReport=False,histFileName=None,histDirName=None, outputbranchsel=None,maxEntries=None,firstEntry=0, prefetch=False,longTermCache=False)\n")
@@ -84,7 +88,7 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
         f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
         f.write("metCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", jesUncert='Total', redojec=True)\n")
         f.write("fatJetCorrector_tot = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", jesUncert='Total', redojec=True, jetType = 'AK8PFchs')\n")
-        f.write("p=PostProcessor('.', inputFiles(), '', modules=["+modules+"], provenance=True, fwkJobReport=True, histFileName='hist.root', histDirName='plots', outputbranchsel='keep_and_drop.txt')\n")# haddFileName='"+sample.label+".root'
+        f.write("p=PostProcessor('.', inputFiles(), '', modules=["+modules+"], provenance=True, fwkJobReport=True, outputbranchsel='keep_and_drop.txt', haddFileName='tree_hadd.root')\n")# haddFileName='"+sample.label+".root'
     else: 
         f.write("metCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", runPeriod='"+str(sample.runP)+"', jesUncert='All', redojec=True)\n")
         f.write("fatJetCorrector = createJMECorrector(isMC="+str(isMC)+", dataYear="+str(sample.year)+", runPeriod='"+str(sample.runP)+"', jesUncert='All', redojec=True, jetType = 'AK8PFchs')\n")
@@ -122,8 +126,8 @@ def crab_script_writer(sample, outpath, isMC, modules, presel):
 
     f_sh.write("echo Found Proxy in: $X509_USER_PROXY\n")
     f_sh.write("python crab_script.py $1\n")
-    if isMC:
-        f_sh.write("hadd tree_hadd.root tree.root hist.root\n")
+    #if isMC:
+    #    f_sh.write("hadd tree_hadd.root tree.root hist.root\n")
     f_sh.write("fi\n")
     f_sh.close()
 
@@ -169,12 +173,14 @@ for sample in samples:
         cfg_writer(sample, isMC, "Wprime")
 
         if isMC:
-            if year != '2018':
-                modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", " + prefire_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
-            else:
-                modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
-        else:
-            modules = "HLT(), preselection(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
+#commenta tutta questa parte divisa in year e metti semplicemente unpacking_vers()!!!!!!!!!!!
+            modules = "GenPart_MomFirstCp(flavour='11,13,5'), unpacking_vers2()"
+#            if year != '2018':
+#                modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", " + prefire_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
+#            else:
+#                modules = "MCweight_writer(),  " + met_hlt_mod + ", preselection(), " + lep_mod + ", " + trg_mod + ", " + pu_mod + ", " + btag_mod + ", metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
+#        else:
+#            modules = "HLT(), preselection(), metCorrector(), fatJetCorrector(), metCorrector_tot(), fatJetCorrector_tot()" # Put here all the modules you want to be runned by crab
             
         print "Producing crab script"
         crab_script_writer(sample,'/eos/user/'+str(os.environ.get('USER')[0]) + '/'+str(os.environ.get('USER'))+'/Wprime/nosynch/', isMC, modules, presel)
